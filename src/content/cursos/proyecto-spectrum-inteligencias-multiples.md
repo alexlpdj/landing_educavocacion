@@ -1,0 +1,72 @@
+---
+title: "El Proyecto Spectrum: Un Enfoque Alternativo Basado en las Inteligencias Múltiples"
+description: "Desarrolla talento y potencial mediante Inteligencias Múltiples, evaluación auténtica y escenarios de exploración naturalista."
+price: 80
+hours: 150
+ects: 6
+modality: "100% Virtual"
+category: ["talento"]
+icon: "ph-palette"
+packEligible: false
+stripeLink: "https://buy.stripe.com/test_placeholder"
+stripePackLink: "https://buy.stripe.com/test_placeholder"
+profesorName: "Equipo EducaVocación"
+profesorRole: "Especialistas en Inteligencias Múltiples y Proyecto Spectrum · Universidad EUNEIZ"
+profesorPhoto: ""
+profesorBio: "Nuestro equipo especializado en Spectrum te acompañará en la implementación de un enfoque que respeta la diversidad de talentos y potenciales del alumnado."
+modules:
+  - title: "Módulo 1: Fundamentos del Proyecto Spectrum y las Inteligencias Múltiples"
+    description: "Analiza los postulados de Gardner, Feldman y Krechevsky. Comprende las Inteligencias Múltiples, sus perfiles, manifestaciones en el aula y cómo Spectrum identifica potencial en contextos naturales."
+  - title: "Módulo 2: Evaluación Auténtica y Escenarios de Desempeño Spectrum"
+    description: "Diseña escenarios de evaluación naturalista: talleres, estaciones, rincones que permitan observar inteligencias en acción. Registra mediante observación sistemática y portafolios."
+  - title: "Módulo 3: Diseño de Actividades y Materiales Spectrum en el Aula"
+    description: "Crea actividades que movilizan distintas inteligencias: lingüísticas, lógico-matemáticas, espaciales, musicales, corporales, interpersonales, intrapersonales y naturalistas."
+  - title: "Módulo 4: Desarrollo de Talentos, Creatividad y Motivación en Spectrum"
+    description: "Explora estrategias para estimular creatividad, motivación intrínseca, curiosidad y pensamiento divergente. Diseña mini-proyectos Spectrum con producción creativa auténtica."
+  - title: "Módulo 5: Inclusión, Atención a la Diversidad y Aplicaciones Curriculares"
+    description: "Integra Spectrum con inclusión educativa y DUA. Adapta Spectrum para alumnado con NEAE, motivación baja, talento específico o alta capacidad en contextos realmente inclusivos."
+  - title: "Módulo 6: Proyecto Final - Diseño de Programa Spectrum en Aula/Centro"
+    description: "Elabora un Programa Spectrum completo integrando diagnóstico, escenarios, actividades, evaluaciones, materiales y plan de implementación sostenible."
+profiles:
+  - icon: "ph-graduation-cap"
+    title: "Estudiantes de Magisterio"
+    description: "Que desean conocer el Proyecto Spectrum desde su formación inicial"
+  - icon: "ph-books"
+    title: "Docentes opositores"
+    description: "Que preparan oposiciones y buscan enfoque diferenciador basado en IM"
+  - icon: "ph-chalkboard-teacher"
+    title: "Docentes en activo"
+    description: "Que desean personalizar el aprendizaje según fortalezas e intereses del alumnado"
+  - icon: "ph-buildings"
+    title: "Equipos directivos"
+    description: "Que buscan transformar el centro hacia identificación de talentos diversos"
+benefits:
+  - "Comprender el marco teórico del Proyecto Spectrum y las Inteligencias Múltiples de Gardner"
+  - "Diseñar actividades Spectrum y escenarios de exploración que hacen visible el potencial"
+  - "Aplicar estrategias de evaluación auténtica mediante observación sistemática y registros"
+  - "Elaborar perfiles competenciales e identitarios del alumnado reconociendo sus fortalezas"
+  - "Integrar Spectrum en proyectos, ambientes y estaciones de aprendizaje accesibles"
+  - "Identificar talentos, fortalezas cognitivas y estilos de aprendizaje diversos"
+  - "Promover motivación intrínseca, autonomía, curiosidad y creatividad en toda su amplitud"
+  - "Adaptar Spectrum a contextos inclusivos respondiendo a la diversidad real del aula"
+evaluation: "Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado.\n\nEn caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad para realizar una nueva prueba. El módulo final es práctico: diseñarás e implementarás un Programa Spectrum completo."
+faq:
+  - question: "¿Este curso es válido como mérito en oposiciones?"
+    answer: "Sí. Está acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ y es puntuable como mérito para oposiciones de acceso a la función pública docente en todas las Comunidades Autónomas, según R.D. 276/2007."
+  - question: "¿Spectrum es solo para talento o alta capacidad?"
+    answer: "No. Spectrum identifica potencial en toda la diversidad del alumnado mediante contextos naturales. Beneficia a todos al reconocer distintos tipos de inteligencia más allá de lo académico tradicional."
+  - question: "¿Es un curso teórico o práctico?"
+    answer: "Ambos. Fundamentación teórica sólida combinada con análisis de casos, diseño de actividades, simulaciones de escenarios y tu propio programa final implementable."
+  - question: "¿Necesito presupuesto especial para implementar Spectrum?"
+    answer: "No. Spectrum se basa en reorganizar el aula mediante estaciones y escenarios. Los recursos pueden ser de bajo coste: materiales manipulativos sencillos, espacio flexible, creatividad pedagógica."
+  - question: "¿Cuánto tiempo debo dedicar cada semana?"
+    answer: "Son 150 horas totales. A ritmo flexible, puedes dedicar 10-15 horas semanales. El promedio es completar el curso en 4-6 meses."
+  - question: "¿Cuáles son las 8 Inteligencias Múltiples que abordaremos?"
+    answer: "Lingüística, Lógico-Matemática, Espacial, Musical, Corporal-Cinestésica, Interpersonal, Intrapersonal y Naturalista. El curso enseña cómo diseñar actividades que desarrollan cada una."
+  - question: "¿Los materiales incluyen plantillas descargables?"
+    answer: "Sí. Plantillas de evaluación, guías de diseño de estaciones, bancos de actividades por inteligencia, rúbricas de observación, ejemplos de perfiles Spectrum y modelos de portafolios."
+  - question: "¿Puedo aplicar Spectrum en todas las edades?"
+    answer: "Sí. El curso ofrece ejemplos desde Infantil a Secundaria. Adaptarás los principios a tu nivel específico durante el proyecto final del curso."
+---
+
+El Proyecto Spectrum propone identificar talento mediante contextos naturales, proyectos abiertos y Inteligencias Múltiples. Este curso te forma para detectar potencial en toda su diversidad, respetar fortalezas individuales y diseñar experiencias de aprendizaje que desarrollen creatividad, autonomía y pasión intelectual en el alumnado.

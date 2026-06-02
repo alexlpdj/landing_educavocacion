@@ -1,0 +1,335 @@
+---
+import CartButton from './CartButton.astro';
+import CartDrawer from './CartDrawer.astro';
+
+const currentPath = Astro.url.pathname;
+const isServicio = currentPath.startsWith('/servicios');
+---
+<nav id="main-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <img src="/logo_claro.svg" alt="EducaVocación" style="height:32px; width:auto;" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>Inicio</a></li>
+        <li><a href="/cursos/" aria-current={currentPath.startsWith('/cursos') ? 'page' : undefined}>Cursos</a></li>
+        <li class="nav-has-dropdown">
+          <button
+            class={`nav-dd-trigger${isServicio ? ' is-current' : ''}`}
+            aria-haspopup="true"
+            aria-expanded="false"
+            id="servicios-trigger"
+          >
+            Servicios <i class="ph ph-caret-down nav-dd-caret"></i>
+          </button>
+          <div class="nav-dd-menu" id="servicios-menu" role="menu">
+            <a href="/servicios/preparacion-oposiciones/" class="nav-dd-item" role="menuitem">
+              <span class="nav-dd-icon"><i class="ph ph-graduation-cap"></i></span>
+              <span class="nav-dd-text">
+                <span class="nav-dd-name">Preparación de oposiciones</span>
+                <span class="nav-dd-desc">Acompañamiento personalizado</span>
+              </span>
+            </a>
+            <a href="/servicios/creacion-temarios/" class="nav-dd-item" role="menuitem">
+              <span class="nav-dd-icon"><i class="ph ph-pencil-line"></i></span>
+              <span class="nav-dd-text">
+                <span class="nav-dd-name">Creación de temarios</span>
+                <span class="nav-dd-desc">Temarios a medida para tu oposición</span>
+              </span>
+            </a>
+          </div>
+        </li>
+        <li><a href="/#nosotros">Nosotros</a></li>
+        <li><a href="/#contacto">Contacto</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="/#contacto" class="btn btn--primary btn--sm nav-solicitar">Solicitar info</a>
+        <CartButton />
+        <button class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false">
+          <i class="ph ph-list"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<CartDrawer />
+
+<!-- Mobile overlay + panel -->
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu-head">
+    <img src="/logo_claro.svg" alt="EducaVocación" style="height:26px; width:auto;" />
+    <button id="mobile-close" aria-label="Cerrar menú"><i class="ph ph-x"></i></button>
+  </div>
+
+  <nav class="mobile-nav">
+    <a href="/" class="mobile-nav-link">Inicio</a>
+    <a href="/cursos/" class="mobile-nav-link">Cursos</a>
+    <div class="mobile-nav-group">
+      <button class="mobile-nav-group-trigger" id="mobile-servicios-trigger">
+        Servicios <i class="ph ph-caret-down"></i>
+      </button>
+      <div class="mobile-nav-sub" id="mobile-servicios-sub">
+        <a href="/servicios/preparacion-oposiciones/" class="mobile-nav-sub-link">
+          <i class="ph ph-graduation-cap"></i> Preparación de oposiciones
+        </a>
+        <a href="/servicios/creacion-temarios/" class="mobile-nav-sub-link">
+          <i class="ph ph-pencil-line"></i> Creación de temarios
+        </a>
+      </div>
+    </div>
+    <a href="/#nosotros" class="mobile-nav-link">Nosotros</a>
+    <a href="/#contacto" class="mobile-nav-link">Contacto</a>
+  </nav>
+
+  <div class="mobile-menu-footer">
+    <a href="/#contacto" class="btn btn--primary btn--lg" style="width:100%; justify-content:center;">
+     Solicitar información
+    </a>
+  </div>
+</div>
+
+<style>
+  /* ── Dropdown trigger (inherits nav-links a styles from global.css) ── */
+  .nav-has-dropdown { position: relative; }
+  .nav-dd-trigger {
+    font-family: 'Poppins', sans-serif;
+    font-size: .88rem; font-weight: 600;
+    color: var(--navy); opacity: .7;
+    background: none; border: none; cursor: pointer;
+    padding: 0;
+    display: flex; align-items: center; gap: 5px;
+    transition: opacity .2s, color .2s;
+    white-space: nowrap;
+  }
+  .nav-dd-trigger:hover,
+  .nav-dd-trigger.is-current,
+  .nav-dd-trigger[aria-expanded="true"] { opacity: 1; color: var(--blue); }
+  .nav-dd-caret { font-size: .75rem; transition: transform .2s; }
+  .nav-dd-trigger[aria-expanded="true"] .nav-dd-caret { transform: rotate(-180deg); }
+
+  /* ── Dropdown panel ── */
+  .nav-dd-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 50%; transform: translateX(-50%);
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(19,16,59,.16);
+    border: 1px solid rgba(19,16,59,.08);
+    padding: 8px;
+    min-width: 290px;
+    z-index: 400;
+  }
+  .nav-dd-menu.is-open { display: block; }
+
+  .nav-dd-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--navy);
+    transition: background .18s;
+  }
+  .nav-dd-item:hover { background: var(--cream); }
+
+  .nav-dd-icon {
+    flex-shrink: 0;
+    width: 38px; height: 38px;
+    background: rgba(36,36,186,.08);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blue);
+    font-size: 1.25rem;
+  }
+
+  .nav-dd-text {
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .nav-dd-name { font-size: .87rem; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .nav-dd-desc { font-size: .74rem; color: var(--gray); line-height: 1.3; }
+
+  /* ── Burger button ── */
+  .nav-burger {
+    display: none;
+    background: rgba(19,16,59,.07);
+    border: 1px solid rgba(19,16,59,.12);
+    color: var(--navy);
+    border-radius: 8px;
+    width: 36px; height: 36px;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 1.25rem;
+    transition: background .2s;
+    flex-shrink: 0;
+  }
+  .nav-burger:hover { background: rgba(19,16,59,.12); }
+
+  /* ── Mobile overlay ── */
+  .mobile-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(19,16,59,.45);
+    z-index: 498;
+    backdrop-filter: blur(2px);
+  }
+  .mobile-overlay.is-open { display: block; }
+
+  /* ── Mobile slide panel ── */
+  .mobile-menu {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(320px, 88vw);
+    background: var(--white);
+    z-index: 499;
+    display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    overflow-y: auto;
+  }
+  .mobile-menu.is-open { transform: translateX(0); }
+
+  .mobile-menu-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--navy);
+    flex-shrink: 0;
+  }
+  #mobile-close {
+    background: rgba(255,255,255,.12); border: none;
+    color: var(--white); border-radius: 8px;
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1rem;
+  }
+
+  .mobile-nav { display: flex; flex-direction: column; flex: 1; padding: 8px 0; }
+
+  .mobile-nav-link {
+    display: block;
+    padding: 13px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .95rem; font-weight: 500;
+    color: var(--navy); text-decoration: none;
+    border-bottom: 1px solid rgba(19,16,59,.05);
+    transition: background .2s;
+  }
+  .mobile-nav-link:hover { background: var(--cream); }
+
+  .mobile-nav-group { border-bottom: 1px solid rgba(19,16,59,.05); }
+
+  .mobile-nav-group-trigger {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .95rem; font-weight: 500;
+    color: var(--navy);
+    background: none; border: none; cursor: pointer;
+    transition: background .2s;
+  }
+  .mobile-nav-group-trigger:hover { background: var(--cream); }
+  .mobile-nav-group-trigger i { transition: transform .2s; font-size: .9rem; }
+  .mobile-nav-group-trigger.is-open i { transform: rotate(-180deg); }
+
+  .mobile-nav-sub { display: none; flex-direction: column; background: rgba(19,16,59,.02); }
+  .mobile-nav-sub.is-open { display: flex; }
+
+  .mobile-nav-sub-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 24px 11px 32px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .88rem; font-weight: 500;
+    color: var(--navy); text-decoration: none;
+    border-bottom: 1px solid rgba(19,16,59,.04);
+    transition: background .2s;
+  }
+  .mobile-nav-sub-link:hover { background: var(--cream); }
+  .mobile-nav-sub-link i { color: var(--blue); font-size: 1rem; flex-shrink: 0; }
+
+  .mobile-menu-footer {
+    padding: 20px 16px 28px 16px;
+    border-top: 2px solid rgba(19,16,59,.1);
+    background: linear-gradient(180deg, transparent, rgba(36,36,186,.02));
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+
+  .mobile-menu-footer .btn {
+    display: flex;
+    gap: 8px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 960px) {
+    /* nav-links already hidden by global.css at this breakpoint */
+    .nav-burger { display: flex; }
+    .logo img { height: 24px !important; }
+    .nav-solicitar { display: none; }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (nav) nav.classList.toggle('nav--scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Desktop dropdown
+  const ddTrigger = document.getElementById('servicios-trigger');
+  const ddMenu    = document.getElementById('servicios-menu');
+
+  ddTrigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = ddMenu?.classList.toggle('is-open');
+    ddTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', (e) => {
+    if (!ddMenu?.contains(e.target as Node) && !ddTrigger?.contains(e.target as Node)) {
+      ddMenu?.classList.remove('is-open');
+      ddTrigger?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Mobile menu
+  const burger     = document.getElementById('nav-burger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const overlay    = document.getElementById('mobile-overlay');
+  const closeBtn   = document.getElementById('mobile-close');
+
+  const openMenu  = () => {
+    mobileMenu?.classList.add('is-open');
+    overlay?.classList.add('is-open');
+    burger?.setAttribute('aria-expanded', 'true');
+    mobileMenu?.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeMenu = () => {
+    mobileMenu?.classList.remove('is-open');
+    overlay?.classList.remove('is-open');
+    burger?.setAttribute('aria-expanded', 'false');
+    mobileMenu?.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  burger?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+  overlay?.addEventListener('click', closeMenu);
+
+  // Mobile Servicios sub-accordion
+  const mServTrigger = document.getElementById('mobile-servicios-trigger');
+  const mServSub     = document.getElementById('mobile-servicios-sub');
+  mServTrigger?.addEventListener('click', () => {
+    const open = mServSub?.classList.toggle('is-open');
+    mServTrigger.classList.toggle('is-open', !!open);
+  });
+
+  // Close mobile menu when a link is tapped
+  mobileMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+</script>

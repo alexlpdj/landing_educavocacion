@@ -1,0 +1,305 @@
+---
+interface Props {
+  subject?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  subject = '',
+  title = '¿Hablamos?',
+  subtitle = 'Cuéntanos tu situación y te respondemos en menos de 48 horas. Sin compromiso.',
+} = Astro.props;
+---
+
+<section class="contact-section" id="contacto">
+  <div class="container">
+    <div class="contact-inner">
+
+      <!-- Columna izquierda: info -->
+      <div class="contact-info">
+        <span class="contact-label">Contacto</span>
+        <h2 class="h2 contact-title">{title}</h2>
+        <p class="lead contact-subtitle">{subtitle}</p>
+        <ul class="contact-features">
+          <li><i class="ph-fill ph-check-circle"></i> Respuesta en menos de 48 horas</li>
+          <li><i class="ph-fill ph-check-circle"></i> Sin compromiso ni coste</li>
+          <li><i class="ph-fill ph-check-circle"></i> Te asesoramos sobre la mejor opción para ti</li>
+        </ul>
+        <div class="contact-alt">
+          <p>¿Prefieres contactar directamente?</p>
+          <a href="https://wa.me/34603415314" target="_blank" rel="noopener" class="contact-option">
+            <div class="contact-option-icon" style="background:#d4f5e2;"><i class="ph ph-chat-circle" style="color:#16a34a;"></i></div>
+            <div>
+              <h5>WhatsApp</h5>
+              <span>Escríbenos directamente</span>
+            </div>
+          </a>
+          <a href="mailto:info@educavocacion.es" class="contact-option">
+            <div class="contact-option-icon" style="background:var(--light);"><i class="ph ph-envelope" style="color:var(--navy);"></i></div>
+            <div>
+              <h5>Email</h5>
+              <span>info@educavocacion.es</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna derecha: formulario -->
+      <div class="contact-form-wrap">
+        <form
+          class="contact-form"
+          name="contacto"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="/gracias/"
+        >
+          <input type="hidden" name="form-name" value="contacto" />
+          <input type="hidden" name="subject" value={subject} />
+          <p class="hidden"><label>No rellenar: <input name="bot-field" /></label></p>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-name">Nombre completo <span class="req">*</span></label>
+              <input id="cf-name" name="nombre" type="text" placeholder="Ana García" required />
+            </div>
+          </div>
+
+          <div class="form-row form-row--two">
+            <div class="form-field">
+              <label for="cf-email">Email <span class="req">*</span></label>
+              <input id="cf-email" name="email" type="email" placeholder="ana@email.com" required />
+            </div>
+            <div class="form-field">
+              <label for="cf-phone">Teléfono <span class="opt">(opcional)</span></label>
+              <input id="cf-phone" name="telefono" type="tel" placeholder="600 000 000" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-message">Cuéntanos tu situación <span class="req">*</span></label>
+              <textarea id="cf-message" name="mensaje" rows="4" placeholder="Describe brevemente tu situación: oposición, especialidad, en qué punto del proceso estás…" required></textarea>
+            </div>
+          </div>
+
+          <div class="form-checkbox-group">
+            <label class="form-checkbox">
+              <input type="checkbox" id="cf-rgpd" name="rgpd" required />
+              <span class="checkbox-label">
+                Acepto la <a href="/privacidad/" target="_blank" rel="noopener">política de privacidad</a> y consiento el tratamiento de mis datos según RGPD
+                <span class="req">*</span>
+              </span>
+            </label>
+            <span id="rgpd-error" class="form-error"></span>
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn btn--primary btn--lg form-submit" id="cf-submit" disabled>
+              <i class="ph ph-paper-plane-tilt"></i> Enviar mensaje
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    background: var(--cream);
+    padding: 96px 0;
+    scroll-margin-top: 72px;
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* Info col */
+  .contact-label {
+    display: inline-block;
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--sky); margin-bottom: 12px;
+  }
+  .contact-title { color: var(--navy); margin-bottom: 14px; }
+  .contact-subtitle { margin-bottom: 28px; }
+  .contact-features {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 12px;
+    margin-bottom: 32px;
+  }
+  .contact-features li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: .9rem; color: var(--navy); font-weight: 500;
+  }
+  .contact-features i { color: var(--sky); font-size: 1.1rem; flex-shrink: 0; }
+  .contact-alt p { font-size: .85rem; color: var(--gray); margin-bottom: 14px; }
+  .contact-alt { display: flex; flex-direction: column; gap: 10px; }
+  .contact-option {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(19,16,59,.08);
+    text-decoration: none;
+    color: var(--navy);
+    transition: border-color .2s, background .2s;
+  }
+  .contact-option:hover { border-color: var(--sky); background: rgba(41,171,226,.06); }
+  .contact-option-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-option-icon i { font-size: 1.3rem; }
+  .contact-option h5 { font-size: .87rem; font-weight: 700; margin-bottom: 2px; }
+  .contact-option span { font-size: .75rem; color: var(--gray); }
+
+  /* Form */
+  .contact-form-wrap {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 32px rgba(19,16,59,.08);
+    border: 1px solid rgba(19,16,59,.06);
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+  .form-row { display: flex; flex-direction: column; }
+  .form-row--two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field label {
+    font-size: .82rem; font-weight: 600; color: var(--navy);
+  }
+  .req { color: var(--sky); }
+  .opt { font-weight: 400; color: var(--gray); font-size: .78rem; }
+  .form-field input,
+  .form-field textarea {
+    font-family: 'Poppins', sans-serif;
+    font-size: .9rem;
+    padding: 12px 16px;
+    border: 1.5px solid rgba(19,16,59,.12);
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--navy);
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: #9CA3AF; }
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: var(--sky);
+    box-shadow: 0 0 0 3px rgba(41,171,226,.15);
+  }
+  .form-field textarea { resize: vertical; min-height: 110px; }
+  /* ─── RGPD Checkbox ─── */
+  .form-checkbox-group { margin-bottom: 20px; }
+  .form-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .form-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid rgba(19,16,59,.15);
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 3px;
+    accent-color: var(--blue);
+    transition: border-color .2s;
+  }
+  .form-checkbox input[type="checkbox"]:hover {
+    border-color: var(--sky);
+  }
+  .form-checkbox input[type="checkbox"]:focus {
+    outline: none;
+    border-color: var(--sky);
+    box-shadow: 0 0 0 3px rgba(41,171,226,.12);
+  }
+  .checkbox-label {
+    font-size: .87rem;
+    color: var(--navy);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .checkbox-label a {
+    color: var(--sky);
+    text-decoration: underline;
+    transition: opacity .2s;
+  }
+  .checkbox-label a:hover { opacity: .8; }
+  .form-error {
+    display: block;
+    font-size: .77rem;
+    color: #ef4444;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  .form-footer {
+    display: flex; align-items: center;
+    justify-content: flex-end; gap: 20px;
+  }
+  .form-submit { flex-shrink: 0; }
+  .form-submit:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+  .hidden { display: none; }
+
+  @media (max-width: 960px) {
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .contact-form-wrap { padding: 28px 24px; }
+  }
+  @media (max-width: 600px) {
+    .contact-section { padding: 64px 0; }
+    .form-row--two { grid-template-columns: 1fr; }
+    .form-footer { flex-direction: column; align-items: stretch; }
+    .form-submit { width: 100%; justify-content: center; }
+    .form-legal { max-width: 100%; }
+  }
+</style>
+
+<script is:inline>
+  const rgpdCheckbox = document.getElementById('cf-rgpd');
+  const submitBtn = document.getElementById('cf-submit');
+  const rgpdError = document.getElementById('rgpd-error');
+
+  const updateSubmitState = () => {
+    if (rgpdCheckbox && rgpdCheckbox.checked) {
+      submitBtn.removeAttribute('disabled');
+      rgpdError.textContent = '';
+    } else {
+      submitBtn.setAttribute('disabled', '');
+    }
+  };
+
+  if (rgpdCheckbox) {
+    rgpdCheckbox.addEventListener('change', updateSubmitState);
+  }
+
+  const form = document.querySelector('.contact-form');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      if (!rgpdCheckbox || !rgpdCheckbox.checked) {
+        e.preventDefault();
+        if (rgpdError) {
+          rgpdError.textContent = 'Debes aceptar la política de privacidad para continuar.';
+        }
+        if (rgpdCheckbox) {
+          rgpdCheckbox.focus();
+        }
+      }
+    });
+  }
+</script>

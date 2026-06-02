@@ -1,0 +1,72 @@
+---
+title: "Intervención en Alumnado con Trastornos del Neurodesarrollo"
+description: "Domina intervención educativa para trastornos del neurodesarrollo: TDAH, TEA, dificultades de aprendizaje, comunicación; DUA, funciones ejecutivas y respuesta multinivel."
+price: 80
+hours: 150
+ects: 6
+modality: "100% Virtual"
+category: ["inclusion"]
+icon: "ph-brain"
+packEligible: false
+stripeLink: "https://buy.stripe.com/test_placeholder"
+stripePackLink: "https://buy.stripe.com/test_placeholder"
+profesorName: "Equipo EducaVocación"
+profesorRole: "Especialistas en trastornos del neurodesarrollo e intervención educativa · Universidad EUNEIZ"
+profesorPhoto: ""
+profesorBio: "Nuestro equipo especializado en neurodesarrollo te acompañará en la comprensión integral de diversos trastornos y en el diseño de intervenciones educativas diferenciadas basadas en la evidencia."
+modules:
+  - title: "Módulo 1: Fundamentos de Trastornos del Neurodesarrollo y Escuela Inclusiva"
+    description: "Comprende panorama de trastornos del neurodesarrollo: TDAH, TEA, dificultades de aprendizaje, comunicación, motores. Analiza impacto educativo e interconexiones. Aplica DUA y principios inclusivos."
+  - title: "Módulo 2: Detección Educativa, Evaluación Funcional y Planificación de Apoyos"
+    description: "Domina procedimientos de detección y evaluación funcional en contextos reales. Realiza observación sistemática y análisis por contexto-tarea-estudiante. Diseña planes de apoyo multinivel con indicadores de impacto."
+  - title: "Módulo 3: Intervenciones Específicas por Perfiles de Trastornos del Neurodesarrollo"
+    description: "Aprende estrategias prioritarias para cada perfil: TDAH (atención/funciones ejecutivas), TEA (comunicación/interacción), dificultades de aprendizaje (lectura/escritura/cálculo), comunicación, motores. Ajustes instruccionales y emocionales."
+  - title: "Módulo 4: Diseño Universal para el Aprendizaje (DUA), Tecnología de Apoyo y Evaluación"
+    description: "Aplica DUA integrando múltiples formas de representación, implicación y expresión. Implementa accesibilidad digital en Moodle, documentos, presentaciones. Usa tecnología de apoyo específica. Crea evaluación diversificada."
+  - title: "Módulo 5: Apoyo Socioemocional, Convivencia y Trabajo con Familias y Comunidad"
+    description: "Aborda dimensión emocional en trastornos del neurodesarrollo: ansiedad, frustración, baja autoestima. Diseña estrategias de regulación emocional y convivencia. Coordina con familia y comunidad para coherencia de apoyos."
+  - title: "Módulo 6: Proyecto Final de Implementación y Transferencia al Centro"
+    description: "Diseña y defiende tu programa integral de intervención para alumnado con trastornos del neurodesarrollo en tu contexto. Con indicadores, evidencias y plan de sostenibilidad en el centro."
+profiles:
+  - icon: "ph-graduation-cap"
+    title: "Estudiantes de Magisterio"
+    description: "Que desean especializar su formación en atención a trastornos del neurodesarrollo"
+  - icon: "ph-books"
+    title: "Docentes opositores"
+    description: "Que preparan oposiciones con énfasis en inclusión y neurodesarrollo"
+  - icon: "ph-chalkboard-teacher"
+    title: "Docentes en activo"
+    description: "Que trabajan con perfiles diversos de neurodesarrollo diverso en aula"
+  - icon: "ph-buildings"
+    title: "Equipos de orientación y coordinadores"
+    description: "Que diseñan programas de apoyo para trastornos del neurodesarrollo"
+benefits:
+  - "Comprender la heterogeneidad de trastornos del neurodesarrollo y sus implicaciones educativas"
+  - "Evaluar funcionalmente en contextos reales: observación, análisis de tareas, registros multifuente"
+  - "Diseñar planes de apoyo multinivel: universales, adicionales, personalizados"
+  - "Intervenir específicamente por perfil: TDAH, TEA, dificultades de aprendizaje, comunicación"
+  - "Aplicar DUA integrando múltiples formas de acceso al aprendizaje"
+  - "Implementar accesibilidad digital: Moodle, documentos, presentaciones, tecnología de apoyo"
+  - "Crear evaluación diversificada que reconoce múltiples formas de demostración de aprendizaje"
+  - "Coordinar efectivamente con orientación, especialistas y familia para intervención coherente"
+evaluation: "Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado.\n\nEn caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad para realizar una nueva prueba. El módulo final es práctico: diseñarás un programa integral de intervención para alumnado con trastorno del neurodesarrollo en tu contexto."
+faq:
+  - question: "¿Este curso es válido como mérito en oposiciones?"
+    answer: "Sí. Está acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ y es puntuable como mérito para oposiciones de acceso a la función pública docente en todas las Comunidades Autónomas, según R.D. 276/2007."
+  - question: "¿Cómo diferencia un trastorno del neurodesarrollo de una dificultad de aprendizaje?"
+    answer: "TND: diferencia neurológica desde el desarrollo que afecta estructura/función (TDAH, TEA, motores). DA: dificultad específica en aprendizaje académico (lectura, cálculo). Pueden coexistir. Aprenderás a identificar cada uno."
+  - question: "¿Es un curso teórico o práctico?"
+    answer: "Muy práctico. 150 horas de fundamentos, evaluación funcional, estrategias por perfil, DUA, accesibilidad, talleres de diseño y tu programa final implementable."
+  - question: "¿Qué son 'funciones ejecutivas' y por qué importan?"
+    answer: "Funciones que controlan: atención, memoria, planificación, flexibilidad, control inhibitorio. Muchos TND tienen dificultades aquí. Aprenderás cómo apoyarlas en aula."
+  - question: "¿Cuánto tiempo debo dedicar cada semana?"
+    answer: "Son 150 horas totales. A ritmo flexible, puedes dedicar 10-15 horas semanales. El promedio es completar el curso en 4-6 meses."
+  - question: "¿Cómo abordó alumnado con TND comorbilidades (p.ej. TEA + TDAH)?"
+    answer: "La mayoría de alumnado con TND tiene múltiples diagnósticos. Aprenderás a evaluar cada uno y diseñar intervenciones que abordan la complejidad completa, no en silos."
+  - question: "¿Los materiales incluyen plantillas descargables?"
+    answer: "Sí. Plantillas de detección, evaluación funcional, planes de apoyo por perfil, rúbricas de DUA, guías de accesibilidad digital, checklists de intervención y ejemplos comentados para cada TND."
+  - question: "¿Cómo se aplica el descuento del pack de cursos?"
+    answer: "Este curso de 150h y 80€ no entra en el pack 2×1. Es un curso especializado de intervención en trastornos del neurodesarrollo."
+---
+
+Trastornos del neurodesarrollo son heterogéneos y complejos. Los docentes que comprenden esta diversidad pueden crear aulas donde cada tipo de neurodivergencia encuentra estructuras y apoyos específicos. Este curso te forma en evaluación funcional rigurosa, intervención diferenciada por perfil, DUA aplicado a la complejidad real y coordinación interprofesional que permite alumnado con TND acceder plenamente a educación de calidad.

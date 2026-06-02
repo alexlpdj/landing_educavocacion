@@ -1,0 +1,103 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  price: number;
+  hours: number;
+  ects: number;
+  packEligible: boolean;
+  icon: string;
+  size?: 'sm' | 'md';
+}
+
+const { slug, title, price, hours, ects, packEligible, icon, size = 'sm' } = Astro.props;
+---
+
+<button
+  class={`atc-btn atc-btn--${size}`}
+  data-slug={slug}
+  data-title={title}
+  data-price={String(price)}
+  data-hours={String(hours)}
+  data-ects={String(ects)}
+  data-pack={String(packEligible)}
+  data-icon={icon}
+  aria-label={`Añadir ${title} al carrito`}
+>
+  <span class="atc-default"><i class="ph ph-shopping-cart-simple"></i> Añadir al carrito</span>
+  <span class="atc-added"><i class="ph-fill ph-check-circle"></i> En el carrito</span>
+</button>
+
+<style>
+  .atc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: none;
+    border-radius: 999px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: var(--sky);
+    color: #fff;
+  }
+  .atc-btn--sm { padding: 8px 16px; font-size: 0.82rem; }
+  .atc-btn--md { padding: 12px 24px; font-size: 0.95rem; }
+
+  .atc-btn:hover:not(.is-added) {
+    background: #1a9bc8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(41,171,226,.35);
+  }
+
+  .atc-btn.is-added {
+    background: transparent;
+    color: #059669;
+    border: 1.5px solid #059669;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .atc-added { display: none; }
+  .atc-btn.is-added .atc-default { display: none; }
+  .atc-btn.is-added .atc-added   { display: flex; align-items: center; gap: 6px; }
+</style>
+
+<script>
+  import { addItem, hasItem } from '../lib/cart';
+
+  function initButtons() {
+    document.querySelectorAll<HTMLButtonElement>('.atc-btn').forEach(btn => {
+      const slug = btn.dataset.slug!;
+
+      function sync() {
+        btn.classList.toggle('is-added', hasItem(slug));
+      }
+
+      sync();
+      window.addEventListener('cart:updated', sync);
+
+      btn.addEventListener('click', () => {
+        if (hasItem(slug)) return;
+
+        addItem({
+          slug,
+          title: btn.dataset.title!,
+          price: Number(btn.dataset.price),
+          hours: Number(btn.dataset.hours),
+          ects: Number(btn.dataset.ects),
+          packEligible: btn.dataset.pack === 'true',
+          icon: btn.dataset.icon!,
+        });
+
+        // Abrir el carrito con pequeño delay para que se vea el feedback
+        setTimeout(() => window.dispatchEvent(new CustomEvent('cart:open')), 300);
+      });
+    });
+  }
+
+  initButtons();
+</script>

@@ -1,0 +1,72 @@
+---
+title: "Educación Inclusiva en el Aula"
+description: "Crea aulas inclusivas, accesibles y motivadoras aplicando DUA, evaluación flexible y metodologías activas para responder a toda la diversidad."
+price: 80
+hours: 150
+ects: 6
+modality: "100% Virtual"
+category: ["inclusion"]
+icon: "ph-wheelchair"
+packEligible: false
+stripeLink: "https://buy.stripe.com/test_placeholder"
+stripePackLink: "https://buy.stripe.com/test_placeholder"
+profesorName: "Equipo EducaVocación"
+profesorRole: "Especialistas en educación inclusiva y diversidad · Universidad EUNEIZ"
+profesorPhoto: ""
+profesorBio: "Nuestro equipo especializado en inclusión te acompañará en la transformación profunda de tu práctica hacia la verdadera inclusión y accesibilidad para todo el alumnado."
+modules:
+  - title: "Módulo 1: Fundamentos de la Educación Inclusiva - Derechos, Principios y BAP"
+    description: "Revisa el marco internacional de educación inclusiva, sus principios fundamentales y el enfoque de Barreras para el Aprendizaje y la Participación (BAP). Comprenderás la diversidad desde una perspectiva de derechos."
+  - title: "Módulo 2: Detección Educativa, Evaluación Funcional y Planificación Multinivel"
+    description: "Domina procedimientos de detección, análisis funcional y evaluación continua. Diseña planes de apoyos universal, adicional y personalizado basados en evidencias."
+  - title: "Módulo 3: Diseño Universal para el Aprendizaje (DUA) Aplicado al Aula"
+    description: "Aplica DUA en diseño de materiales, tareas y unidades didácticas accesibles. Integra múltiples formas de representación, implicación y expresión desde el inicio."
+  - title: "Módulo 4: Intervenciones Inclusivas - Metodologías Activas, Participación y Accesibilidad"
+    description: "Implementa metodologías inclusivas: aprendizaje cooperativo, ABP, gamificación, estaciones de aprendizaje. Garantiza accesibilidad digital en Moodle y recursos multimedia."
+  - title: "Módulo 5: Evaluación Inclusiva y Diversificada - Evidencias e Instrumentos"
+    description: "Diseña evaluación formativa, flexible y diversificada: rúbricas, listas de cotejo, dianas, portfolios, feedback y coevaluación. Basa la toma de decisiones en evidencias reales."
+  - title: "Módulo 6: Colaboración Escuela–Familia–Comunidad y Convivencia Inclusiva"
+    description: "Diseña planes de convivencia positiva, participación comunitaria, intervenciones socioemocionales y prácticas restaurativas. Coordina efectivamente con familias y equipos docentes."
+profiles:
+  - icon: "ph-graduation-cap"
+    title: "Estudiantes de Magisterio"
+    description: "Que desean iniciarse en metodologías inclusivas desde el inicio de su carrera"
+  - icon: "ph-books"
+    title: "Docentes opositores"
+    description: "Que preparan oposiciones y desean demostrar compromiso con inclusión"
+  - icon: "ph-chalkboard-teacher"
+    title: "Docentes en activo"
+    description: "Que buscan transformar su aula hacia la verdadera inclusión y accesibilidad"
+  - icon: "ph-buildings"
+    title: "Equipos directivos e inspectores"
+    description: "Que lideran transformación inclusiva en sus centros educativos"
+benefits:
+  - "Comprender fundamentos teóricos y éticos de la educación inclusiva desde un enfoque de derechos"
+  - "Identificar y eliminar barreras para el aprendizaje y participación en tu contexto"
+  - "Detectar necesidades educativas mediante evaluación funcional rigurosa"
+  - "Diseñar experiencias de aprendizaje accesibles para toda la diversidad sensorial, cognitiva y lingüística"
+  - "Aplicar DUA integrando múltiples formas de representación, implicación y expresión"
+  - "Evaluar de forma inclusiva, justa y diversificada mediante evidencias fundamentadas"
+  - "Implementar metodologías activas inclusivas: cooperativo, ABP, gamificación, estaciones"
+  - "Liderar proyectos de mejora, innovación e inclusión a nivel aula y centro educativo"
+evaluation: "Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado.\n\nEn caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad para realizar una nueva prueba. El módulo final es práctico: diseñarás un proyecto de transformación inclusiva completo para tu aula o centro."
+faq:
+  - question: "¿Este curso es válido como mérito en oposiciones?"
+    answer: "Sí. Está acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ y es puntuable como mérito para oposiciones de acceso a la función pública docente en todas las Comunidades Autónomas, según R.D. 276/2007."
+  - question: "¿Necesito formación previa en inclusión o DUA?"
+    answer: "No. El curso comienza desde fundamentos. Aunque tengas experiencia, aprenderás un marco científico y estructurado que eleva significativamente tu práctica."
+  - question: "¿Es un curso teórico o práctico?"
+    answer: "Ambos. Fundamentación teórica sólida basada en neurociencia e investigación inclusiva, con análisis de casos, actividades prácticas de diseño y una tarea final integradora."
+  - question: "¿Puedo aplicar lo aprendido en mi contexto específico?"
+    answer: "Absolutamente. DUA es flexible y aplicable a cualquier etapa, materia y contexto. Durante el curso adaptarás todos los aprendizajes a tu realidad específica."
+  - question: "¿Cuánto tiempo debo dedicar cada semana?"
+    answer: "Son 150 horas totales. A ritmo flexible, puedes dedicar 10-15 horas semanales o distribuirlo según disponibilidad. El promedio es 4-6 meses."
+  - question: "¿Qué aprenderé a diseñar exactamente?"
+    answer: "Diseñarás: objetivos inclusivos, tareas con múltiples formas de participación, materiales accesibles, evaluaciones diversificadas y un proyecto completo de transformación DUA para tu contexto."
+  - question: "¿Los materiales incluyen plantillas descargables?"
+    answer: "Sí. Plantillas de diseño DUA, rúbricas inclusivas, guías de accesibilidad, checklists BAP, banco de ejemplos reales y recursos educativos completos para descargar."
+  - question: "¿Cómo abordaremos temas complejos como la evaluación inclusiva?"
+    answer: "Con videotutoriales prácticos, análisis de evidencias reales, análisis de casos y tareas aplicadas. Diseñarás instrumentos (rúbricas, portfolios, dianas) que puedas usar inmediatamente."
+---
+
+La educación inclusiva exige nuevas capacidades: detección educativa, DUA, análisis de barreras, evaluación flexible y metodologías activas. Este curso te forma para crear aulas accesibles, motivadoras y capaces de responder a la diversidad, garantizando participación equitativa de todo el alumnado en la vida académica.

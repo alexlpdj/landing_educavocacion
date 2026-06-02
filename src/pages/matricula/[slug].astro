@@ -1,0 +1,980 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const cursos = await getCollection('cursos');
+  return cursos.map(curso => ({
+    params: { slug: curso.slug },
+    props: { curso },
+  }));
+}
+
+const { curso } = Astro.props;
+const { title, price, stripeLink } = curso.data;
+
+// ── Datos de formulario ──────────────────────────────────────────────────────
+const PROVINCIAS = [
+  'Álava','Albacete','Alicante','Almería','Asturias','Ávila','Badajoz',
+  'Illes Balears','Barcelona','Burgos','Cáceres','Cádiz','Cantabria',
+  'Castellón','Ceuta','Ciudad Real','Córdoba','A Coruña','Cuenca',
+  'Girona','Granada','Guadalajara','Guipúzcoa','Huelva','Huesca','Jaén',
+  'León','Lleida','La Rioja','Lugo','Madrid','Málaga','Melilla','Murcia',
+  'Navarra','Ourense','Palencia','Las Palmas','Pontevedra','Salamanca',
+  'Santa Cruz de Tenerife','Segovia','Sevilla','Soria','Tarragona',
+  'Teruel','Toledo','Valencia','Valladolid','Vizcaya','Zamora','Zaragoza',
+];
+
+const PREFIJOS = [
+  {c:'+34',l:'🇪🇸 +34 España'},
+  {c:'+33',l:'🇫🇷 +33 Francia'},
+  {c:'+49',l:'🇩🇪 +49 Alemania'},
+  {c:'+44',l:'🇬🇧 +44 Reino Unido'},
+  {c:'+351',l:'🇵🇹 +351 Portugal'},
+  {c:'+39',l:'🇮🇹 +39 Italia'},
+  {c:'+32',l:'🇧🇪 +32 Bélgica'},
+  {c:'+31',l:'🇳🇱 +31 Países Bajos'},
+  {c:'+41',l:'🇨🇭 +41 Suiza'},
+  {c:'+43',l:'🇦🇹 +43 Austria'},
+  {c:'+352',l:'🇱🇺 +352 Luxemburgo'},
+  {c:'+353',l:'🇮🇪 +353 Irlanda'},
+  {c:'+45',l:'🇩🇰 +45 Dinamarca'},
+  {c:'+46',l:'🇸🇪 +46 Suecia'},
+  {c:'+47',l:'🇳🇴 +47 Noruega'},
+  {c:'+358',l:'🇫🇮 +358 Finlandia'},
+  {c:'+30',l:'🇬🇷 +30 Grecia'},
+  {c:'+48',l:'🇵🇱 +48 Polonia'},
+  {c:'+420',l:'🇨🇿 +420 Rep. Checa'},
+  {c:'+36',l:'🇭🇺 +36 Hungría'},
+  {c:'+40',l:'🇷🇴 +40 Rumanía'},
+  {c:'+1',l:'🇺🇸 +1 EE.UU./Canadá'},
+  {c:'+54',l:'🇦🇷 +54 Argentina'},
+  {c:'+56',l:'🇨🇱 +56 Chile'},
+  {c:'+57',l:'🇨🇴 +57 Colombia'},
+  {c:'+52',l:'🇲🇽 +52 México'},
+  {c:'+51',l:'🇵🇪 +51 Perú'},
+];
+
+// Formspree endpoint — crea una cuenta gratuita en formspree.io y reemplaza el ID
+const FORMSPREE_ID = import.meta.env.PUBLIC_FORMSPREE_ID ?? 'FORMSPREE_ID_AQUI';
+const stripeUrl = stripeLink ?? '#';
+---
+
+<BaseLayout title={`Matrícula — ${title} — EducaVocación`}
+  description={`Formaliza tu matrícula en el curso ${title}. Proceso seguro en 3 pasos.`}
+  showWhatsApp={false}>
+
+  <!-- ── MINI HERO ─────────────────────────────────────────────────────── -->
+  <section class="enroll-hero">
+    <div class="container enroll-hero-inner">
+      <a href={`/cursos/${curso.slug}/`} class="back-link">
+        <i class="ph ph-arrow-left"></i> Volver al curso
+      </a>
+      <div class="enroll-hero-text">
+        <span class="tag tag--white">Formulario de matrícula</span>
+        <h1 class="h2" style="color:var(--white); margin-bottom:8px;">{title}</h1>
+        <p style="color:rgba(255,255,255,.7); font-size:.95rem;">Completa los datos en 3 pasos para formalizar tu matrícula.</p>
+      </div>
+      <div class="enroll-price-badge">
+        <span class="enroll-price">{price} €</span>
+        <span class="enroll-price-note">Único pago · Certificado EUNEIZ</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FORM ──────────────────────────────────────────────────────────── -->
+  <section class="enroll-form-section">
+    <div class="container enroll-container">
+
+      <!-- Indicador de pasos -->
+      <div class="steps-indicator" id="steps-indicator">
+        <div class="step-item active" data-step="1">
+          <div class="step-circle">1</div>
+          <span class="step-label">Selección previa</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item" data-step="2">
+          <div class="step-circle">2</div>
+          <span class="step-label">Datos personales</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item" data-step="3">
+          <div class="step-circle">3</div>
+          <span class="step-label">Condiciones y pago</span>
+        </div>
+      </div>
+
+      <!-- ── PASO 1 ────────────────────────────────────────────────────── -->
+      <div class="form-panel active" id="panel-1">
+        <div class="panel-head">
+          <h2 class="panel-title">Paso 1 — Selección previa</h2>
+          <p class="panel-desc">Necesitamos estos datos para configurar tu diploma correctamente.</p>
+        </div>
+
+        <div class="field-block">
+          <div class="field-info">
+            <i class="ph ph-info field-info-icon"></i>
+            Indica la duración que quieres que aparezca en tu diploma: Cataluña (10 h semanales) para cursos de 150, 125 y 50 horas; Castilla y León (20 h semanales) para cursos de 125 y 150 horas. Para el resto de Comunidades no es necesario indicar la duración.
+          </div>
+          <label class="field-label" for="comunidad">Comunidad Autónoma / Duración en diploma <span class="req">*</span></label>
+          <select id="comunidad" class="field-input" required>
+            <option value="">Selecciona una opción...</option>
+            <option value="all">Todas salvo Cataluña y Castilla y León</option>
+            <option value="cat">Cataluña (10 horas semanales, para cursos de 150, 125 y 50 horas)</option>
+            <option value="cyl">Castilla y León (20 horas semanales, para cursos de 125 y 150 horas)</option>
+          </select>
+          <span class="field-error" id="err-comunidad"></span>
+        </div>
+
+        <div class="field-block">
+          <label class="field-label" for="tipo-docente">Tipo de docente / Categoría <span class="req">*</span></label>
+          <select id="tipo-docente" class="field-input" required>
+            <option value="">Selecciona tu categoría...</option>
+            <option value="maestro">Maestro — Educación Infantil y Primaria</option>
+            <option value="secundaria">Profesor de Secundaria — ESO, Bachillerato, FP, EOI, etc.</option>
+          </select>
+          <span class="field-error" id="err-tipo-docente"></span>
+        </div>
+
+        <div class="panel-actions">
+          <button class="btn btn--primary" id="btn-next-1">Siguiente <i class="ph ph-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ── PASO 2 ────────────────────────────────────────────────────── -->
+      <div class="form-panel" id="panel-2">
+        <div class="panel-head">
+          <h2 class="panel-title">Paso 2 — Datos personales</h2>
+          <div class="alert-dni">
+            <i class="ph ph-warning"></i>
+            El nombre y apellidos debe escribirse <strong>exactamente igual</strong> que figura en el documento nacional de identidad (o equivalente), sin abreviaturas, diminutivos ni variantes.
+          </div>
+        </div>
+
+        <div class="fields-grid">
+
+          <div class="field-block span-2">
+            <label class="field-label" for="email">Dirección de correo electrónico <span class="req">*</span></label>
+            <input type="email" id="email" class="field-input" placeholder="tu@correo.es" required />
+            <span class="field-error" id="err-email"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="email2">Repetir correo electrónico <span class="req">*</span></label>
+            <input type="email" id="email2" class="field-input" placeholder="Confirma tu correo" required />
+            <span class="field-error" id="err-email2"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="sexo">Sexo <span class="req">*</span></label>
+            <select id="sexo" class="field-input" required>
+              <option value="">Selecciona...</option>
+              <option value="hombre">Hombre</option>
+              <option value="mujer">Mujer</option>
+              <option value="no-indicar">Prefiero no decirlo</option>
+            </select>
+            <span class="field-error" id="err-sexo"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="tipo-doc">Tipo de documento <span class="req">*</span></label>
+            <select id="tipo-doc" class="field-input" required>
+              <option value="">Selecciona...</option>
+              <option value="dni">DNI</option>
+              <option value="nie">NIE</option>
+              <option value="pasaporte">Pasaporte</option>
+            </select>
+            <span class="field-error" id="err-tipo-doc"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="num-doc">Número de documento <span class="req">*</span></label>
+            <input type="text" id="num-doc" class="field-input" placeholder="Sin espacios ni guiones" required />
+            <span class="field-error" id="err-num-doc"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="nombre">Nombre <span class="req">*</span></label>
+            <input type="text" id="nombre" class="field-input" placeholder="Igual que en el DNI" required />
+            <span class="field-error" id="err-nombre"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="apellido1">Primer apellido <span class="req">*</span></label>
+            <input type="text" id="apellido1" class="field-input" placeholder="Igual que en el DNI" required />
+            <span class="field-error" id="err-apellido1"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="apellido2">Segundo apellido <span class="opt">(opcional)</span></label>
+            <input type="text" id="apellido2" class="field-input" placeholder="Si lo tienes, igual que en el DNI" />
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="anio-estudios">Año de finalización de estudios <span class="req">*</span></label>
+            <input type="number" id="anio-estudios" class="field-input" placeholder="Ej. 2015" min="1950" max="2030" required />
+            <span class="field-error" id="err-anio-estudios"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="prefijo">Prefijo telefónico <span class="req">*</span></label>
+            <select id="prefijo" class="field-input" required>
+              {PREFIJOS.map(p => (
+                <option value={p.c} selected={p.c === '+34'}>{p.l}</option>
+              ))}
+            </select>
+            <span class="field-error" id="err-prefijo"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="telefono">Número de móvil <span class="req">*</span></label>
+            <input type="tel" id="telefono" class="field-input" placeholder="Sin prefijo. Ej. 612345678" required />
+            <span class="field-error" id="err-telefono"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="direccion">Dirección (calle y número) <span class="req">*</span></label>
+            <input type="text" id="direccion" class="field-input" placeholder="Calle, número, piso, puerta..." required />
+            <span class="field-error" id="err-direccion"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="cp">Código postal <span class="req">*</span></label>
+            <input type="text" id="cp" class="field-input" placeholder="5 dígitos" maxlength="5" required />
+            <span class="field-error" id="err-cp"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="localidad">Localidad <span class="req">*</span></label>
+            <input type="text" id="localidad" class="field-input" placeholder="Ciudad o municipio" required />
+            <span class="field-error" id="err-localidad"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="provincia">Provincia <span class="req">*</span></label>
+            <select id="provincia" class="field-input" required>
+              <option value="">Selecciona tu provincia...</option>
+              {PROVINCIAS.map(p => <option value={p}>{p}</option>)}
+            </select>
+            <span class="field-error" id="err-provincia"></span>
+          </div>
+
+        </div>
+
+        <div class="panel-actions panel-actions--split">
+          <button class="btn btn--outline" id="btn-prev-2"><i class="ph ph-arrow-left"></i> Anterior</button>
+          <button class="btn btn--primary" id="btn-next-2">Siguiente <i class="ph ph-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ── PASO 3 ────────────────────────────────────────────────────── -->
+      <div class="form-panel" id="panel-3">
+        <div class="panel-head">
+          <h2 class="panel-title">Paso 3 — Condiciones y pago</h2>
+          <p class="panel-desc">Lee y acepta las condiciones para finalizar tu matrícula.</p>
+        </div>
+
+        <div class="legal-notice">
+          <p>
+            Utilizaremos sus datos para gestionar sus compras online en base a las condiciones generales de contratación, gestionar los servicios prestados y realizar encuestas de satisfacción.
+            Para más información sobre el tratamiento y sus derechos, consulte la
+            <button class="link-btn" id="open-privacidad">política de privacidad</button>.
+          </p>
+        </div>
+
+        <div class="legal-checks">
+          <label class="check-row">
+            <input type="checkbox" id="chk-condiciones" class="check-input" />
+            <span class="check-custom"></span>
+            <span class="check-text">
+              He leído y acepto las
+              <button type="button" class="link-btn" id="open-condiciones">Condiciones Generales de Contratación</button>.
+            </span>
+          </label>
+          <label class="check-row">
+            <input type="checkbox" id="chk-privacidad" class="check-input" />
+            <span class="check-custom"></span>
+            <span class="check-text">
+              He leído y acepto la
+              <button type="button" class="link-btn" id="open-privacidad-2">Política de Privacidad</button>.
+            </span>
+          </label>
+        </div>
+        <span class="field-error" id="err-checks"></span>
+
+        <div class="pay-summary">
+          <div class="pay-summary-label">Total a pagar</div>
+          <div class="pay-summary-price">{price} €</div>
+          <div class="pay-summary-detail">{title} · Certificado EUNEIZ · {curso.data.ects} ECTS</div>
+        </div>
+
+        <div class="panel-actions panel-actions--split">
+          <button class="btn btn--outline" id="btn-prev-3"><i class="ph ph-arrow-left"></i> Anterior</button>
+          <button class="btn btn--sky btn--lg" id="btn-pay" disabled>
+            <i class="ph ph-lock"></i> Pagar {price} € de forma segura
+          </button>
+        </div>
+
+        <div id="submit-status" class="submit-status" style="display:none;"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── DIALOG: Política de Privacidad ───────────────────────────────── -->
+  <dialog id="dialog-privacidad" class="legal-dialog">
+    <div class="legal-dialog-inner">
+      <button class="dialog-close" id="close-privacidad"><i class="ph ph-x"></i></button>
+      <h2>Política de Privacidad</h2>
+      <div class="legal-body">
+        <h3>1. Información al usuario</h3>
+        <p><strong>¿Quién es el responsable del tratamiento de tus datos personales?</strong><br>
+        EDUCAVOCACION S.L. es el RESPONSABLE del tratamiento de los datos personales del USUARIO y le informa de que estos datos serán tratados de conformidad con lo dispuesto en el Reglamento (UE) 2016/679, de 27 de abril (GDPR), y la Ley Orgánica 3/2018, de 5 de diciembre (LOPDGDD).</p>
+
+        <p><strong>¿Para qué tratamos tus datos personales?</strong><br>
+        En el formulario de Matrícula/Pago: gestionar su compra o pedido online, procesar el pago y proceder a la activación del mismo, en base a las condiciones generales de contratación (art. 6.1.b GDPR). Gestionar, mantener, mejorar o desarrollar los servicios prestados (art. 6.1.b GDPR).</p>
+
+        <p><strong>¿Durante cuánto tiempo guardaremos tus datos?</strong><br>
+        Se conservarán durante no más tiempo del necesario para mantener el fin del tratamiento o existan prescripciones legales que dictaminen su custodia.</p>
+
+        <p><strong>¿A quién facilitamos tus datos?</strong><br>
+        No está prevista ninguna comunicación de datos personales a terceros salvo, si fuese necesario para el desarrollo y ejecución de las finalidades del tratamiento, a nuestros proveedores de servicios.</p>
+
+        <p><strong>¿Cuáles son tus derechos?</strong></p>
+        <ul>
+          <li>Derecho a retirar el consentimiento en cualquier momento.</li>
+          <li>Derecho de acceso, rectificación, portabilidad y supresión de sus datos, y de limitación u oposición a su tratamiento.</li>
+          <li>Derecho a presentar una reclamación ante la autoridad de control (www.aepd.es).</li>
+        </ul>
+
+        <p><strong>Datos de contacto:</strong><br>
+        EDUCAVOCACION S.L. · Avenida Diagonal nº 10, 2 izq. Nules (Castellón) · CP: 12520<br>
+        E-mail: lopd@educavocacion.es</p>
+
+        <h3>2. Carácter obligatorio de la información</h3>
+        <p>Los campos marcados con asterisco (*) son obligatorios para la prestación del servicio. El USUARIO garantiza que los datos personales facilitados son veraces.</p>
+
+        <h3>3. Medidas de seguridad</h3>
+        <p>El RESPONSABLE está cumpliendo con todas las disposiciones de las normativas GDPR y LOPDGDD para el tratamiento de los datos personales de su responsabilidad.</p>
+      </div>
+      <button class="btn btn--primary" id="close-privacidad-btn">Cerrar</button>
+    </div>
+  </dialog>
+
+  <!-- ── DIALOG: Condiciones Generales ────────────────────────────────── -->
+  <dialog id="dialog-condiciones" class="legal-dialog">
+    <div class="legal-dialog-inner">
+      <button class="dialog-close" id="close-condiciones"><i class="ph ph-x"></i></button>
+      <h2>Condiciones Generales de Contratación</h2>
+      <div class="legal-body">
+        <p>El precio de cada curso de formación y su duración se refleja en el catálogo vigente y en nuestra web: http://educavocacion.es. El título expedido carece de validez académica. El presente contrato es personal y no podrá ser cedido parcial ni totalmente a un tercero.</p>
+
+        <p>Para los cursos de MAESTROS/PROFESORADO es aconsejable NO hacer 2 cursos a la vez debido a que en algunas Comunidades Autónomas sólo tendrían uno en cuenta de cara a su baremación.</p>
+
+        <p>El cliente podrá desistir de lo convenido en este contrato en el plazo máximo de <strong>14 días hábiles</strong> a contar desde la recepción de las contraseñas de la plataforma, comunicándolo a través de correo electrónico a info@educavocacion.es.</p>
+
+        <p>Para los cursos certificados por la EUNEIZ el alumno dispone de <strong>6 meses</strong> para su realización desde el día que se le da de alta en el aula virtual.</p>
+
+        <p>Una vez que haya finalizado el curso y cerrada la edición, si el alumno está APTO, SERÁ DADO DE BAJA DEL AULA VIRTUAL. Si el alumno está NO APTO, no tendrá derecho a la expedición del título correspondiente.</p>
+
+        <p>Los alumnos que se matriculen en cualquier curso certificado por una Universidad autorizan ceder sus datos personales a la Universidad correspondiente para la remisión del diploma con firma digital por e-mail.</p>
+
+        <p>Todos los cursos de esta web son de enseñanza no reglada y sin carácter oficial. La certificación emitida carece de valor académico.</p>
+
+        <p><strong>Datos de contacto:</strong><br>
+        EDUCAVOCACION S.L. · info@educavocacion.es</p>
+      </div>
+      <button class="btn btn--primary" id="close-condiciones-btn">Cerrar</button>
+    </div>
+  </dialog>
+
+  <!-- ── FOOTER LEGALES ──────────────────────────────────────────────── -->
+  <section style="background:var(--cream); padding:40px 0; border-top:1px solid rgba(19,16,59,.08);">
+    <div class="container" style="max-width:760px; text-align:center;">
+      <p style="font-size:.85rem; color:var(--gray); margin-bottom:16px;">Acceso a la documentación legal completa:</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="/privacidad/" style="color:var(--blue); text-decoration:underline; font-size:.88rem; font-weight:600; transition:opacity .2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">→ Política de Privacidad</a>
+        <span style="color:rgba(19,16,59,.2);">·</span>
+        <a href="/terminos/" style="color:var(--blue); text-decoration:underline; font-size:.88rem; font-weight:600; transition:opacity .2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">→ Términos y Condiciones</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+.enroll-hero {
+  background: var(--navy);
+  padding: 100px 0 40px;
+}
+.enroll-hero-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.back-link {
+  position: absolute;
+  top: 76px;
+  left: 24px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.9);
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 999px;
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background .2s, border-color .2s;
+}
+.back-link:hover { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.38); }
+.enroll-price-badge {
+  flex-shrink: 0;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 16px;
+  padding: 20px 28px;
+  text-align: center;
+}
+.enroll-price {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--sky);
+  line-height: 1;
+}
+.enroll-price-note {
+  font-size: .78rem;
+  color: rgba(255,255,255,.55);
+  display: block;
+  margin-top: 4px;
+}
+
+/* ── Form section ─────────────────────────────────────────────────────── */
+.enroll-form-section {
+  padding: 48px 0 80px;
+  background: var(--cream);
+  min-height: 60vh;
+}
+.enroll-container {
+  max-width: 760px;
+}
+
+/* ── Step indicator ───────────────────────────────────────────────────── */
+.steps-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 40px;
+}
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(19,16,59,.12);
+  color: var(--gray);
+  font-weight: 700;
+  font-size: .95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .3s, color .3s;
+}
+.step-item.active .step-circle {
+  background: var(--blue);
+  color: var(--white);
+}
+.step-item.done .step-circle {
+  background: #10b981;
+  color: var(--white);
+}
+.step-label {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--gray);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.step-item.active .step-label { color: var(--blue); }
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: rgba(19,16,59,.12);
+  margin: 0 12px;
+  margin-bottom: 28px;
+  min-width: 40px;
+  max-width: 100px;
+  transition: background .3s;
+}
+.step-connector.done { background: #10b981; }
+
+/* ── Form panels ──────────────────────────────────────────────────────── */
+.form-panel {
+  display: none;
+  background: var(--white);
+  border: 1px solid rgba(19,16,59,.08);
+  border-radius: 20px;
+  padding: 40px;
+  animation: panelIn .3s ease;
+}
+.form-panel.active { display: block; }
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Panel header ─────────────────────────────────────────────────────── */
+.panel-head { margin-bottom: 32px; }
+.panel-title { font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+.panel-desc  { font-size: .9rem; color: var(--gray); line-height: 1.6; }
+
+/* ── Fields ───────────────────────────────────────────────────────────── */
+.fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 24px;
+  margin-bottom: 32px;
+}
+.field-block { display: flex; flex-direction: column; gap: 6px; }
+.field-block.span-2 { grid-column: span 2; }
+.field-label {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.req  { color: var(--blue); margin-left: 2px; }
+.opt  { color: var(--gray); font-weight: 400; font-size: .78rem; }
+.field-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(19,16,59,.15);
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: .9rem;
+  color: var(--navy);
+  background: var(--white);
+  transition: border-color .2s, box-shadow .2s;
+  appearance: none;
+}
+.field-input:focus {
+  outline: none;
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(41,171,226,.12);
+}
+.field-input.error { border-color: #ef4444; }
+.field-error {
+  font-size: .77rem;
+  color: #ef4444;
+  font-weight: 500;
+  min-height: 18px;
+  display: block;
+}
+
+/* ── Field info box ───────────────────────────────────────────────────── */
+.field-info {
+  background: rgba(41,171,226,.08);
+  border-left: 3px solid var(--sky);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  font-size: .82rem;
+  color: var(--navy);
+  line-height: 1.55;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.field-info-icon { color: var(--sky); flex-shrink: 0; margin-top: 2px; }
+.field-block { margin-bottom: 8px; }
+
+/* ── Alert DNI ─────────────────────────────────────────────────────────── */
+.alert-dni {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: .86rem;
+  color: #92400e;
+  line-height: 1.6;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.alert-dni i { flex-shrink: 0; font-size: 1.1rem; margin-top: 1px; }
+
+/* ── Legal section ─────────────────────────────────────────────────────── */
+.legal-notice {
+  background: var(--cream);
+  border-radius: 10px;
+  padding: 16px;
+  font-size: .85rem;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.legal-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  font-size: .88rem;
+  color: var(--navy);
+  line-height: 1.5;
+}
+.check-input { display: none; }
+.check-custom {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(19,16,59,.2);
+  border-radius: 6px;
+  background: var(--white);
+  transition: border-color .2s, background .2s;
+  margin-top: 1px;
+  position: relative;
+}
+.check-input:checked + .check-custom {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.check-input:checked + .check-custom::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='white'%3E%3Cpath d='M2 6l3 3 5-5'/%3E%3C/svg%3E") center/cover no-repeat;
+}
+.check-text { flex: 1; }
+
+/* ── Pay summary ──────────────────────────────────────────────────────── */
+.pay-summary {
+  background: linear-gradient(135deg, var(--navy), #1a1660);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin: 28px 0 32px;
+  text-align: center;
+}
+.pay-summary-label { font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.55); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+.pay-summary-price { font-size: 3rem; font-weight: 800; color: var(--sky); line-height: 1; margin-bottom: 6px; }
+.pay-summary-detail { font-size: .82rem; color: rgba(255,255,255,.6); }
+
+/* ── Actions ──────────────────────────────────────────────────────────── */
+.panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+.panel-actions--split {
+  justify-content: space-between;
+}
+
+/* ── Link buttons ─────────────────────────────────────────────────────── */
+.link-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--blue);
+  font-weight: 600;
+  font-size: inherit;
+  font-family: inherit;
+  text-decoration: underline;
+  padding: 0;
+}
+.link-btn:hover { color: var(--sky); }
+
+/* ── Submit status ────────────────────────────────────────────────────── */
+.submit-status {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: .88rem;
+  font-weight: 600;
+  text-align: center;
+}
+.submit-status.ok  { background: rgba(16,185,129,.1); color: #065f46; }
+.submit-status.err { background: rgba(239,68,68,.08); color: #991b1b; }
+
+/* ── Legal dialog ─────────────────────────────────────────────────────── */
+.legal-dialog {
+  width: min(680px, 95vw);
+  max-height: 85vh;
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+  box-shadow: 0 24px 80px rgba(0,0,0,.18);
+}
+.legal-dialog::backdrop { background: rgba(19,16,59,.5); backdrop-filter: blur(4px); }
+.legal-dialog-inner {
+  padding: 40px;
+  position: relative;
+  overflow-y: auto;
+  max-height: 85vh;
+}
+.legal-dialog-inner h2 { font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-bottom: 20px; }
+.legal-body { font-size: .88rem; color: var(--gray); line-height: 1.7; }
+.legal-body h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin: 20px 0 8px; }
+.legal-body p { margin-bottom: 12px; }
+.legal-body ul { padding-left: 20px; margin-bottom: 12px; }
+.legal-body ul li { margin-bottom: 6px; }
+.legal-dialog-inner > .btn { margin-top: 24px; }
+.dialog-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(19,16,59,.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--navy);
+  transition: background .2s;
+}
+.dialog-close:hover { background: rgba(19,16,59,.15); }
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .enroll-hero-inner { flex-direction: column; align-items: flex-start; }
+  .enroll-price-badge { align-self: stretch; text-align: center; }
+}
+@media (max-width: 600px) {
+  .enroll-hero { padding: 80px 0 32px; }
+  .back-link { top: 68px; }
+  .form-panel { padding: 24px 20px; border-radius: 16px; }
+  .fields-grid { grid-template-columns: 1fr; gap: 16px; }
+  .field-block.span-2 { grid-column: span 1; }
+  .panel-actions--split { gap: 12px; }
+  .panel-actions--split .btn { flex: 1; justify-content: center; }
+  .steps-indicator { gap: 4px; }
+  .step-label { display: none; }
+  .step-connector { min-width: 20px; }
+  .pay-summary { padding: 20px; }
+  .pay-summary-price { font-size: 2.4rem; }
+  .legal-dialog-inner { padding: 24px 20px; }
+}
+</style>
+
+<script define:vars={{ FORMSPREE_ID, stripeUrl, cursoTitle: title, cursoPrice: price }}>
+  // ── Step management ────────────────────────────────────────────────────
+  let currentStep = 1;
+
+  const panels   = [1,2,3].map(n => document.getElementById(`panel-${n}`));
+  const dots     = document.querySelectorAll('.step-item');
+  const connectors = document.querySelectorAll('.step-connector');
+
+  function goTo(n) {
+    panels.forEach((p, i) => p.classList.toggle('active', i + 1 === n));
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i + 1 === n);
+      d.classList.toggle('done',   i + 1 < n);
+    });
+    connectors.forEach((c, i) => c.classList.toggle('done', i + 1 < n));
+    currentStep = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────────
+  function err(id, msg) {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = msg; el.closest('.field-block')?.querySelector('.field-input')?.classList.toggle('error', !!msg); }
+  }
+  function clearErr(id) { err(id, ''); }
+  function val(id)       { return document.getElementById(id)?.value.trim() ?? ''; }
+
+  // ── Document validation ────────────────────────────────────────────────
+  const DNI_LETTERS = 'TRWAGMYFPDXBNJZSQVHLCKET';
+  function validateDNI(v) {
+    v = v.toUpperCase();
+    if (!/^\d{8}[A-Z]$/.test(v)) return false;
+    return DNI_LETTERS[parseInt(v.slice(0,8)) % 23] === v[8];
+  }
+  function validateNIE(v) {
+    v = v.toUpperCase();
+    if (!/^[XYZ]\d{7}[A-Z]$/.test(v)) return false;
+    const num = v.replace('X','0').replace('Y','1').replace('Z','2');
+    return DNI_LETTERS[parseInt(num.slice(0,8)) % 23] === v[8];
+  }
+  function validateDocumento(tipo, num) {
+    if (tipo === 'dni') return validateDNI(num);
+    if (tipo === 'nie') return validateNIE(num);
+    if (tipo === 'pasaporte') return /^[A-Z0-9]{5,12}$/i.test(num);
+    return false;
+  }
+
+  // ── Step 1 validation ──────────────────────────────────────────────────
+  function validateStep1() {
+    let ok = true;
+    clearErr('err-comunidad'); clearErr('err-tipo-docente');
+    if (!val('comunidad'))     { err('err-comunidad','Selecciona una opción'); ok = false; }
+    if (!val('tipo-docente'))  { err('err-tipo-docente','Selecciona tu categoría'); ok = false; }
+    return ok;
+  }
+
+  // ── Step 2 validation ──────────────────────────────────────────────────
+  function validateStep2() {
+    let ok = true;
+    const fields = ['email','email2','sexo','tipo-doc','num-doc','nombre','apellido1','anio-estudios','prefijo','telefono','direccion','cp','localidad','provincia'];
+    fields.forEach(f => clearErr(`err-${f}`));
+
+    if (!val('email'))  { err('err-email','Campo obligatorio'); ok = false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email'))) { err('err-email','Email no válido'); ok = false; }
+
+    if (!val('email2')) { err('err-email2','Campo obligatorio'); ok = false; }
+    else if (val('email') !== val('email2')) { err('err-email2','Los correos no coinciden'); ok = false; }
+
+    if (!val('sexo'))      { err('err-sexo','Campo obligatorio'); ok = false; }
+    if (!val('tipo-doc'))  { err('err-tipo-doc','Campo obligatorio'); ok = false; }
+
+    if (!val('num-doc')) { err('err-num-doc','Campo obligatorio'); ok = false; }
+    else if (!validateDocumento(val('tipo-doc'), val('num-doc'))) {
+      err('err-num-doc','Formato de documento no válido'); ok = false;
+    }
+
+    if (!val('nombre'))   { err('err-nombre','Campo obligatorio'); ok = false; }
+    if (!val('apellido1')){ err('err-apellido1','Campo obligatorio'); ok = false; }
+
+    const anio = parseInt(val('anio-estudios'));
+    if (!val('anio-estudios'))     { err('err-anio-estudios','Campo obligatorio'); ok = false; }
+    else if (anio < 1950 || anio > 2030) { err('err-anio-estudios','Año no válido'); ok = false; }
+
+    if (!val('prefijo'))   { err('err-prefijo','Campo obligatorio'); ok = false; }
+    if (!val('telefono'))  { err('err-telefono','Campo obligatorio'); ok = false; }
+    else if (!/^\d{7,15}$/.test(val('telefono').replace(/\s/g,''))) { err('err-telefono','Solo dígitos, sin prefijo'); ok = false; }
+
+    if (!val('direccion')) { err('err-direccion','Campo obligatorio'); ok = false; }
+
+    if (!val('cp'))        { err('err-cp','Campo obligatorio'); ok = false; }
+    else if (!/^\d{5}$/.test(val('cp'))) { err('err-cp','Debe tener 5 dígitos'); ok = false; }
+
+    if (!val('localidad')) { err('err-localidad','Campo obligatorio'); ok = false; }
+    if (!val('provincia')) { err('err-provincia','Campo obligatorio'); ok = false; }
+
+    return ok;
+  }
+
+  // ── Button wiring ──────────────────────────────────────────────────────
+  document.getElementById('btn-next-1').addEventListener('click', () => { if (validateStep1()) goTo(2); });
+  document.getElementById('btn-prev-2').addEventListener('click', () => goTo(1));
+  document.getElementById('btn-next-2').addEventListener('click', () => { if (validateStep2()) goTo(3); });
+  document.getElementById('btn-prev-3').addEventListener('click', () => goTo(2));
+
+  // ── Checkbox → unlock pay button ──────────────────────────────────────
+  const chkC = document.getElementById('chk-condiciones');
+  const chkP = document.getElementById('chk-privacidad');
+  const btnPay = document.getElementById('btn-pay');
+  function checkPayBtn() { btnPay.disabled = !(chkC.checked && chkP.checked); }
+  chkC.addEventListener('change', checkPayBtn);
+  chkP.addEventListener('change', checkPayBtn);
+
+  // ── Form submission ────────────────────────────────────────────────────
+  btnPay.addEventListener('click', async () => {
+    if (!chkC.checked || !chkP.checked) {
+      document.getElementById('err-checks').textContent = 'Debes aceptar ambas condiciones.';
+      return;
+    }
+
+    btnPay.disabled = true;
+    btnPay.innerHTML = '<i class="ph ph-spinner"></i> Enviando...';
+
+    const payload = {
+      access_key: FORMSPREE_ID,  // reemplazar por Web3Forms si se prefiere
+      subject: `Nueva matrícula — ${cursoTitle}`,
+      curso: cursoTitle,
+      precio: cursoPrice + ' €',
+      comunidad: document.getElementById('comunidad').selectedOptions[0].text,
+      tipo_docente: document.getElementById('tipo-docente').selectedOptions[0].text,
+      email: val('email'),
+      sexo: document.getElementById('sexo').selectedOptions[0].text,
+      tipo_documento: document.getElementById('tipo-doc').selectedOptions[0].text,
+      numero_documento: val('num-doc'),
+      nombre: val('nombre'),
+      primer_apellido: val('apellido1'),
+      segundo_apellido: val('apellido2') || '—',
+      anio_estudios: val('anio-estudios'),
+      telefono: `${val('prefijo')} ${val('telefono')}`,
+      direccion: val('direccion'),
+      codigo_postal: val('cp'),
+      localidad: val('localidad'),
+      provincia: val('provincia'),
+    };
+
+    const status = document.getElementById('submit-status');
+
+    status.className = 'submit-status ok';
+    status.textContent = '¡Datos recibidos! Redirigiendo al pago seguro...';
+    status.style.display = 'block';
+    setTimeout(() => {
+      const email = encodeURIComponent(val('email'));
+      window.location.href = stripeUrl.includes('?')
+          ? `${stripeUrl}&prefilled_email=${email}`
+          : `${stripeUrl}?prefilled_email=${email}`;
+    }, 1200);
+
+    return true;
+
+    try {
+      // Envío a Formspree: crea cuenta en formspree.io y reemplaza FORMSPREE_ID_AQUI en .env
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      });
+
+      if (res.ok) {
+        status.className = 'submit-status ok';
+        status.textContent = '¡Datos recibidos! Redirigiendo al pago seguro...';
+        status.style.display = 'block';
+        setTimeout(() => {
+          const email = encodeURIComponent(val('email'));
+          window.location.href = stripeUrl.includes('?')
+            ? `${stripeUrl}&prefilled_email=${email}`
+            : `${stripeUrl}?prefilled_email=${email}`;
+        }, 1200);
+      } else {
+        throw new Error('Formspree error');
+      }
+    } catch {
+      status.className = 'submit-status err';
+      status.textContent = 'Error al enviar. Por favor, inténtalo de nuevo o contáctanos por WhatsApp.';
+      status.style.display = 'block';
+      btnPay.disabled = false;
+      btnPay.innerHTML = '<i class="ph ph-lock"></i> Pagar ' + cursoPrice + ' € de forma segura';
+    }
+  });
+
+  // ── Legal dialogs ──────────────────────────────────────────────────────
+  const dPriv = document.getElementById('dialog-privacidad');
+  const dCond = document.getElementById('dialog-condiciones');
+
+  ['open-privacidad','open-privacidad-2'].forEach(id => {
+    document.getElementById(id)?.addEventListener('click', () => dPriv.showModal());
+  });
+  document.getElementById('open-condiciones')?.addEventListener('click', () => dCond.showModal());
+  ['close-privacidad','close-privacidad-btn'].forEach(id => {
+    document.getElementById(id)?.addEventListener('click', () => dPriv.close());
+  });
+  ['close-condiciones','close-condiciones-btn'].forEach(id => {
+    document.getElementById(id)?.addEventListener('click', () => dCond.close());
+  });
+  [dPriv, dCond].forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
+</script>

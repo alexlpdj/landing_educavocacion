@@ -1,0 +1,170 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Términos y Condiciones – EducaVocación"
+  description="Términos y condiciones generales de contratación de los cursos y servicios de EducaVocación."
+>
+
+<section class="legal-hero">
+  <div class="container">
+    <a href="/" class="back-link">
+      <i class="ph ph-arrow-left"></i> Volver al inicio
+    </a>
+    <div class="legal-hero-content">
+      <h1 class="h1">Términos y Condiciones Generales</h1>
+      <p class="legal-hero-desc">Condiciones generales de contratación de nuestros cursos y servicios</p>
+    </div>
+  </div>
+</section>
+
+<section class="legal-content">
+  <div class="container">
+    <div class="legal-body">
+      <h2>Condiciones Generales de Contratación</h2>
+
+      <h3>Información sobre precios y duración</h3>
+      <p>El precio de cada curso de formación y su duración se refleja en el catálogo vigente y en nuestra web: <a href="https://educavocacion.es" target="_blank" rel="noopener">educavocacion.es</a>. El título expedido carece de validez académica. El presente contrato es personal y no podrá ser cedido parcial ni totalmente a un tercero.</p>
+
+      <h3>Recomendación importante para docentes</h3>
+      <p>Para los cursos de MAESTROS/PROFESORADO es aconsejable <strong>NO hacer 2 cursos a la vez</strong> debido a que en algunas Comunidades Autónomas sólo tendrían uno en cuenta de cara a su baremación.</p>
+
+      <h3>Derecho de desistimiento</h3>
+      <p>El cliente podrá desistir de lo convenido en este contrato en el plazo máximo de <strong>14 días hábiles</strong> a contar desde la recepción de las contraseñas de la plataforma, comunicándolo a través de correo electrónico a <a href="mailto:info@educavocacion.es">info@educavocacion.es</a>.</p>
+
+      <h3>Plazo de realización del curso</h3>
+      <p>Para los cursos certificados por la EUNEIZ el alumno dispone de <strong>6 meses</strong> para su realización desde el día que se le da de alta en el aula virtual.</p>
+
+      <h3>Finalización del curso y expedición de títulos</h3>
+      <p>Una vez que haya finalizado el curso y cerrada la edición, si el alumno está APTO, <strong>SERÁ DADO DE BAJA DEL AULA VIRTUAL</strong>. Si el alumno está NO APTO, no tendrá derecho a la expedición del título correspondiente.</p>
+
+      <h3>Datos personales y Universidad</h3>
+      <p>Los alumnos que se matriculen en cualquier curso certificado por una Universidad autorizan ceder sus datos personales a la Universidad correspondiente para la remisión del diploma con firma digital por e-mail.</p>
+
+      <h3>Carácter de la enseñanza</h3>
+      <p><strong>Todos los cursos de esta web son de enseñanza no reglada y sin carácter oficial.</strong> La certificación emitida carece de valor académico.</p>
+
+      <div class="important-box">
+        <h4>Nota importante</h4>
+        <p>Aunque nuestros cursos no tienen valor académico oficial, sí tienen validez como méritos en baremos de oposiciones docentes en toda España, avalados por la Universidad EUNEIZ.</p>
+      </div>
+
+      <h3>Datos de contacto</h3>
+      <div class="contact-box">
+        <p><strong>EDUCAVOCACION S.L.</strong></p>
+        <p><strong>E-mail:</strong> <a href="mailto:info@educavocacion.es">info@educavocacion.es</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .legal-hero {
+    background: var(--navy);
+    padding: 120px 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .legal-hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: var(--blue);
+    filter: blur(80px);
+    opacity: .2;
+    bottom: -200px;
+    left: 10%;
+    pointer-events: none;
+  }
+  .legal-hero-content { position: relative; z-index: 2; }
+  .legal-hero .h1 { color: var(--white); margin-bottom: 12px; }
+  .legal-hero-desc { font-size: 1.1rem; color: rgba(255,255,255,.7); line-height: 1.6; max-width: 600px; }
+  .back-link {
+    position: absolute;
+    top: 76px;
+    left: 24px;
+    font-size: .82rem;
+    font-weight: 600;
+    color: rgba(255,255,255,.9);
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 999px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background .2s, border-color .2s;
+  }
+  .back-link:hover { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.38); }
+
+  .legal-content {
+    padding: 80px 0;
+    background: var(--white);
+  }
+  .legal-body { max-width: 780px; }
+  .legal-body h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-top: 48px;
+    margin-bottom: 28px;
+  }
+  .legal-body h2:first-child { margin-top: 0; }
+  .legal-body h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-top: 28px;
+    margin-bottom: 12px;
+  }
+  .legal-body p {
+    font-size: .95rem;
+    color: var(--gray);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+  .legal-body a { color: var(--blue); text-decoration: underline; transition: opacity .2s; }
+  .legal-body a:hover { opacity: .8; }
+
+  .important-box {
+    background: rgba(41,171,226,.08);
+    border-left: 4px solid var(--sky);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin: 32px 0;
+  }
+  .important-box h4 {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .important-box p {
+    font-size: .93rem;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .contact-box {
+    background: var(--cream);
+    border: 1px solid rgba(19,16,59,.1);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+  .contact-box p {
+    margin-bottom: 8px;
+    font-size: .93rem;
+  }
+  .contact-box p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 600px) {
+    .legal-hero { padding: 80px 0 40px; }
+    .legal-content { padding: 48px 0; }
+    .legal-body h2 { font-size: 1.2rem; margin-top: 36px; }
+  }
+</style>
+
+</BaseLayout>

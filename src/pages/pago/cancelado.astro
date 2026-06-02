@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Pago cancelado – EducaVocación"
+  description="Tu proceso de pago fue cancelado. No se ha realizado ningún cargo. Puedes intentarlo de nuevo cuando quieras."
+>
+
+  <section style="padding:120px 0 96px; text-align:center;">
+    <div class="container" style="max-width:620px;">
+
+      <div class="cancel-icon fade-in">
+        <i class="ph ph-x-circle"></i>
+      </div>
+
+      <h1 class="h1 fade-in fade-delay-1" style="color:var(--navy); margin-bottom:16px;">
+        Pago cancelado
+      </h1>
+
+      <p class="lead fade-in fade-delay-2" style="color:var(--gray); margin-bottom:40px;">
+        Cancelaste el proceso de pago en Stripe. <strong>No se ha realizado ningún cargo</strong> en tu tarjeta.
+        Tu carrito sigue disponible para cuando estés listo.
+      </p>
+
+      <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;" class="fade-in fade-delay-2">
+        <a href="/matricula/checkout/" class="btn btn--primary">
+          <i class="ph ph-arrow-u-up-left"></i> Volver al carrito
+        </a>
+        <a href="/cursos/" class="btn btn--outline">
+          Ver catálogo
+        </a>
+      </div>
+
+      <div style="margin-top:56px; background:var(--cream); border-radius:16px; padding:28px 32px; text-align:left;" class="fade-in fade-delay-3">
+        <h3 style="color:var(--navy); font-size:1rem; margin:0 0 16px 0;">Preguntas frecuentes</h3>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <p style="font-weight:700; color:var(--navy); margin:0 0 4px 0; font-size:0.9rem;">¿Se me ha cobrado algo?</p>
+            <p style="color:var(--gray); font-size:0.88rem; margin:0; line-height:1.6;">No. El pago solo se procesa cuando lo completas en Stripe. Al cancelar, no se realiza ningún cargo.</p>
+          </div>
+          <div>
+            <p style="font-weight:700; color:var(--navy); margin:0 0 4px 0; font-size:0.9rem;">¿Sigue mi carrito guardado?</p>
+            <p style="color:var(--gray); font-size:0.88rem; margin:0; line-height:1.6;">Sí, los cursos que añadiste siguen en tu carrito. Pulsa "Volver al carrito" para retomar el proceso.</p>
+          </div>
+          <div>
+            <p style="font-weight:700; color:var(--navy); margin:0 0 4px 0; font-size:0.9rem;">¿Necesitas ayuda?</p>
+            <p style="color:var(--gray); font-size:0.88rem; margin:0; line-height:1.6;">Escríbenos a <a href="mailto:info@educavocacion.es" style="color:var(--blue); font-weight:600;">info@educavocacion.es</a> o usa el botón de WhatsApp.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <style>
+    .cancel-icon {
+      font-size: 5rem;
+      color: #f59e0b;
+      margin-bottom: 24px;
+    }
+    .cancel-icon i { display: block; line-height: 1; }
+  </style>
+
+</BaseLayout>

@@ -1,0 +1,442 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import { courseImageMap } from '../../data/courseImages';
+
+const cursos = await getCollection('cursos');
+
+// Normaliza categorías inconsistentes al mismo valor
+const normalizeCategory = (cat: string) =>
+  cat === 'methodology' ? 'metodologia' : cat;
+
+// Etiquetas y iconos amigables por categoría
+const categoryMeta: Record<string, { label: string; icon: string }> = {
+  inclusion:               { label: 'Inclusión',         icon: 'ph-heart' },
+  metodologia:             { label: 'Metodología',       icon: 'ph-puzzle-piece' },
+  teacher_development:     { label: 'Desarrollo docente',icon: 'ph-chalkboard-teacher' },
+  historia:                { label: 'Historia',           icon: 'ph-book-open' },
+  tecnologia:              { label: 'Tecnología',         icon: 'ph-device-mobile' },
+  talento:                 { label: 'Talento',            icon: 'ph-star' },
+  liderazgo:               { label: 'Liderazgo',          icon: 'ph-crown' },
+  investigacion:           { label: 'Investigación',      icon: 'ph-magnifying-glass' },
+  infantil:                { label: 'Infantil',           icon: 'ph-baby' },
+  'competencias-personales':{ label: 'Comp. personales', icon: 'ph-person' },
+};
+
+// Categorías únicas ordenadas por número de cursos (desc)
+const categoryCounts = new Map<string, number>();
+cursos.forEach(c => {
+  c.data.category.forEach(cat => {
+    const key = normalizeCategory(cat);
+    categoryCounts.set(key, (categoryCounts.get(key) ?? 0) + 1);
+  });
+});
+const uniqueCategories = [...categoryCounts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .map(([key]) => key);
+---
+
+<BaseLayout title="Todos los Cursos Homologados – EducaVocación" description="Cursos acreditados por la Universidad EUNEIZ. Válidos como méritos en oposiciones docentes en toda España. 2 créditos ECTS · 100% virtual.">
+
+  <!-- HERO MINI -->
+  <section class="hero-cursos" style="background:var(--navy); position:relative; overflow:hidden;">
+    <div style="position:absolute; width:500px; height:500px; border-radius:50%; background:var(--sky); filter:blur(80px); opacity:.3; top:-200px; right:-80px; pointer-events:none;"></div>
+    <div style="position:absolute; width:300px; height:300px; border-radius:50%; background:var(--blue); filter:blur(80px); opacity:.3; bottom:-100px; left:20%; pointer-events:none;"></div>
+    <div class="container">
+      <div class="fade-in" style="position:relative; z-index:2; max-width:680px;">
+        <span class="tag tag--white">Formación homologada</span>
+        <h1 class="h1" style="color:var(--white); margin-bottom:16px;">
+          Cursos acreditados<br><em style="font-style:normal; color:var(--sky);">que cuentan en tus oposiciones</em>
+        </h1>
+        <p style="color:rgba(255,255,255,.7); font-size:1.05rem; line-height:1.65;">
+          Todos nuestros cursos están certificados por la Universidad EUNEIZ y son válidos como méritos en oposiciones docentes en toda España.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section style="padding:72px 0 96px; position:relative;">
+    <div class="container">
+
+      <!-- BUSCADOR -->
+      <div class="search-wrap fade-in" style="margin-bottom:28px;">
+        <i class="ph ph-magnifying-glass search-icon"></i>
+        <input
+          type="search"
+          id="curso-search"
+          placeholder="Buscar por nombre, temática o competencia..."
+          class="search-input"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="search-clear" id="search-clear" aria-label="Limpiar búsqueda" style="display:none;">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <!-- FILTROS -->
+      <div class="cursos-filters fade-in" style="margin-bottom:32px;">
+        <div class="filters-scroll">
+          <button class="filter-btn filter-btn--active" data-filter="todos">
+            <i class="ph ph-list"></i> Todos
+          </button>
+          <button class="filter-btn" data-filter="pack">
+            <i class="ph ph-fire"></i> Pack 2×1
+          </button>
+          <div class="filters-divider"></div>
+          {uniqueCategories.map(cat => {
+            const meta = categoryMeta[cat];
+            if (!meta) return null;
+            return (
+              <button class="filter-btn" data-filter={cat}>
+                <i class={`ph ${meta.icon}`}></i>
+                {meta.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <!-- CONTADOR -->
+      <p class="results-count fade-in" id="results-count" style="margin-bottom:32px;">
+        <span id="results-number">{cursos.length}</span> cursos encontrados
+      </p>
+
+      <!-- GRID -->
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:28px;" id="cursos-grid">
+        {cursos.map((curso, i) => (
+          <CourseCard
+            slug={curso.slug}
+            title={curso.data.title}
+            description={curso.data.description}
+            hours={curso.data.hours}
+            ects={curso.data.ects}
+            price={curso.data.price}
+            icon={curso.data.icon}
+            image={courseImageMap[curso.slug] || curso.data.image}
+            packEligible={curso.data.packEligible}
+            animClass={`fade-in${i > 0 ? ` fade-delay-${Math.min(i,3)}` : ''}`}
+            dataAttrs={{
+              'data-course': curso.slug,
+              'data-pack': curso.data.packEligible ? 'yes' : 'no',
+              'data-hours': curso.data.hours.toString(),
+              'data-icon': curso.data.icon,
+              'data-category': curso.data.category.map(c => c === 'methodology' ? 'metodologia' : c).join(' '),
+              'data-title': curso.data.title.toLowerCase(),
+              'data-desc': curso.data.description.toLowerCase(),
+            }}
+          />
+        ))}
+      </div>
+
+      <!-- SIN RESULTADOS -->
+      <div id="no-results" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:80px 20px; text-align:center; gap:16px;">
+        <i class="ph ph-magnifying-glass" style="font-size:3rem; color:rgba(19,16,59,.2);"></i>
+        <p style="font-size:1.1rem; font-weight:600; color:var(--navy); margin:0;">Sin resultados para tu búsqueda</p>
+        <p style="font-size:.9rem; color:var(--gray); margin:0;">Prueba con otro término o cambia el filtro activo.</p>
+        <button class="btn btn--outline" id="reset-search" style="margin-top:8px;">
+          <i class="ph ph-arrow-counter-clockwise"></i> Ver todos los cursos
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BANNER PACK -->
+  <section class="section section--light">
+    <div class="container">
+      <div class="pack-banner fade-in">
+        <div class="pack-banner-glow"></div>
+        <div class="pack-banner-text">
+          <span class="tag" style="color:var(--sky); background:rgba(41,171,226,.15);"><i class="ph-fill ph-fire"></i> Oferta por tiempo limitado</span>
+          <div class="pack-banner-title">Llévate 2 cursos por solo 40 €</div>
+          <p class="pack-banner-desc">Matricúlate en dos cursos de 50 h simultáneamente y el segundo te sale a solo 8 €. Ahorras 24 € (37,5%). Tú eliges la combinación.</p>
+        </div>
+        <div class="pack-banner-cta">
+          <div class="pack-banner-price-wrap">
+            <div class="pack-banner-price">40 €</div>
+            <div class="pack-banner-price-old">64 €</div>
+          </div>
+          <div class="pack-banner-price-note">2 cursos · 100h · 4 ECTS</div>
+          <a href="/cursos/?filter=pack" class="btn btn--sky">Ver cursos elegibles →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+  /* ── Hero ───────────────────────────────────────────────── */
+  .hero-cursos { padding: 120px 0 72px; }
+  @media (max-width: 960px) { .hero-cursos { padding: 88px 0 52px; } }
+  @media (max-width: 600px) { .hero-cursos { padding: 72px 0 40px; } }
+
+  /* ── Buscador ────────────────────────────────────────────── */
+  .search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .search-icon {
+    position: absolute;
+    left: 18px;
+    font-size: 1.15rem;
+    color: var(--gray);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .search-input {
+    width: 100%;
+    padding: 14px 48px 14px 48px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .95rem;
+    color: var(--navy);
+    background: var(--white);
+    border: 1.5px solid rgba(19,16,59,.12);
+    border-radius: 12px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .search-input::placeholder { color: rgba(107,114,128,.6); }
+  .search-input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(36,36,186,.1);
+  }
+  .search-input::-webkit-search-cancel-button { display: none; }
+  .search-clear {
+    position: absolute;
+    right: 14px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(19,16,59,.08);
+    color: var(--navy);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85rem;
+    transition: background .2s;
+  }
+  .search-clear:hover { background: rgba(19,16,59,.15); }
+
+  /* ── Filtros ─────────────────────────────────────────────── */
+  .filters-scroll {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filters-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(19,16,59,.12);
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+  .filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border: 1.5px solid rgba(19,16,59,.12);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--navy);
+    font-family: 'Poppins', sans-serif;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s cubic-bezier(.4,0,.2,1);
+    white-space: nowrap;
+  }
+  .filter-btn:hover:not(.filter-btn--active) {
+    border-color: var(--sky);
+    background: rgba(41,171,226,.06);
+    color: var(--navy);
+  }
+  .filter-btn--active {
+    background: var(--blue);
+    color: var(--white);
+    border-color: var(--blue);
+    box-shadow: 0 6px 20px rgba(36,36,186,.25);
+  }
+  .filter-btn i { font-size: .9rem; }
+
+  /* ── Contador ────────────────────────────────────────────── */
+  .results-count {
+    font-size: .82rem;
+    font-weight: 600;
+    color: rgba(19,16,59,.45);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin: 0;
+  }
+  .results-count span {
+    color: var(--blue);
+    font-size: 1rem;
+  }
+
+  /* ── Cards ───────────────────────────────────────────────── */
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .curso-card-modern { animation: fadeInUp .35s ease-out forwards; }
+
+  /* ── Banner pack ─────────────────────────────────────────── */
+  .pack-banner {
+    background: linear-gradient(135deg, var(--navy), #1a1660);
+    border-radius: 24px;
+    padding: 48px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pack-banner-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(41,171,226,.15), transparent 60%);
+    pointer-events: none;
+  }
+  .pack-banner-text { position: relative; z-index: 2; }
+  .pack-banner-title {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .pack-banner-desc {
+    color: rgba(255,255,255,.7);
+    max-width: 480px;
+    line-height: 1.6;
+    font-size: .95rem;
+  }
+  .pack-banner-cta {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .pack-banner-price-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    justify-content: center;
+  }
+  .pack-banner-price { font-size: 3rem; font-weight: 800; color: var(--white); line-height: 1; }
+  .pack-banner-price-old { font-size: 1.3rem; font-weight: 600; color: rgba(255,255,255,.4); text-decoration: line-through; }
+  .pack-banner-price-note { font-size: .82rem; color: rgba(255,255,255,.6); margin: 6px 0 16px; }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 960px) {
+    #cursos-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px; }
+    .pack-banner { padding: 36px 32px; gap: 28px; }
+  }
+  @media (max-width: 600px) {
+    #cursos-grid { grid-template-columns: 1fr !important; gap: 14px; }
+    .pack-banner {
+      padding: 28px 20px;
+      flex-direction: column;
+      gap: 24px;
+      text-align: center;
+      border-radius: 16px;
+    }
+    .pack-banner-desc { max-width: 100%; }
+    .pack-banner-cta { width: 100%; }
+    .pack-banner-cta .btn { width: 100%; justify-content: center; }
+    .pack-banner-price { font-size: 2.4rem; }
+    .filters-divider { display: none; }
+  }
+  </style>
+
+  <script is:inline>
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const courseCards   = document.querySelectorAll('[data-course]');
+    const searchInput   = document.getElementById('curso-search');
+    const searchClear   = document.getElementById('search-clear');
+    const resultsNumber = document.getElementById('results-number');
+    const noResults     = document.getElementById('no-results');
+    const resetBtn      = document.getElementById('reset-search');
+
+    let activeFilter = 'todos';
+    let searchQuery  = '';
+
+    const applyFilters = () => {
+      let visible = 0;
+
+      courseCards.forEach(card => {
+        const matchPack   = activeFilter === 'pack' && card.dataset.pack === 'yes';
+        const matchCat    = card.dataset.category && card.dataset.category.split(' ').includes(activeFilter);
+        const matchAll    = activeFilter === 'todos';
+        const matchFilter = matchAll || matchPack || matchCat;
+
+        const title = card.dataset.title || '';
+        const desc  = card.dataset.desc  || '';
+        const matchSearch = !searchQuery || title.includes(searchQuery) || desc.includes(searchQuery);
+
+        if (matchFilter && matchSearch) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      resultsNumber.textContent = visible;
+      noResults.style.display = visible === 0 ? 'flex' : 'none';
+    };
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('filter-btn--active'));
+        btn.classList.add('filter-btn--active');
+        activeFilter = btn.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      searchClear.style.display = searchQuery ? 'flex' : 'none';
+      applyFilters();
+    });
+
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      searchClear.style.display = 'none';
+      applyFilters();
+      searchInput.focus();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      searchClear.style.display = 'none';
+      activeFilter = 'todos';
+      filterButtons.forEach(b => b.classList.remove('filter-btn--active'));
+      filterButtons[0].classList.add('filter-btn--active');
+      applyFilters();
+    });
+
+    // Leer ?filter= de la URL al cargar
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParam = urlParams.get('filter');
+    if (filterParam) {
+      const targetBtn = document.querySelector(`[data-filter="${filterParam}"]`);
+      if (targetBtn) {
+        filterButtons.forEach(b => b.classList.remove('filter-btn--active'));
+        targetBtn.classList.add('filter-btn--active');
+        activeFilter = filterParam;
+        applyFilters();
+      }
+    }
+  </script>
+
+</BaseLayout>

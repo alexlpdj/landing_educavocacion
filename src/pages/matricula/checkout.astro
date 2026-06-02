@@ -1,0 +1,883 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const PROVINCIAS = [
+  'Álava','Albacete','Alicante','Almería','Asturias','Ávila','Badajoz',
+  'Illes Balears','Barcelona','Burgos','Cáceres','Cádiz','Cantabria',
+  'Castellón','Ceuta','Ciudad Real','Córdoba','A Coruña','Cuenca',
+  'Girona','Granada','Guadalajara','Guipúzcoa','Huelva','Huesca','Jaén',
+  'León','Lleida','La Rioja','Lugo','Madrid','Málaga','Melilla','Murcia',
+  'Navarra','Ourense','Palencia','Las Palmas','Pontevedra','Salamanca',
+  'Santa Cruz de Tenerife','Segovia','Sevilla','Soria','Tarragona',
+  'Teruel','Toledo','Valencia','Valladolid','Vizcaya','Zamora','Zaragoza',
+];
+
+const PREFIJOS = [
+  {c:'+34',l:'🇪🇸 +34 España'},
+  {c:'+33',l:'🇫🇷 +33 Francia'},
+  {c:'+49',l:'🇩🇪 +49 Alemania'},
+  {c:'+44',l:'🇬🇧 +44 Reino Unido'},
+  {c:'+351',l:'🇵🇹 +351 Portugal'},
+  {c:'+39',l:'🇮🇹 +39 Italia'},
+  {c:'+32',l:'🇧🇪 +32 Bélgica'},
+  {c:'+31',l:'🇳🇱 +31 Países Bajos'},
+  {c:'+41',l:'🇨🇭 +41 Suiza'},
+  {c:'+43',l:'🇦🇹 +43 Austria'},
+  {c:'+352',l:'🇱🇺 +352 Luxemburgo'},
+  {c:'+353',l:'🇮🇪 +353 Irlanda'},
+  {c:'+45',l:'🇩🇰 +45 Dinamarca'},
+  {c:'+46',l:'🇸🇪 +46 Suecia'},
+  {c:'+47',l:'🇳🇴 +47 Noruega'},
+  {c:'+358',l:'🇫🇮 +358 Finlandia'},
+  {c:'+30',l:'🇬🇷 +30 Grecia'},
+  {c:'+48',l:'🇵🇱 +48 Polonia'},
+  {c:'+420',l:'🇨🇿 +420 Rep. Checa'},
+  {c:'+36',l:'🇭🇺 +36 Hungría'},
+  {c:'+40',l:'🇷🇴 +40 Rumanía'},
+  {c:'+1',l:'🇺🇸 +1 EE.UU./Canadá'},
+  {c:'+54',l:'🇦🇷 +54 Argentina'},
+  {c:'+56',l:'🇨🇱 +56 Chile'},
+  {c:'+57',l:'🇨🇴 +57 Colombia'},
+  {c:'+52',l:'🇲🇽 +52 México'},
+  {c:'+51',l:'🇵🇪 +51 Perú'},
+];
+---
+
+<BaseLayout
+  title="Formalizar matrícula — EducaVocación"
+  description="Completa tus datos y procede al pago seguro de tus cursos."
+  showWhatsApp={false}
+>
+
+  <!-- ── HERO ── -->
+  <section class="enroll-hero">
+    <div class="container">
+      <a href="/cursos/" class="back-link">
+        <i class="ph ph-arrow-left"></i> Volver al catálogo
+      </a>
+      <div class="enroll-hero-inner">
+        <div class="enroll-hero-text">
+          <span class="tag tag--white">Formulario de matrícula</span>
+          <h1 class="h2" style="color:var(--white); margin-bottom:8px;">
+            Formaliza tu matrícula
+          </h1>
+          <p style="color:rgba(255,255,255,.7); font-size:.95rem;">
+            Completa tus datos en 3 pasos para proceder al pago seguro.
+          </p>
+        </div>
+        <div class="enroll-cart-summary">
+          <p class="enroll-cart-label"><i class="ph ph-shopping-cart-simple"></i> Tu pedido</p>
+          <div id="hero-cart-items" class="enroll-cart-items"></div>
+          <div id="hero-pack-tag"></div>
+          <div class="enroll-cart-total-row">
+            <span>Total</span>
+            <span id="hero-total">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FORM ── -->
+  <section class="enroll-form-section">
+    <div class="container enroll-container">
+
+      <!-- Indicador de pasos -->
+      <div class="steps-indicator" id="steps-indicator">
+        <div class="step-item active" data-step="1">
+          <div class="step-circle">1</div>
+          <span class="step-label">Selección previa</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item" data-step="2">
+          <div class="step-circle">2</div>
+          <span class="step-label">Datos personales</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item" data-step="3">
+          <div class="step-circle">3</div>
+          <span class="step-label">Resumen y pago</span>
+        </div>
+      </div>
+
+      <!-- ── PASO 1 ── -->
+      <div class="form-panel active" id="panel-1">
+        <div class="panel-head">
+          <h2 class="panel-title">Paso 1 — Selección previa</h2>
+          <p class="panel-desc">Necesitamos estos datos para configurar tu diploma correctamente.</p>
+        </div>
+
+        <div class="field-block">
+          <div class="field-info">
+            <i class="ph ph-info field-info-icon"></i>
+            Indica la duración que quieres que aparezca en tu diploma: Cataluña (10 h semanales) para cursos de 150, 125 y 50 horas; Castilla y León (20 h semanales) para cursos de 125 y 150 horas. Para el resto de Comunidades no es necesario indicar la duración.
+          </div>
+          <label class="field-label" for="comunidad">Comunidad Autónoma / Duración en diploma <span class="req">*</span></label>
+          <select id="comunidad" class="field-input" required>
+            <option value="">Selecciona una opción...</option>
+            <option value="all">Todas salvo Cataluña y Castilla y León</option>
+            <option value="cat">Cataluña (10 horas semanales, para cursos de 150, 125 y 50 horas)</option>
+            <option value="cyl">Castilla y León (20 horas semanales, para cursos de 125 y 150 horas)</option>
+          </select>
+          <span class="field-error" id="err-comunidad"></span>
+        </div>
+
+        <div class="field-block">
+          <label class="field-label" for="tipo-docente">Tipo de docente / Categoría <span class="req">*</span></label>
+          <select id="tipo-docente" class="field-input" required>
+            <option value="">Selecciona tu categoría...</option>
+            <option value="maestro">Maestro — Educación Infantil y Primaria</option>
+            <option value="secundaria">Profesor de Secundaria — ESO, Bachillerato, FP, EOI, etc.</option>
+          </select>
+          <span class="field-error" id="err-tipo-docente"></span>
+        </div>
+
+        <div class="panel-actions">
+          <button class="btn btn--primary" id="btn-next-1">Siguiente <i class="ph ph-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ── PASO 2 ── -->
+      <div class="form-panel" id="panel-2">
+        <div class="panel-head">
+          <h2 class="panel-title">Paso 2 — Datos personales</h2>
+          <div class="alert-dni">
+            <i class="ph ph-warning"></i>
+            El nombre y apellidos debe escribirse <strong>exactamente igual</strong> que figura en el documento nacional de identidad (o equivalente), sin abreviaturas, diminutivos ni variantes.
+          </div>
+        </div>
+
+        <div class="fields-grid">
+
+          <div class="field-block span-2">
+            <label class="field-label" for="email">Dirección de correo electrónico <span class="req">*</span></label>
+            <input type="email" id="email" class="field-input" placeholder="tu@correo.es" required />
+            <span class="field-error" id="err-email"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="email2">Repetir correo electrónico <span class="req">*</span></label>
+            <input type="email" id="email2" class="field-input" placeholder="Confirma tu correo" required />
+            <span class="field-error" id="err-email2"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="sexo">Sexo <span class="req">*</span></label>
+            <select id="sexo" class="field-input" required>
+              <option value="">Selecciona...</option>
+              <option value="hombre">Hombre</option>
+              <option value="mujer">Mujer</option>
+              <option value="no-indicar">Prefiero no decirlo</option>
+            </select>
+            <span class="field-error" id="err-sexo"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="tipo-doc">Tipo de documento <span class="req">*</span></label>
+            <select id="tipo-doc" class="field-input" required>
+              <option value="">Selecciona...</option>
+              <option value="dni">DNI</option>
+              <option value="nie">NIE</option>
+              <option value="pasaporte">Pasaporte</option>
+            </select>
+            <span class="field-error" id="err-tipo-doc"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="num-doc">Número de documento <span class="req">*</span></label>
+            <input type="text" id="num-doc" class="field-input" placeholder="Sin espacios ni guiones" required />
+            <span class="field-error" id="err-num-doc"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="nombre">Nombre <span class="req">*</span></label>
+            <input type="text" id="nombre" class="field-input" placeholder="Igual que en el DNI" required />
+            <span class="field-error" id="err-nombre"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="apellido1">Primer apellido <span class="req">*</span></label>
+            <input type="text" id="apellido1" class="field-input" placeholder="Igual que en el DNI" required />
+            <span class="field-error" id="err-apellido1"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="apellido2">Segundo apellido <span class="opt">(opcional)</span></label>
+            <input type="text" id="apellido2" class="field-input" placeholder="Si lo tienes, igual que en el DNI" />
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="anio-estudios">Año de finalización de estudios <span class="req">*</span></label>
+            <input type="number" id="anio-estudios" class="field-input" placeholder="Ej. 2015" min="1950" max="2030" required />
+            <span class="field-error" id="err-anio-estudios"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="prefijo">Prefijo telefónico <span class="req">*</span></label>
+            <select id="prefijo" class="field-input" required>
+              {PREFIJOS.map(p => (
+                <option value={p.c} selected={p.c === '+34'}>{p.l}</option>
+              ))}
+            </select>
+            <span class="field-error" id="err-prefijo"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="telefono">Número de móvil <span class="req">*</span></label>
+            <input type="tel" id="telefono" class="field-input" placeholder="Sin prefijo. Ej. 612345678" required />
+            <span class="field-error" id="err-telefono"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="direccion">Dirección (calle y número) <span class="req">*</span></label>
+            <input type="text" id="direccion" class="field-input" placeholder="Calle, número, piso, puerta..." required />
+            <span class="field-error" id="err-direccion"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="cp">Código postal <span class="req">*</span></label>
+            <input type="text" id="cp" class="field-input" placeholder="5 dígitos" maxlength="5" required />
+            <span class="field-error" id="err-cp"></span>
+          </div>
+
+          <div class="field-block">
+            <label class="field-label" for="localidad">Localidad <span class="req">*</span></label>
+            <input type="text" id="localidad" class="field-input" placeholder="Ciudad o municipio" required />
+            <span class="field-error" id="err-localidad"></span>
+          </div>
+
+          <div class="field-block span-2">
+            <label class="field-label" for="provincia">Provincia <span class="req">*</span></label>
+            <select id="provincia" class="field-input" required>
+              <option value="">Selecciona tu provincia...</option>
+              {PROVINCIAS.map(p => <option value={p}>{p}</option>)}
+            </select>
+            <span class="field-error" id="err-provincia"></span>
+          </div>
+
+        </div>
+
+        <div class="panel-actions panel-actions--split">
+          <button class="btn btn--outline" id="btn-prev-2"><i class="ph ph-arrow-left"></i> Anterior</button>
+          <button class="btn btn--primary" id="btn-next-2">Siguiente <i class="ph ph-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ── PASO 3 ── -->
+      <div class="form-panel" id="panel-3">
+        <div class="panel-head">
+          <h2 class="panel-title">Paso 3 — Resumen y pago</h2>
+          <p class="panel-desc">Revisa tu carrito y acepta las condiciones para finalizar.</p>
+        </div>
+
+        <!-- Resumen del carrito -->
+        <div class="cart-review" id="cart-review">
+          <!-- Se rellena con JavaScript -->
+        </div>
+
+        <div class="legal-notice">
+          <p>
+            Utilizaremos sus datos para gestionar sus compras online en base a las condiciones generales de contratación, gestionar los servicios prestados y realizar encuestas de satisfacción.
+            Para más información sobre el tratamiento y sus derechos, consulte la
+            <button class="link-btn" id="open-privacidad">política de privacidad</button>.
+          </p>
+        </div>
+
+        <div class="legal-checks">
+          <label class="check-row">
+            <input type="checkbox" id="chk-condiciones" class="check-input" />
+            <span class="check-custom"></span>
+            <span class="check-text">
+              He leído y acepto las
+              <button type="button" class="link-btn" id="open-condiciones">Condiciones Generales de Contratación</button>.
+            </span>
+          </label>
+          <label class="check-row">
+            <input type="checkbox" id="chk-privacidad" class="check-input" />
+            <span class="check-custom"></span>
+            <span class="check-text">
+              He leído y acepto la
+              <button type="button" class="link-btn" id="open-privacidad-2">Política de Privacidad</button>.
+            </span>
+          </label>
+        </div>
+        <span class="field-error" id="err-checks"></span>
+
+        <div class="panel-actions panel-actions--split" style="margin-top:24px;">
+          <button class="btn btn--outline" id="btn-prev-3"><i class="ph ph-arrow-left"></i> Anterior</button>
+          <button class="btn btn--sky btn--lg" id="btn-pay" disabled>
+            <i class="ph ph-lock"></i> <span id="btn-pay-label">Ir al pago seguro</span>
+          </button>
+        </div>
+
+        <div id="submit-status" class="submit-status" style="display:none;"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── DIALOG: Política de Privacidad ── -->
+  <dialog id="dialog-privacidad" class="legal-dialog">
+    <div class="legal-dialog-inner">
+      <button class="dialog-close" id="close-privacidad"><i class="ph ph-x"></i></button>
+      <h2>Política de Privacidad</h2>
+      <div class="legal-body">
+        <h3>1. Información al usuario</h3>
+        <p><strong>¿Quién es el responsable del tratamiento de tus datos personales?</strong><br>
+        EDUCAVOCACION S.L. es el RESPONSABLE del tratamiento de los datos personales del USUARIO y le informa de que estos datos serán tratados de conformidad con lo dispuesto en el Reglamento (UE) 2016/679, de 27 de abril (GDPR), y la Ley Orgánica 3/2018, de 5 de diciembre (LOPDGDD).</p>
+        <p><strong>¿Para qué tratamos tus datos personales?</strong><br>
+        En el formulario de Matrícula/Pago: gestionar su compra o pedido online, procesar el pago y proceder a la activación del mismo, en base a las condiciones generales de contratación (art. 6.1.b GDPR).</p>
+        <p><strong>¿Durante cuánto tiempo guardaremos tus datos?</strong><br>
+        Se conservarán durante no más tiempo del necesario para mantener el fin del tratamiento o existan prescripciones legales que dictaminen su custodia.</p>
+        <p><strong>¿Cuáles son tus derechos?</strong></p>
+        <ul>
+          <li>Derecho a retirar el consentimiento en cualquier momento.</li>
+          <li>Derecho de acceso, rectificación, portabilidad y supresión de sus datos.</li>
+          <li>Derecho a presentar una reclamación ante la autoridad de control (www.aepd.es).</li>
+        </ul>
+        <p><strong>Datos de contacto:</strong><br>
+        EDUCAVOCACION S.L. · Avenida Diagonal nº 10, 2 izq. Nules (Castellón) · CP: 12520<br>
+        E-mail: lopd@educavocacion.es</p>
+      </div>
+      <button class="btn btn--primary" id="close-privacidad-btn">Cerrar</button>
+    </div>
+  </dialog>
+
+  <!-- ── DIALOG: Condiciones Generales ── -->
+  <dialog id="dialog-condiciones" class="legal-dialog">
+    <div class="legal-dialog-inner">
+      <button class="dialog-close" id="close-condiciones"><i class="ph ph-x"></i></button>
+      <h2>Condiciones Generales de Contratación</h2>
+      <div class="legal-body">
+        <p>El precio de cada curso de formación y su duración se refleja en el catálogo vigente y en nuestra web: http://educavocacion.es. El título expedido carece de validez académica. El presente contrato es personal y no podrá ser cedido parcial ni totalmente a un tercero.</p>
+        <p>Para los cursos de MAESTROS/PROFESORADO es aconsejable NO hacer 2 cursos a la vez debido a que en algunas Comunidades Autónomas sólo tendrían uno en cuenta de cara a su baremación.</p>
+        <p>El cliente podrá desistir de lo convenido en este contrato en el plazo máximo de <strong>14 días hábiles</strong> a contar desde la recepción de las contraseñas de la plataforma, comunicándolo a través de correo electrónico a info@educavocacion.es.</p>
+        <p>Para los cursos certificados por la EUNEIZ el alumno dispone de <strong>6 meses</strong> para su realización desde el día que se le da de alta en el aula virtual.</p>
+        <p>Los alumnos que se matriculen en cualquier curso certificado por una Universidad autorizan ceder sus datos personales a la Universidad correspondiente para la remisión del diploma con firma digital por e-mail.</p>
+        <p><strong>Datos de contacto:</strong><br>EDUCAVOCACION S.L. · info@educavocacion.es</p>
+      </div>
+      <button class="btn btn--primary" id="close-condiciones-btn">Cerrar</button>
+    </div>
+  </dialog>
+
+  <section style="background:var(--cream); padding:40px 0; border-top:1px solid rgba(19,16,59,.08);">
+    <div class="container" style="max-width:760px; text-align:center;">
+      <p style="font-size:.85rem; color:var(--gray); margin-bottom:16px;">Acceso a la documentación legal completa:</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="/privacidad/" target="_blank" rel="noopener noreferrer" style="color:var(--blue); text-decoration:underline; font-size:.88rem; font-weight:600;">→ Política de Privacidad</a>
+        <span style="color:rgba(19,16,59,.2);">·</span>
+        <a href="/terminos/" target="_blank" rel="noopener noreferrer" style="color:var(--blue); text-decoration:underline; font-size:.88rem; font-weight:600;">→ Términos y Condiciones</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style is:global>
+/* Hero */
+.enroll-hero { background: var(--navy); padding: 84px 0 40px; }
+.back-link {
+  font-size: .82rem; font-weight: 600; color: rgba(255,255,255,.9);
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
+  border-radius: 999px; padding: 6px 14px;
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-bottom: 20px;
+  transition: background .2s, border-color .2s;
+}
+.back-link:hover { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.38); }
+.enroll-hero-inner {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 32px; flex-wrap: wrap;
+}
+
+/* Cart summary in hero */
+.enroll-cart-summary {
+  flex-shrink: 0; width: min(300px, 100%);
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.13);
+  border-radius: 16px; padding: 18px 20px;
+}
+.enroll-cart-label {
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); margin: 0 0 12px 0;
+  display: flex; align-items: center; gap: 6px;
+}
+.enroll-cart-items { display: flex; flex-direction: column; margin-bottom: 10px; }
+.enroll-cart-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.enroll-cart-item:last-child { border-bottom: none; }
+.enroll-cart-item-name { font-size: .84rem; font-weight: 600; color: rgba(255,255,255,.88); flex: 1; line-height: 1.3; }
+.enroll-cart-item-price { font-size: .84rem; font-weight: 700; color: var(--sky); flex-shrink: 0; }
+.enroll-cart-pack {
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(41,171,226,.15); border-radius: 8px;
+  padding: 7px 10px; margin-bottom: 10px;
+  font-size: .79rem; font-weight: 700; color: var(--sky);
+}
+.enroll-cart-total-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-top: 12px; border-top: 1px solid rgba(255,255,255,.13);
+}
+.enroll-cart-total-row span:first-child { font-size: .88rem; font-weight: 600; color: rgba(255,255,255,.55); }
+.enroll-cart-total-row span:last-child { font-size: 1.6rem; font-weight: 800; color: var(--sky); line-height: 1; }
+
+/* Form section */
+.enroll-form-section { padding: 48px 0 80px; background: var(--cream); min-height: 60vh; }
+.enroll-container { max-width: 760px; }
+
+/* Steps */
+.steps-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 40px; }
+.step-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.step-circle {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(19,16,59,.12); color: var(--gray);
+  font-weight: 700; font-size: .95rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .3s, color .3s;
+}
+.step-item.active .step-circle { background: var(--blue); color: var(--white); }
+.step-item.done .step-circle   { background: #10b981; color: var(--white); }
+.step-label {
+  font-size: .72rem; font-weight: 600; color: var(--gray);
+  letter-spacing: .04em; text-transform: uppercase; white-space: nowrap;
+}
+.step-item.active .step-label { color: var(--blue); }
+.step-connector {
+  flex: 1; height: 2px; background: rgba(19,16,59,.12);
+  margin: 0 12px; margin-bottom: 28px;
+  min-width: 40px; max-width: 100px; transition: background .3s;
+}
+.step-connector.done { background: #10b981; }
+
+/* Panels */
+.form-panel {
+  display: none; background: var(--white);
+  border: 1px solid rgba(19,16,59,.08); border-radius: 20px;
+  padding: 40px; animation: panelIn .3s ease;
+}
+.form-panel.active { display: block; }
+@keyframes panelIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+.panel-head { margin-bottom: 32px; }
+.panel-title { font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+.panel-desc  { font-size: .9rem; color: var(--gray); line-height: 1.6; }
+
+/* Fields */
+.fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; margin-bottom: 32px; }
+.field-block { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+.field-block.span-2 { grid-column: span 2; }
+.field-label { font-size: .82rem; font-weight: 600; color: var(--navy); }
+.req { color: var(--blue); margin-left: 2px; }
+.opt { color: var(--gray); font-weight: 400; font-size: .78rem; }
+.field-input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid rgba(19,16,59,.15); border-radius: 10px;
+  font-family: 'Poppins', sans-serif; font-size: .9rem; color: var(--navy);
+  background: var(--white); transition: border-color .2s, box-shadow .2s; appearance: none;
+}
+.field-input:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 3px rgba(41,171,226,.12); }
+.field-input.error { border-color: #ef4444; }
+.field-error { font-size: .77rem; color: #ef4444; font-weight: 500; min-height: 18px; display: block; }
+.field-info {
+  background: rgba(41,171,226,.08); border-left: 3px solid var(--sky);
+  border-radius: 0 8px 8px 0; padding: 12px 14px; font-size: .82rem;
+  color: var(--navy); line-height: 1.55; display: flex; gap: 8px; margin-bottom: 4px;
+}
+.field-info-icon { color: var(--sky); flex-shrink: 0; margin-top: 2px; }
+
+.alert-dni {
+  background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.3);
+  border-radius: 10px; padding: 14px 16px; font-size: .86rem;
+  color: #92400e; line-height: 1.6; display: flex; gap: 10px; margin-bottom: 8px;
+}
+.alert-dni i { flex-shrink: 0; font-size: 1.1rem; margin-top: 1px; }
+
+/* Cart review */
+.cart-review {
+  background: rgba(19,16,59,.03); border: 1px solid rgba(19,16,59,.08);
+  border-radius: 16px; padding: 24px; margin-bottom: 24px;
+}
+.cart-review-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 10px 0; border-bottom: 1px solid rgba(19,16,59,.06); gap: 12px;
+}
+.cart-review-item:last-of-type { border-bottom: none; margin-bottom: 8px; }
+.cart-review-item-name { font-size: .88rem; font-weight: 600; color: var(--navy); flex: 1; }
+.cart-review-item-meta { font-size: .75rem; color: var(--gray); margin: 2px 0 0 0; }
+.cart-review-item-price { font-size: .95rem; font-weight: 800; color: var(--blue); flex-shrink: 0; }
+
+.cart-review-pack-tag {
+  background: rgba(41,171,226,.1); color: var(--sky);
+  border: 1px solid rgba(41,171,226,.2); border-radius: 8px;
+  padding: 8px 12px; font-size: .8rem; font-weight: 700;
+  display: flex; align-items: center; gap: 6px; margin: 12px 0;
+}
+
+.cart-review-summary { padding-top: 12px; border-top: 2px solid rgba(19,16,59,.08); }
+.cart-review-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: .88rem; }
+.cart-review-row.total {
+  font-size: 1.05rem; font-weight: 800; color: var(--navy);
+  padding-top: 8px; margin-top: 4px; border-top: 1px solid rgba(19,16,59,.1);
+}
+.cart-review-row.total span:last-child { color: var(--blue); }
+
+/* Legal */
+.legal-notice {
+  background: var(--cream); border-radius: 10px; padding: 16px;
+  font-size: .85rem; color: var(--gray); line-height: 1.6; margin-bottom: 24px;
+}
+.legal-checks { display: flex; flex-direction: column; gap: 14px; margin-bottom: 8px; }
+.check-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  cursor: pointer; font-size: .88rem; color: var(--navy); line-height: 1.5;
+}
+.check-input { display: none; }
+.check-custom {
+  flex-shrink: 0; width: 20px; height: 20px;
+  border: 2px solid rgba(19,16,59,.2); border-radius: 6px;
+  background: var(--white); transition: border-color .2s, background .2s;
+  margin-top: 1px; position: relative;
+}
+.check-input:checked + .check-custom { background: var(--blue); border-color: var(--blue); }
+.check-input:checked + .check-custom::after {
+  content: '';
+  position: absolute; inset: 3px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='white'%3E%3Cpath d='M2 6l3 3 5-5'/%3E%3C/svg%3E") center/cover no-repeat;
+}
+.check-text { flex: 1; }
+
+/* Actions */
+.panel-actions { display: flex; justify-content: flex-end; padding-top: 8px; }
+.panel-actions--split { justify-content: space-between; }
+
+.link-btn {
+  background: none; border: none; cursor: pointer; color: var(--blue);
+  font-weight: 600; font-size: inherit; font-family: inherit;
+  text-decoration: underline; padding: 0;
+}
+.link-btn:hover { color: var(--sky); }
+
+.submit-status {
+  margin-top: 16px; padding: 14px 16px; border-radius: 10px;
+  font-size: .88rem; font-weight: 600; text-align: center;
+}
+.submit-status.ok  { background: rgba(16,185,129,.1); color: #065f46; }
+.submit-status.err { background: rgba(239,68,68,.08); color: #991b1b; }
+
+/* Legal dialog */
+.legal-dialog {
+  width: min(680px, 95vw); max-height: 85vh;
+  border: none; border-radius: 20px; padding: 0;
+  box-shadow: 0 24px 80px rgba(0,0,0,.18);
+}
+.legal-dialog::backdrop { background: rgba(19,16,59,.5); backdrop-filter: blur(4px); }
+.legal-dialog-inner {
+  padding: 40px; position: relative; overflow-y: auto; max-height: 85vh;
+}
+.legal-dialog-inner h2 { font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-bottom: 20px; }
+.legal-body { font-size: .88rem; color: var(--gray); line-height: 1.7; }
+.legal-body h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin: 20px 0 8px; }
+.legal-body p { margin-bottom: 12px; }
+.legal-body ul { padding-left: 20px; margin-bottom: 12px; }
+.legal-body ul li { margin-bottom: 6px; }
+.legal-dialog-inner > .btn { margin-top: 24px; }
+.dialog-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 32px; height: 32px; border-radius: 50%; border: none;
+  background: rgba(19,16,59,.08); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--navy); transition: background .2s;
+}
+.dialog-close:hover { background: rgba(19,16,59,.15); }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .enroll-hero-inner { flex-direction: column; align-items: flex-start; }
+  .enroll-cart-summary { align-self: stretch; width: 100%; }
+}
+@media (max-width: 600px) {
+  .enroll-hero { padding: 76px 0 28px; }
+  .form-panel { padding: 24px 20px; border-radius: 16px; }
+  .fields-grid { grid-template-columns: 1fr; gap: 16px; }
+  .field-block.span-2 { grid-column: span 1; }
+  .panel-actions--split { gap: 12px; }
+  .panel-actions--split .btn { flex: 1; justify-content: center; }
+  .steps-indicator { gap: 4px; }
+  .step-label { display: none; }
+  .step-connector { min-width: 20px; }
+  .legal-dialog-inner { padding: 24px 20px; }
+}
+</style>
+
+<script>
+  import { getItems, getTotals } from '../../lib/cart';
+
+  // ── Redirect si carrito vacío ──────────────────────────────────────────
+  if (getItems().length === 0) {
+    window.location.replace('/cursos/');
+  }
+
+  // ── Renderizar resumen del carrito en el hero ─────────────────────────
+  function updateHero() {
+    const totals = getTotals();
+    const itemsEl = document.getElementById('hero-cart-items');
+    const packEl  = document.getElementById('hero-pack-tag');
+    const totalEl = document.getElementById('hero-total');
+
+    if (itemsEl) {
+      itemsEl.innerHTML = totals.items.map(item => `
+        <div class="enroll-cart-item">
+          <span class="enroll-cart-item-name">${item.title}</span>
+          <span class="enroll-cart-item-price">${item.price} €</span>
+        </div>
+      `).join('');
+    }
+
+    if (packEl) {
+      packEl.innerHTML = totals.packApplied ? `
+        <div class="enroll-cart-pack">
+          <span><i class="ph-fill ph-fire"></i> Pack 2×1 aplicado</span>
+          <span>−${totals.discount} €</span>
+        </div>
+      ` : '';
+    }
+
+    if (totalEl) totalEl.textContent = `${totals.total} €`;
+  }
+  updateHero();
+
+  // ── Renderizar carrito en paso 3 ───────────────────────────────────────
+  function renderCartReview() {
+    const totals = getTotals();
+    const review = document.getElementById('cart-review');
+    if (!review) return;
+
+    const itemsHtml = totals.items.map(item => `
+      <div class="cart-review-item">
+        <div>
+          <p class="cart-review-item-name">${item.title}</p>
+          <p class="cart-review-item-meta">${item.hours}h · ${item.ects} ECTS${item.packEligible ? ' · Pack 2×1' : ''}</p>
+        </div>
+        <span class="cart-review-item-price">${item.price} €</span>
+      </div>
+    `).join('');
+
+    const packTag = totals.packApplied
+      ? `<div class="cart-review-pack-tag">
+          <i class="ph-fill ph-fire"></i> Pack 2×1 aplicado — Ahorras ${totals.discount} €
+        </div>`
+      : '';
+
+    review.innerHTML = `
+      <h3 style="font-size:1rem;font-weight:800;color:var(--navy);margin:0 0 16px 0;">
+        <i class="ph ph-shopping-cart-simple"></i> Cursos en tu carrito
+      </h3>
+      ${itemsHtml}
+      ${packTag}
+      <div class="cart-review-summary">
+        ${totals.packApplied ? `
+          <div class="cart-review-row">
+            <span style="color:var(--gray)">Subtotal</span>
+            <span style="color:var(--navy);font-weight:600;">${totals.subtotal} €</span>
+          </div>
+          <div class="cart-review-row">
+            <span style="color:var(--sky)">Descuento pack</span>
+            <span style="color:var(--sky);font-weight:700;">−${totals.discount} €</span>
+          </div>
+        ` : ''}
+        <div class="cart-review-row total">
+          <span>Total a pagar</span>
+          <span>${totals.total} €</span>
+        </div>
+      </div>
+    `;
+
+    // Actualizar label del botón de pago
+    const payLabel = document.getElementById('btn-pay-label');
+    if (payLabel) payLabel.textContent = `Ir al pago seguro — ${totals.total} €`;
+  }
+
+  // ── Step management ────────────────────────────────────────────────────
+  const panels     = [1,2,3].map(n => document.getElementById(`panel-${n}`)!);
+  const dots       = document.querySelectorAll('.step-item');
+  const connectors = document.querySelectorAll('.step-connector');
+
+  function goTo(n: number) {
+    panels.forEach((p, i) => p.classList.toggle('active', i + 1 === n));
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i + 1 === n);
+      d.classList.toggle('done',   i + 1 < n);
+    });
+    connectors.forEach((c, i) => c.classList.toggle('done', i + 1 < n));
+    if (n === 3) renderCartReview();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Validation helpers ─────────────────────────────────────────────────
+  function err(id: string, msg: string) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.textContent = msg;
+      el.closest('.field-block')?.querySelector('.field-input')?.classList.toggle('error', !!msg);
+    }
+  }
+  function clearErr(id: string) { err(id, ''); }
+  function val(id: string) { return (document.getElementById(id) as HTMLInputElement)?.value.trim() ?? ''; }
+
+  const DNI_LETTERS = 'TRWAGMYFPDXBNJZSQVHLCKET';
+  function validateDNI(v: string) {
+    v = v.toUpperCase();
+    if (!/^\d{8}[A-Z]$/.test(v)) return false;
+    return DNI_LETTERS[parseInt(v.slice(0,8)) % 23] === v[8];
+  }
+  function validateNIE(v: string) {
+    v = v.toUpperCase();
+    if (!/^[XYZ]\d{7}[A-Z]$/.test(v)) return false;
+    const num = v.replace('X','0').replace('Y','1').replace('Z','2');
+    return DNI_LETTERS[parseInt(num.slice(0,8)) % 23] === v[8];
+  }
+  function validateDoc(tipo: string, num: string) {
+    if (tipo === 'dni') return validateDNI(num);
+    if (tipo === 'nie') return validateNIE(num);
+    return /^[A-Z0-9]{5,12}$/i.test(num);
+  }
+
+  function validateStep1() {
+    let ok = true;
+    clearErr('err-comunidad'); clearErr('err-tipo-docente');
+    if (!val('comunidad'))    { err('err-comunidad','Selecciona una opción'); ok = false; }
+    if (!val('tipo-docente')) { err('err-tipo-docente','Selecciona tu categoría'); ok = false; }
+    return ok;
+  }
+
+  function validateStep2() {
+    let ok = true;
+    const fields = ['email','email2','sexo','tipo-doc','num-doc','nombre','apellido1','anio-estudios','prefijo','telefono','direccion','cp','localidad','provincia'];
+    fields.forEach(f => clearErr(`err-${f}`));
+
+    if (!val('email'))  { err('err-email','Campo obligatorio'); ok = false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email'))) { err('err-email','Email no válido'); ok = false; }
+
+    if (!val('email2')) { err('err-email2','Campo obligatorio'); ok = false; }
+    else if (val('email') !== val('email2')) { err('err-email2','Los correos no coinciden'); ok = false; }
+
+    if (!val('sexo'))     { err('err-sexo','Campo obligatorio'); ok = false; }
+    if (!val('tipo-doc')) { err('err-tipo-doc','Campo obligatorio'); ok = false; }
+
+    if (!val('num-doc')) { err('err-num-doc','Campo obligatorio'); ok = false; }
+    else if (!validateDoc(val('tipo-doc'), val('num-doc'))) { err('err-num-doc','Formato de documento no válido'); ok = false; }
+
+    if (!val('nombre'))    { err('err-nombre','Campo obligatorio'); ok = false; }
+    if (!val('apellido1')) { err('err-apellido1','Campo obligatorio'); ok = false; }
+
+    const anio = parseInt(val('anio-estudios'));
+    if (!val('anio-estudios'))      { err('err-anio-estudios','Campo obligatorio'); ok = false; }
+    else if (anio < 1950 || anio > 2030) { err('err-anio-estudios','Año no válido'); ok = false; }
+
+    if (!val('prefijo'))  { err('err-prefijo','Campo obligatorio'); ok = false; }
+    if (!val('telefono')) { err('err-telefono','Campo obligatorio'); ok = false; }
+    else if (!/^\d{7,15}$/.test(val('telefono').replace(/\s/g,''))) { err('err-telefono','Solo dígitos, sin prefijo'); ok = false; }
+
+    if (!val('direccion')) { err('err-direccion','Campo obligatorio'); ok = false; }
+
+    if (!val('cp'))       { err('err-cp','Campo obligatorio'); ok = false; }
+    else if (!/^\d{5}$/.test(val('cp'))) { err('err-cp','Debe tener 5 dígitos'); ok = false; }
+
+    if (!val('localidad')) { err('err-localidad','Campo obligatorio'); ok = false; }
+    if (!val('provincia')) { err('err-provincia','Campo obligatorio'); ok = false; }
+
+    return ok;
+  }
+
+  // ── Button wiring ──────────────────────────────────────────────────────
+  document.getElementById('btn-next-1')!.addEventListener('click', () => { if (validateStep1()) goTo(2); });
+  document.getElementById('btn-prev-2')!.addEventListener('click', () => goTo(1));
+  document.getElementById('btn-next-2')!.addEventListener('click', () => { if (validateStep2()) goTo(3); });
+  document.getElementById('btn-prev-3')!.addEventListener('click', () => goTo(2));
+
+  // ── Unlock pay button on checkboxes ───────────────────────────────────
+  const chkC   = document.getElementById('chk-condiciones') as HTMLInputElement;
+  const chkP   = document.getElementById('chk-privacidad')  as HTMLInputElement;
+  const btnPay = document.getElementById('btn-pay')         as HTMLButtonElement;
+  const checkPay = () => { btnPay.disabled = !(chkC.checked && chkP.checked); };
+  chkC.addEventListener('change', checkPay);
+  chkP.addEventListener('change', checkPay);
+
+  // ── Payment submission ─────────────────────────────────────────────────
+  btnPay.addEventListener('click', async () => {
+    if (!chkC.checked || !chkP.checked) {
+      document.getElementById('err-checks')!.textContent = 'Debes aceptar ambas condiciones.';
+      return;
+    }
+
+    btnPay.disabled = true;
+    btnPay.innerHTML = '<i class="ph ph-spinner"></i> Procesando…';
+
+    const status = document.getElementById('submit-status')!;
+    const items  = getItems();
+
+    const studentData = {
+      email:       val('email'),
+      nombre:      val('nombre'),
+      apellido1:   val('apellido1'),
+      apellido2:   val('apellido2') || '',
+      numDoc:      val('num-doc'),
+      tipoDoc:     val('tipo-doc'),
+      sexo:        val('sexo'),
+      telefono:    val('telefono'),
+      prefijo:     val('prefijo'),
+      direccion:   val('direccion'),
+      cp:          val('cp'),
+      localidad:   val('localidad'),
+      provincia:   val('provincia'),
+      comunidad:   val('comunidad'),
+      tipoDocente: val('tipo-docente'),
+      anioEstudios: val('anio-estudios'),
+    };
+
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items, studentData }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.url) {
+        throw new Error(data.error ?? 'Error al crear la sesión de pago');
+      }
+
+      status.className = 'submit-status ok';
+      status.textContent = 'Redirigiendo al pago seguro…';
+      status.style.display = 'block';
+
+      window.location.href = data.url;
+
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : 'Error desconocido';
+      status.className = 'submit-status err';
+      status.textContent = `Error: ${msg}. Inténtalo de nuevo o contáctanos.`;
+      status.style.display = 'block';
+      btnPay.disabled = false;
+      btnPay.innerHTML = `<i class="ph ph-lock"></i> <span id="btn-pay-label">Ir al pago seguro — ${getTotals().total} €</span>`;
+    }
+  });
+
+  // ── Legal dialogs ──────────────────────────────────────────────────────
+  const dPriv = document.getElementById('dialog-privacidad') as HTMLDialogElement;
+  const dCond = document.getElementById('dialog-condiciones') as HTMLDialogElement;
+
+  ['open-privacidad','open-privacidad-2'].forEach(id =>
+    document.getElementById(id)?.addEventListener('click', () => dPriv.showModal())
+  );
+  document.getElementById('open-condiciones')?.addEventListener('click', () => dCond.showModal());
+  ['close-privacidad','close-privacidad-btn'].forEach(id =>
+    document.getElementById(id)?.addEventListener('click', () => dPriv.close())
+  );
+  ['close-condiciones','close-condiciones-btn'].forEach(id =>
+    document.getElementById(id)?.addEventListener('click', () => dCond.close())
+  );
+  [dPriv, dCond].forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
+</script>

@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Stripe from 'stripe';
+
+export const prerender = false;
+
+const sessionId = Astro.url.searchParams.get('session_id');
+
+let session: Stripe.Checkout.Session | null = null;
+let errorMsg: string | null = null;
+
+if (!sessionId) {
+  errorMsg = 'No se ha encontrado el identificador de sesión.';
+} else {
+  try {
+    const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY);
+    session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ['line_items'],
+    });
+  } catch (e) {
+    errorMsg = 'No se pudo verificar la sesión de pago. Contacta con soporte si el cargo se realizó.';
+  }
+}
+
+const isPaid = session?.payment_status === 'paid';
+const totalEuros = session?.amount_total ? (session.amount_total / 100).toFixed(2) : null;
+const studentName = session?.metadata?.nombre
+  ? `${session.metadata.nombre} ${session.metadata.apellido1}`
+  : null;
+---
+
+<BaseLayout
+  title="¡Pago completado! – EducaVocación"
+  description="Tu pago se procesó correctamente. Recibirás acceso a tus cursos por email."
+>
+
+  {errorMsg || !isPaid ? (
+    <!-- Error o estado desconocido -->
+    <section style="padding:120px 0 96px; text-align:center;">
+      <div class="container" style="max-width:620px;">
+        <div style="font-size:4rem; margin-bottom:24px;"><i class="ph ph-warning" style="color:#f59e0b;"></i></div>
+        <h1 class="h1" style="color:var(--navy); margin-bottom:16px;">
+          {errorMsg ? 'Error al verificar el pago' : 'Estado del pago no confirmado'}
+        </h1>
+        <p style="color:var(--gray); margin-bottom:32px; line-height:1.7;">
+          {errorMsg ?? 'No pudimos confirmar el estado de tu pago. Si el cargo se realizó, contacta con nosotros.'}
+        </p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+          <a href="mailto:info@educavocacion.es" class="btn btn--primary">Contactar soporte</a>
+          <a href="/cursos/" class="btn btn--outline">Volver al catálogo</a>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <!-- Éxito -->
+    <section style="padding:100px 0 80px; text-align:center;">
+      <div class="container" style="max-width:680px;">
+
+        <!-- Icono animado -->
+        <div class="success-icon fade-in">
+          <i class="ph-fill ph-check-circle"></i>
+        </div>
+
+        <h1 class="h1 fade-in fade-delay-1" style="color:var(--navy); margin-bottom:12px;">
+          {studentName ? `¡Felicidades, ${studentName.split(' ')[0]}!` : '¡Matrícula completada!'}
+        </h1>
+
+        <p class="lead fade-in fade-delay-1" style="color:var(--gray); margin-bottom:32px;">
+          Tu pago se ha procesado correctamente. Recibirás un email de confirmación en
+          <strong>{session?.customer_email}</strong> con los accesos a tus cursos y los próximos pasos.
+        </p>
+
+        <!-- Resumen de compra -->
+        <div class="success-card fade-in fade-delay-2">
+          <h3>Resumen de tu compra</h3>
+
+          {session?.line_items?.data && session.line_items.data.length > 0 && (
+            <div class="success-items">
+              {session.line_items.data.map(item => (
+                <div class="success-item">
+                  <span class="success-item-name">{item.description ?? item.price?.product_data?.name ?? 'Curso'}</span>
+                  <span class="success-item-price">{item.amount_total ? (item.amount_total / 100).toFixed(2) : '—'} €</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div class="success-total">
+            <span>Total pagado</span>
+            <span>{totalEuros} €</span>
+          </div>
+
+          <div class="success-ref">
+            Referencia: <code>{sessionId?.slice(0, 24)}…</code>
+          </div>
+        </div>
+
+        <!-- Próximos pasos -->
+        <div class="success-steps fade-in fade-delay-3">
+          <div class="success-step">
+            <div class="step-num">1</div>
+            <div>
+              <p class="step-title">Revisa tu email</p>
+              <p class="step-desc">Te hemos enviado la confirmación de pago a {session?.customer_email}</p>
+            </div>
+          </div>
+          <div class="success-step">
+            <div class="step-num">2</div>
+            <div>
+              <p class="step-title">Activa tu acceso</p>
+              <p class="step-desc">En 24–48 h recibirás las credenciales de acceso a la plataforma de formación</p>
+            </div>
+          </div>
+          <div class="success-step">
+            <div class="step-num">3</div>
+            <div>
+              <p class="step-title">Completa el curso</p>
+              <p class="step-desc">Tienes 6 meses para completarlo. Al aprobar recibirás tu diploma EUNEIZ</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-top:40px;" class="fade-in fade-delay-3">
+          <a href="/cursos/" class="btn btn--primary">Ver más cursos</a>
+          <a href="/" class="btn btn--outline">Ir al inicio</a>
+        </div>
+
+      </div>
+    </section>
+  )}
+
+  <style>
+    .success-icon {
+      font-size: 5.5rem;
+      color: #10b981;
+      margin-bottom: 24px;
+    }
+    .success-icon i { display: block; line-height: 1; }
+
+    .success-card {
+      background: rgba(19,16,59,.03);
+      border: 1px solid rgba(19,16,59,.08);
+      border-radius: 20px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .success-card h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0 0 16px 0;
+    }
+    .success-items { margin-bottom: 12px; }
+    .success-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(19,16,59,.06);
+      gap: 12px;
+    }
+    .success-item:last-child { border-bottom: none; }
+    .success-item-name { font-size: 0.88rem; color: var(--navy); font-weight: 600; flex: 1; }
+    .success-item-price { font-size: 0.88rem; color: var(--blue); font-weight: 700; flex-shrink: 0; }
+    .success-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      color: var(--navy);
+      font-size: 1.1rem;
+      border-top: 2px solid rgba(19,16,59,.1);
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+    .success-total span:last-child { color: var(--blue); }
+    .success-ref {
+      margin-top: 12px;
+      font-size: 0.78rem;
+      color: var(--gray);
+    }
+    .success-ref code {
+      background: rgba(19,16,59,.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .success-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+    }
+    .success-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      background: var(--cream);
+      border-radius: 12px;
+    }
+    .step-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-title { font-weight: 700; color: var(--navy); margin: 0 0 4px 0; font-size: 0.95rem; }
+    .step-desc  { font-size: 0.85rem; color: var(--gray); margin: 0; line-height: 1.5; }
+
+    @media (max-width: 600px) {
+      .success-card { padding: 20px; }
+    }
+  </style>
+
+  <script>
+    import { clearCart } from '../../lib/cart';
+    clearCart();
+  </script>
+
+</BaseLayout>

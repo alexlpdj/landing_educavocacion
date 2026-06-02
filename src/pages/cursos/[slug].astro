@@ -1,0 +1,1265 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DesignSwitcher from '../../components/DesignSwitcher.astro';
+import AddToCartButton from '../../components/AddToCartButton.astro';
+import euneizLogo from '../../assets/img/Logo_EUNEIZ_2023.jpg';
+import profesorImg from '../../assets/img/Imagen_profesor_david-garcia.jpg';
+import { courseImageMap } from '../../data/courseImages';
+
+export async function getStaticPaths() {
+  const courses = await getCollection('cursos');
+  return courses.map(course => ({
+    params: { slug: course.slug },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+const { data } = course;
+const { Content } = await course.render();
+
+const bodyWithoutCert = course.body.split('## ACREDITACIÓN OFICIAL')[0].trim();
+
+const optimizedImage = courseImageMap[course.slug] || data.image;
+const imageSrc = typeof optimizedImage === 'object' ? optimizedImage.src : optimizedImage;
+
+const waMessage = encodeURIComponent(`Hola, me interesa el curso "${data.title}". ¿Me puedes dar más información?`);
+---
+
+<BaseLayout title={`${data.title} — EducaVocación`} description={data.description} waMessage={waMessage}>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────────── -->
+  <section
+    class={`section section--navy hero-curso hero-desktop${imageSrc ? ' has-image' : ''}`}
+    style={imageSrc ? `--hero-bg:url('${imageSrc}')` : undefined}
+  >
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class={`hero-overlay${imageSrc ? ' hero-overlay--photo' : ''}`}></div>
+    <div class="container">
+      <div class="hero-curso-inner fade-in">
+        <div class="hero-curso-content">
+          <!-- Desktop: etiqueta genérica / Mobile: oculta -->
+          <span class="tag hero-tag-desktop">Formación para docentes</span>
+          <h1 class="h1 hero-curso-title">
+            <em>{data.title}</em>
+          </h1>
+          <div class="hero-curso-desc-wrap">
+            <div class="lead lead--white hero-curso-desc" id="hero-desc" set:text={bodyWithoutCert} />
+            <button class="hero-desc-toggle" id="hero-desc-toggle" aria-expanded="false">
+              Leer más <i class="ph ph-caret-down"></i>
+            </button>
+          </div>
+          <!-- Desktop: meta badges -->
+          <div class="hero-curso-meta">
+            <span class="meta-badge"><i class="ph ph-clock"></i> {data.hours} horas</span>
+            <span class="meta-badge"><i class="ph ph-medal"></i> {data.ects} créditos ECTS</span>
+            <span class="meta-badge"><i class="ph ph-laptop"></i> {data.modality}</span>
+          </div>
+          <div class="hero-curso-price">
+            <span class="price-tag">{data.price} €</span>
+            <span class="price-note">
+              Precio por curso
+              {data.packEligible && (
+                <>
+                  · <a href="#pack" class="pack-link">Pack 2×1 disponible</a>
+                </>
+              )}
+            </span>
+          </div>
+          <div class="hero-curso-btns">
+            <AddToCartButton slug={course.slug} title={data.title} price={data.price} hours={data.hours} ects={data.ects} packEligible={data.packEligible ?? false} icon={data.icon} size="md" />
+            <a href="/cursos/" class="btn btn--outline-white btn--sm">Ver todos los cursos</a>
+          </div>
+        </div>
+        {data.image && (
+          <div class="hero-curso-img-col">
+            <img src={data.image} alt={data.title} class="hero-curso-img-r" loading="eager" />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HERO MOBILE (v2-style, oculto en desktop) ────────────────────── -->
+  <section class={`hero-mobile${imageSrc ? ' has-image' : ''}`} style={imageSrc ? `--hero-bg:url('${imageSrc}')` : undefined}>
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="container">
+      <div class="hero-mobile__tags">
+        <span class="tag tag--white"><i class="ph ph-graduation-cap"></i> {data.ects} créditos ECTS</span>
+        <span class="tag tag--white"><i class="ph ph-buildings"></i> EUNEIZ</span>
+        <span class="tag tag--sky"><i class="ph ph-seal-check"></i> Válido en oposiciones</span>
+      </div>
+      <h1 class="h1 hero-mobile__title">{data.title}</h1>
+      <p class="hero-mobile__desc">{data.description}</p>
+      <div class="hero-mobile__pills">
+        <span class="hero__pill"><i class="ph ph-clock"></i> {data.hours} horas</span>
+        <span class="hero__pill"><i class="ph ph-laptop"></i> {data.modality}</span>
+        <span class="hero__pill"><i class="ph ph-books"></i> {data.modules.length} módulos</span>
+        <span class="hero__pill"><i class="ph ph-certificate"></i> Diploma digital</span>
+      </div>
+    </div>
+
+    <!-- ── TARJETA PRECIO MOBILE (solo visible en mobile, estilo v2) ─────── -->
+    <div class="mobile-hero-card">
+      <div class="container">
+        <div class="course-card">
+          <div class="course-card__img" style={imageSrc ? `background-image:url('${imageSrc}');background-size:cover;background-position:center;` : undefined}>
+            {!imageSrc && <i class="ph-fill ph-graduation-cap course-card__img-icon"></i>}
+            {!imageSrc && <span class="course-card__img-text">Formación docente · EUNEIZ</span>}
+          </div>
+          <div class="course-card__body">
+            <div class="course-card__price">
+              <span class="course-card__amount">{data.price}</span>
+              <span class="course-card__currency">€</span>
+            </div>
+            {data.packEligible && (
+                <p class="course-card__pack-hint">
+                  <i class="ph-fill ph-fire"></i>
+                  Pack 2 cursos por 40 € — el 2.º a 8 €
+                </p>
+            )}
+            <div class="course-card__meta">
+              <div class="course-card__meta-row"><i class="ph ph-clock"></i><span>{data.hours} horas · {data.ects} créditos ECTS</span></div>
+              <div class="course-card__meta-row"><i class="ph ph-laptop"></i><span>{data.modality} · a tu ritmo</span></div>
+              <div class="course-card__meta-row"><i class="ph ph-buildings"></i><span>Acreditado por Universidad EUNEIZ</span></div>
+              <div class="course-card__meta-row"><i class="ph ph-seal-check"></i><span>Válido como mérito en oposiciones</span></div>
+            </div>
+            <div class="course-card__cta">
+              <AddToCartButton slug={course.slug} title={data.title} price={data.price} hours={data.hours} ects={data.ects} packEligible={data.packEligible ?? false} icon={data.icon} size="md" />
+              {data.packEligible && (
+                <a href="#pack" class="btn btn--ghost btn--full">
+                  <i class="ph-fill ph-fire" style="color:var(--sky)"></i> Ver oferta pack 2×1
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ── RESUMEN FICHAS ────────────────────────────────────────────────── -->
+  <section class="section section--white">
+    <div class="container">
+      <div class="stats-grid fade-in">
+        <div class="stat-card">
+          <i class="ph ph-currency-eur stat-icon"></i>
+          <div class="stat-value">{data.price} €</div>
+          <div class="stat-label">Precio del curso</div>
+        </div>
+        <div class="stat-card">
+          <i class="ph ph-clock stat-icon"></i>
+          <div class="stat-value">{data.hours} h</div>
+          <div class="stat-label">Horas de formación</div>
+        </div>
+        <div class="stat-card">
+          <i class="ph ph-medal stat-icon"></i>
+          <div class="stat-value">{data.ects} ECTS</div>
+          <div class="stat-label">Créditos universitarios</div>
+        </div>
+        <div class="stat-card">
+          <i class="ph ph-laptop stat-icon"></i>
+          <div class="stat-value">Online</div>
+          <div class="stat-label">{data.modality}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROGRAMA ──────────────────────────────────────────────────────── -->
+  <section class="section section--cream" id="programa">
+    <div class="container">
+      <div class="programa-header">
+        <div>
+          <span class="section-label">Temario</span>
+          <h2 class="h2">Programa formativo</h2>
+          <p class="lead" style="margin-top:8px; max-width:520px">
+            {data.modules.length} módulos para dominar los contenidos con rigor y eficacia
+          </p>
+        </div>
+        <div class="programa-count">
+          <i class="ph ph-books"></i> {data.modules.length} módulos · {data.hours} horas
+        </div>
+      </div>
+      <div class="acordeon">
+        {data.modules.map((mod, i) => (
+          <div class={`acordeon__item${i === 0 ? ' is-open' : ''}`}>
+            <div class="acordeon__header">
+              <div class="acordeon__num">M{i + 1}</div>
+              <span class="acordeon__title">{mod.title}</span>
+              <div class="acordeon__chevron"><i class="ph ph-caret-down"></i></div>
+            </div>
+            <div class="acordeon__body" style={i === 0 ? 'max-height:300px' : undefined}>
+              <div class="acordeon__body-inner">{mod.description}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PARA QUIÉN ────────────────────────────────────────────────────── -->
+  <section class="section section--white">
+    <div class="container">
+      <span class="tag fade-in">Destinatarios</span>
+      <h2 class="h2 fade-in fade-delay-1">¿Para quién es este curso?</h2>
+      <div class="profiles-grid fade-in fade-delay-2">
+        {data.profiles.map(profile => (
+          <div class="profile-card">
+            <div class="icon-box">
+              <i class={`ph ${profile.icon}`}></i>
+            </div>
+            <div>
+              <strong>{profile.title}</strong>
+              <p>{profile.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LO QUE CONSEGUIRÁS ────────────────────────────────────────────── -->
+  <section class="section section--cream">
+    <div class="container section-two-col">
+      <div class="fade-in">
+        <span class="tag">Resultados</span>
+        <h2 class="h2">Lo que conseguirás</h2>
+        <p class="lead">Al finalizar el curso serás capaz de:</p>
+      </div>
+      <ul class="check-list fade-in fade-delay-1">
+        {data.benefits.map(benefit => (
+          <li>{benefit}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── CÓMO SE SUPERA ────────────────────────────────────────────────── -->
+  <section class="section section--white">
+    <div class="container">
+      <span class="tag fade-in">Evaluación</span>
+      <h2 class="h2 fade-in fade-delay-1">Evaluación y superación del curso</h2>
+      <div class="evaluation-cards fade-in fade-delay-2">
+        <div class="evaluation-card">
+          <div class="evaluation-icon">
+            <i class="ph ph-test-tube"></i>
+          </div>
+          <div>
+            <h3 class="h3">Prueba tipo test</h3>
+            <p>Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado y acreditar su aprovechamiento.</p>
+          </div>
+        </div>
+        <div class="evaluation-card">
+          <div class="evaluation-icon">
+            <i class="ph ph-arrow-clockwise"></i>
+          </div>
+          <div>
+            <h3 class="h3">Segunda oportunidad</h3>
+            <p>En caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad, pudiendo realizar una nueva prueba para superar el curso.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* <!-- ── PROFESORADO ───────────────────────────────────────────────────── -->
+  <section class="section section--light">
+    <div class="container">
+      <span class="tag fade-in">Quién te enseña</span>
+      <h2 class="h2 fade-in fade-delay-1">Aprende de quien lo vive desde dentro</h2>
+      <div class="profesor-card fade-in fade-delay-2">
+        <div class="profesor-photo-col">
+          <div class="profesor-photo-ring">
+            {data.profesorPhoto
+              ? <img src={data.profesorPhoto} alt={`Foto de ${data.profesorName}`} class="profesor-photo" loading="lazy" />
+              : <div class="profesor-photo-placeholder"><i class="ph ph-user"></i></div>
+            }
+          </div>
+          <div class="profesor-badge-row">
+            <span class="profesor-badge"><i class="ph ph-buildings"></i> UNED</span>
+            <span class="profesor-badge"><i class="ph ph-chalkboard-teacher"></i> Docente</span>
+          </div>
+        </div>
+        <div class="profesor-info">
+          <h3 class="h3">{data.profesorName}</h3>
+          <p class="profesor-role">{data.profesorRole}</p>
+          <p>{data.profesorBio}</p>
+        </div>
+      </div>
+    </div>
+  </section> */}
+
+  <!-- ── PACK 2×1 ──────────────────────────────────────────────────────── -->
+  {data.packEligible && (
+    <section class="section section--white" id="pack">
+      <div class="container">
+        <div class="pack-card fade-in">
+          <div class="pack-badge"><i class="ph-fill ph-fire"></i> Oferta por tiempo limitado</div>
+          <h2 class="h2" style="margin-bottom:6px">Llévate 2 cursos por solo 40 €</h2>
+          <p class="lead">El segundo te sale a <strong style="color:var(--blue)">8 €</strong>. Elige cualquier combinación del catálogo.</p>
+          <div class="pack-prices">
+            <span class="pack-prices__main">40 €</span>
+            <span class="pack-prices__old">64 €</span>
+            <span class="pack-prices__saving">Ahorras 24 € (37,5%)</span>
+          </div>
+          <div class="pack-rules">
+            <div class="pack-rule"><i class="ph-fill ph-check-circle"></i> Matrícula simultánea en dos cursos de 50 horas y 32 €</div>
+            <div class="pack-rule"><i class="ph-fill ph-check-circle"></i> Cualquier combinación: tú eliges los dos cursos</div>
+            <div class="pack-rule"><i class="ph-fill ph-check-circle"></i> Todos los cursos virtuales, acreditados por EUNEIZ (2 ECTS c/u)</div>
+            <div class="pack-rule"><i class="ph ph-x-circle" style="color:var(--gray)"></i> No acumulable con otras ofertas o descuentos</div>
+          </div>
+          <div class="pack-btns">
+            <AddToCartButton slug={course.slug} title={data.title} price={data.price} hours={data.hours} ects={data.ects} packEligible={data.packEligible ?? false} icon={data.icon} size="md" />
+            <a href="/cursos/" class="btn btn--ghost">
+              <i class="ph ph-list-bullets"></i> Elegir 2.º curso en catálogo
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ── CERTIFICADO EUNEIZ ────────────────────────────────────────────── -->
+  <section class="section section--cream">
+    <div class="container">
+      <span class="tag fade-in">Acreditación oficial</span>
+      <h2 class="h2 fade-in fade-delay-1">Acredita la Universidad de Vitoria-Gasteiz EUNEIZ</h2>
+      <div class="euneiz-inner fade-in fade-delay-2">
+        <div class="euneiz-logo euneiz-logo-desktop">
+          <Image src={euneizLogo} class="euneiz-logo" alt="Universidad de Vitoria-Gasteiz EUNEIZ" loading="lazy" />
+        </div>
+        <ul class="check-list">
+          <li>Título acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ.</li>
+          <li>Curso puntuable como méritos para oposiciones de acceso a la función pública docente en todas las CC.AA., según R.D. 276/2007 de 23 de febrero (BOE 2/3/2007).</li>
+          <li>La certificación será remitida por la Universidad y se hace mediante diploma con firma digital, que recibirá en su e-mail para descargarlo en el plazo aproximado de 30-45 días desde el cierre de la edición del curso.</li>
+        </ul>
+        <div class="euneiz-logo euneiz-logo-mobile">
+          <Image src={euneizLogo} class="euneiz-logo" alt="Universidad de Vitoria-Gasteiz EUNEIZ" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ──────────────────────────────────────────────────────────── -->
+  <section class="section section--white">
+    <div class="container">
+      <span class="tag fade-in">Preguntas frecuentes</span>
+      <h2 class="h2 fade-in fade-delay-1">Resolvemos tus dudas</h2>
+      <div class="accordion fade-in fade-delay-2" id="accordion-faq">
+        {data.faq.map(item => (
+          <div class="accordion-item">
+            <button class="accordion-toggle" aria-expanded="false" data-accordion>
+              <span>{item.question}</span>
+              <i class="ph ph-caret-down accordion-icon"></i>
+            </button>
+            <div class="accordion-body">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ─────────────────────────────────────────────────────── -->
+  <section class="cta-final" id="matricula">
+    <div class="container">
+      <span class="section-label">Empieza hoy</span>
+      <h2 class="cta-final__title">Empieza hoy. Tu próxima oposición te lo agradecerá.</h2>
+      <p class="cta-final__sub">Formación online, acreditada por universidad y válida como mérito. Solo {data.price} €.</p>
+      <div class="cta-final__btns">
+        <AddToCartButton slug={course.slug} title={data.title} price={data.price} hours={data.hours} ects={data.ects} packEligible={data.packEligible ?? false} icon={data.icon} size="md" />
+        {data.packEligible && (
+          <a href="#pack" class="btn btn--outline-white btn--lg">
+            <i class="ph-fill ph-fire"></i> Ver oferta pack 2×1
+          </a>
+        )}
+      </div>
+      <div class="cta-final__pills">
+        <span class="cta-final__pill"><i class="ph ph-graduation-cap"></i> {data.ects} créditos ECTS</span>
+        <span class="cta-final__pill"><i class="ph ph-buildings"></i> Universidad EUNEIZ</span>
+        <span class="cta-final__pill"><i class="ph ph-seal-check"></i> Válido en oposiciones</span>
+        <span class="cta-final__pill"><i class="ph ph-clock"></i> {data.hours} horas · 100% online</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── STICKY CTA MOBILE ─────────────────────────────────────────────── -->
+  <div class="sticky-cta" id="sticky-cta">
+    <div class="sticky-cta-inner">
+      <div class="sticky-price">
+        <span class="sticky-price-val">{data.price} €</span>
+        <span class="sticky-price-note">con certificado EUNEIZ</span>
+      </div>
+      <AddToCartButton slug={course.slug} title={data.title} price={data.price} hours={data.hours} ects={data.ects} packEligible={data.packEligible ?? false} icon={data.icon} size="sm" />
+    </div>
+  </div>
+
+  <!-- ── PAGE STYLES ───────────────────────────────────────────────────── -->
+  <style>
+    /* Hero */
+    .hero-curso {
+      padding-top: 120px;
+      position: relative;
+      overflow: hidden;
+      background-image:
+        var(--hero-bg),
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 80px,
+          rgba(41,171,226,.04) 80px,
+          rgba(41,171,226,.04) 160px
+        );
+      background-size: cover, auto;
+      background-position: center, 0 0;
+    }
+    /* Desktop con imagen: ocultar blobs (la foto es el fondo) */
+    .hero-curso.has-image .hero-blob { display: none; }
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hero-blob-1 {
+      width: 700px;
+      height: 700px;
+      background: var(--sky);
+      opacity: .3;
+      top: -250px;
+      right: -200px;
+    }
+    .hero-blob-2 {
+      width: 500px;
+      height: 500px;
+      background: var(--blue);
+      opacity: .25;
+      bottom: -150px;
+      left: 20%;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, rgba(19,16,59,.85) 0%, rgba(19,16,59,.68) 45%, rgba(19,16,59,.15) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-overlay--photo {
+      background: linear-gradient(to right, rgba(19,16,59,.95) 0%, rgba(19,16,59,.85) 40%, rgba(19,16,59,.35) 70%, rgba(19,16,59,.05) 100%);
+    }
+    .hero-curso-inner {
+      max-width: 720px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 56px;
+    }
+    .hero-curso-content { flex: 1; min-width: 0; }
+    .hero-curso-img-col { display: none; }
+    .hero-curso-img-r {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.5);
+    }
+    .hero-curso-title { color: var(--white); margin-top: 12px; margin-bottom: 0; }
+    .hero-curso-title em { font-style: normal; color: var(--sky); }
+
+    .hero-curso-desc { line-height: 1.7; }
+    .hero-curso-desc-wrap { margin: 20px 0 0; }
+    .hero-desc-toggle { display: none; }
+
+    .hero-curso-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 28px 0 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.1);
+      color: rgba(255,255,255,.9);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: .85rem;
+      font-weight: 500;
+    }
+    .hero-curso-price {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin: 24px 0 32px;
+    }
+    .price-tag {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--sky);
+      line-height: 1;
+    }
+    .price-note {
+      font-size: .9rem;
+      color: rgba(255,255,255,.6);
+    }
+    .pack-link {
+      color: var(--sky);
+      font-weight: 600;
+      transition: opacity .2s;
+      text-decoration: underline;
+      text-decoration-color: var(--sky);
+      text-underline-offset: 3px;
+    }
+    .pack-link:hover { opacity: .85; }
+    .hero-curso-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    /* Hero mobile (oculto en desktop) */
+    .hero-mobile {
+      display: none;
+      background: var(--navy);
+      padding: 100px 0 36px;
+      position: relative; overflow: hidden;
+    }
+    .hero-mobile.has-image {
+      background-image: var(--hero-bg);
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-mobile.has-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(19,16,59,.90);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 0;
+    }
+    .hero-mobile.has-image .hero-blob { display: none; }
+    .hero-mobile .container { position: relative; z-index: 1; }
+    .hero-mobile__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .hero-mobile__title { color: var(--white); margin-bottom: 18px; line-height: 1.15; }
+    .hero-mobile__desc {
+      font-size: .97rem; color: rgba(255,255,255,.72);
+      line-height: 1.75; margin-bottom: 0;
+    }
+    .hero-mobile__pills {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .hero__pill {
+      display: flex; align-items: center; gap: 7px;
+      font-size: .82rem; color: rgba(255,255,255,.78); font-weight: 500;
+    }
+    .hero__pill i { color: var(--sky); font-size: 1rem; }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .stat-card {
+      background: var(--white);
+      border: 1px solid rgba(19,16,59,.08);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(19,16,59,.05);
+      position: relative;
+      overflow: hidden;
+      transition: all .3s cubic-bezier(.4,.0,.2,1);
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(41,171,226,.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .stat-card:hover {
+      border-color: rgba(41,171,226,.2);
+      box-shadow: 0 8px 24px rgba(41,171,226,.1);
+    }
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+    .stat-icon {
+      font-size: 1.8rem;
+      color: var(--sky);
+      margin-bottom: 8px;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--blue); position: relative; z-index: 1; }
+    .stat-label { font-size: .82rem; color: var(--gray); margin-top: 4px; position: relative; z-index: 1; }
+
+    /* Accordion */
+    .accordion { margin-top: 40px; }
+    .accordion-item {
+      background: var(--white);
+      border: 1.5px solid rgba(19,16,59,.1);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color .25s, box-shadow .25s;
+      position: relative;
+    }
+    .accordion-item:hover {
+      border-color: rgba(41,171,226,.3);
+      box-shadow: 0 4px 16px rgba(19,16,59,.07);
+    }
+    /* open state — :has() corrects the broken [aria-expanded] selector */
+    .accordion-item:has([aria-expanded="true"]) {
+      border-color: rgba(41,171,226,.45);
+      box-shadow: 0 4px 20px rgba(41,171,226,.12);
+      border-left-width: 3px;
+      border-left-color: var(--sky);
+    }
+
+    .accordion-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 22px 28px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      text-align: left;
+      transition: color .2s, background .2s;
+    }
+    .accordion-toggle:hover { color: var(--blue); }
+    .accordion-toggle:focus { outline: none; }
+    .accordion-toggle[aria-expanded="true"] {
+      color: var(--blue);
+      background: rgba(41,171,226,.07);
+      border-bottom: 1px solid rgba(41,171,226,.2);
+    }
+    .accordion-icon {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(36,36,186,.1), rgba(41,171,226,.1));
+      border-radius: 50%;
+      font-size: 0.9rem;
+      color: var(--sky);
+      transition: all .25s cubic-bezier(.4,0,.2,1);
+    }
+    .accordion-toggle[aria-expanded="true"] .accordion-icon {
+      transform: rotate(180deg) scale(1.1);
+      background: linear-gradient(135deg, var(--blue), var(--sky));
+      color: var(--white);
+    }
+    .accordion-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+    .accordion-body.open { max-height: 800px; }
+    .accordion-body p {
+      padding: 20px 28px 24px;
+      color: var(--gray);
+      line-height: 1.8;
+      font-size: .96rem;
+      background: rgba(240,246,255,.5);
+      border-top: none;
+    }
+
+    /* Profiles */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .profile-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+    .profile-card strong { display: block; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .profile-card p { font-size: .88rem; color: var(--gray); margin: 0; }
+    .icon-box {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--blue);
+    }
+
+    /* Two-col layout */
+    .section-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* Steps */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .step-card {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 24px;
+      background: var(--cream);
+      border-radius: var(--radius);
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+    .step-card p { color: var(--gray); line-height: 1.7; margin-top: 8px; }
+
+    /* Evaluation cards */
+    .evaluation-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .evaluation-card {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 24px;
+      background: var(--cream);
+      border-radius: var(--radius);
+      border: 1.5px solid rgba(19,16,59,.08);
+      transition: all .3s cubic-bezier(.4,0,.2,1);
+    }
+    .evaluation-card:hover {
+      border-color: rgba(41,171,226,.25);
+      box-shadow: 0 4px 16px rgba(41,171,226,.1);
+    }
+    .evaluation-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--blue), var(--sky));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--white);
+    }
+    .evaluation-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .evaluation-card p {
+      color: var(--gray);
+      line-height: 1.7;
+      font-size: .9rem;
+      margin: 0;
+    }
+
+    /* Profesor */
+    .profesor-card {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      background: var(--white);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 32px rgba(19,16,59,.09);
+      margin-top: 32px;
+      border: 1px solid rgba(19,16,59,.06);
+    }
+    .profesor-photo-col {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .profesor-photo-ring {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, var(--blue), var(--sky));
+      box-shadow: 0 8px 32px rgba(41,171,226,.3);
+      flex-shrink: 0;
+    }
+    .profesor-photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--white);
+      display: block;
+    }
+    .profesor-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      border: 4px solid var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      color: rgba(255,255,255,.4);
+    }
+    .profesor-badge-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .profesor-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--cream);
+      color: var(--navy);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: .73rem;
+      font-weight: 600;
+    }
+    .profesor-badge i { color: var(--sky); }
+    .profesor-role { color: var(--sky); font-weight: 600; font-size: .95rem; margin: 6px 0 16px; }
+    .profesor-info p { color: var(--gray); line-height: 1.7; }
+    .profesor-info .h3 { font-size: 1.4rem; }
+
+    /* section-label */
+    .section-label {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--sky); margin-bottom: 10px;
+    }
+
+    /* Pack (v2 card) */
+    .pack-card {
+      background: var(--cream); border: 1.5px solid rgba(41,171,226,.25);
+      border-radius: 20px; padding: 48px;
+      position: relative; overflow: hidden;
+    }
+    .pack-card::after {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(41,171,226,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .pack-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(90deg, var(--blue), var(--sky));
+      color: var(--white); font-size: .76rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 999px; margin-bottom: 20px;
+    }
+    .pack-prices { display: flex; align-items: baseline; gap: 12px; margin: 16px 0 4px; flex-wrap: wrap; }
+    .pack-prices__main { font-size: 3rem; font-weight: 800; color: var(--navy); }
+    .pack-prices__old  { font-size: 1.3rem; font-weight: 600; color: var(--gray); text-decoration: line-through; }
+    .pack-prices__saving { font-size: .82rem; font-weight: 700; color: var(--sky); background: rgba(41,171,226,.15); padding: 4px 12px; border-radius: 999px; }
+    .pack-rules { display: flex; flex-direction: column; gap: 10px; margin: 22px 0; }
+    .pack-rule  { display: flex; align-items: center; gap: 10px; font-size: .87rem; color: var(--navy); }
+    .pack-rule i { color: var(--sky); font-size: 1rem; flex-shrink: 0; }
+    .pack-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn--ghost { background: rgba(19,16,59,.07); color: var(--navy); }
+    .btn--ghost:hover { background: rgba(19,16,59,.12); }
+
+    /* CTA Final (v2) */
+    .cta-final {
+      background: var(--navy); padding: 96px 0;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-final::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 50% 0%, rgba(36,36,186,.5) 0%, transparent 70%);
+    }
+    .cta-final .container { position: relative; z-index: 1; }
+    .cta-final__title {
+      font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800;
+      color: var(--white); margin-bottom: 14px;
+    }
+    .cta-final__sub {
+      font-size: .97rem; color: rgba(255,255,255,.68);
+      margin-bottom: 36px; max-width: 500px; margin-inline: auto;
+    }
+    .cta-final__btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+    .cta-final__pills { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .cta-final__pill  { display: flex; align-items: center; gap: 7px; font-size: .8rem; color: rgba(255,255,255,.65); }
+    .cta-final__pill i { color: var(--sky); }
+    .btn--lg { padding: 18px 36px; font-size: 1rem; }
+
+    /* EUNEIZ */
+    .euneiz-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-top: 32px;
+    }
+    .euneiz-logo img { max-width: 200px; width: auto; height: auto; border-radius: 16px; }
+
+    /* Acordeón v2 (programa) */
+    .programa-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 24px; margin-bottom: 36px; flex-wrap: wrap;
+    }
+    .programa-count {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(41,171,226,.1); border-radius: 999px; padding: 8px 20px;
+      font-size: .82rem; font-weight: 600; color: var(--sky); white-space: nowrap;
+    }
+    .acordeon { display: flex; flex-direction: column; gap: 10px; }
+    .acordeon__item {
+      background: var(--white); border: 1.5px solid rgba(19,16,59,.09);
+      border-radius: var(--radius); overflow: hidden;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .acordeon__item.is-open { border-color: rgba(41,171,226,.35); box-shadow: 0 4px 18px rgba(41,171,226,.09); }
+    .acordeon__header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 20px 22px; cursor: pointer; user-select: none; transition: background .2s;
+    }
+    .acordeon__header:hover { background: rgba(240,246,255,.7); }
+    .acordeon__num {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: var(--cream); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .76rem; font-weight: 700; color: var(--blue); transition: background .2s, color .2s;
+    }
+    .acordeon__item.is-open .acordeon__num { background: var(--blue); color: var(--white); }
+    .acordeon__title { flex: 1; font-size: .93rem; font-weight: 600; color: var(--navy); }
+    .acordeon__chevron {
+      width: 30px; height: 30px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(41,171,226,.1); border-radius: 50%;
+      color: var(--sky); font-size: .85rem;
+      transition: transform .3s, background .25s, color .25s;
+    }
+    .acordeon__item.is-open .acordeon__chevron {
+      transform: rotate(180deg);
+      background: linear-gradient(135deg, var(--blue), var(--sky));
+      color: var(--white);
+    }
+    .acordeon__body { max-height: 0; overflow: hidden; transition: max-height .38s ease; }
+    .acordeon__body-inner {
+      padding: 16px 22px 20px 68px;
+      font-size: .87rem; color: var(--gray); line-height: 1.75;
+      background: rgba(240,246,255,.5);
+      border-top: 1px solid rgba(41,171,226,.15);
+    }
+
+    /* Course card (mobile hero) */
+    .mobile-hero-card { display: none; margin-top: 2.5rem; padding: 0 0 8px; }
+    .course-card {
+      background: var(--white); border-radius: 20px;
+      overflow: hidden; box-shadow: var(--shadow-lg);
+      max-width: 440px; margin: 0 auto;
+    }
+    .course-card__img {
+      width: 100%; height: 160px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--sky) 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .course-card__img-icon { font-size: 3.5rem; color: rgba(255,255,255,.2); }
+    .course-card__img-text {
+      position: absolute; bottom: 12px; left: 16px;
+      font-size: .68rem; font-weight: 600;
+      color: rgba(255,255,255,.55); letter-spacing: .07em; text-transform: uppercase;
+    }
+    .course-card__body { padding: 20px; }
+    .course-card__price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+    .course-card__amount { font-size: 2.2rem; font-weight: 800; color: var(--navy); }
+    .course-card__currency { font-size: 1rem; font-weight: 600; color: var(--gray); }
+    .course-card__pack-hint {
+      font-size: .77rem; color: var(--sky); font-weight: 600;
+      margin-bottom: 16px; display: flex; align-items: center; gap: 6px;
+    }
+    .course-card__meta {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-bottom: 16px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .course-card__meta-row { display: flex; align-items: center; gap: 9px; font-size: .82rem; color: var(--navy); font-weight: 500; }
+    .course-card__meta-row i { color: var(--sky); font-size: .9rem; flex-shrink: 0; }
+    .course-card__cta { display: flex; flex-direction: column; gap: 8px; }
+    .btn--full { width: 100%; justify-content: center; }
+    .course-card__cta .atc-btn { width: 100%; justify-content: center; }
+
+    /* Sticky CTA mobile */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      background: var(--white);
+      box-shadow: 0 -4px 20px rgba(19,16,59,.12);
+      padding: 12px 20px;
+    }
+    .sticky-cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .sticky-price-val { display: block; font-size: 1.4rem; font-weight: 800; color: var(--blue); }
+    .sticky-price-note { font-size: .75rem; color: var(--gray); }
+
+    .euneiz-logo-mobile{ display: none; }
+
+    @media (max-width: 960px) {
+      /* Hero: ocultar desktop, mostrar mobile */
+      .hero-desktop { display: none; }
+      .hero-mobile  { display: block; }
+      .mobile-hero-card { display: block; }
+      /* Grids */
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .profiles-grid { grid-template-columns: 1fr; }
+      .section-two-col { grid-template-columns: 1fr; gap: 32px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .evaluation-cards { grid-template-columns: 1fr; }
+      .euneiz-inner { grid-template-columns: 1fr; }
+      \.euneiz-logo img { width: 100%; height: auto; border-radius: 16px; }
+      .euneiz-logo-desktop{ display: none; }
+      .euneiz-logo-mobile{ display: block; }
+      /* Pack card */
+      .pack-card { padding: 28px; }
+      /* Acordeon */
+      .acordeon__header { padding: 16px; gap: 10px; }
+      .acordeon__title  { font-size: .87rem; }
+      .acordeon__body-inner { padding: 0 16px 16px 58px; }
+      /* Profesor */
+      .profesor-card { flex-direction: column; align-items: center; text-align: center; padding: 28px; gap: 28px; }
+      .profesor-photo-ring { width: 160px; height: 160px; }
+      .profesor-badge-row { justify-content: center; }
+      /* CTA final */
+      .cta-final { padding: 64px 0; }
+      .cta-final__btns { flex-direction: column; align-items: stretch; }
+      .cta-final__btns .btn { justify-content: center; }
+      .cta-final__btns .atc-btn { width: 100%; justify-content: center; }
+      /* Sticky */
+      .sticky-cta { display: block; }
+      body { padding-bottom: 80px; }
+    }
+
+    @media (max-width: 600px) {
+      /* Hero */
+      .hero-curso { padding: 84px 0 44px; }
+      .hero-curso-desc {
+        font-size: .9rem;
+        line-height: 1.55;
+        opacity: .85;
+        overflow: hidden;
+        max-height: 2.8em;
+        transition: max-height .4s cubic-bezier(.4,0,.2,1);
+      }
+      .hero-curso-desc.expanded {
+        max-height: 20em;
+      }
+      .hero-desc-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 8px;
+        background: none;
+        border: none;
+        color: var(--sky);
+        font-family: 'Poppins', sans-serif;
+        font-size: .85rem;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0;
+        transition: opacity .2s;
+      }
+      .hero-desc-toggle i {
+        font-size: .9rem;
+        transition: transform .3s cubic-bezier(.4,0,.2,1);
+      }
+      .hero-desc-toggle[aria-expanded="true"] i {
+        transform: rotate(180deg);
+      }
+      .hero-desc-toggle:hover { opacity: .75; }
+      .hero-curso-desc-wrap { margin: 14px 0 0; }
+      .hero-curso-meta { gap: 8px; margin: 20px 0 0; padding-top: 18px; }
+      .meta-badge { font-size: .8rem; padding: 5px 11px; }
+      .hero-curso-price { flex-direction: column; align-items: flex-start; margin: 18px 0 22px; gap: 4px; }
+      .price-tag { font-size: 2.2rem; line-height: 1; }
+      .price-note { font-size: .84rem; line-height: 1.4; }
+      .hero-curso-btns {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 4px;
+      }
+      .hero-curso-btns .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Stats: 2 columnas en móvil (más compacto que 1) */
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .stat-card { padding: 18px 12px; }
+      .stat-icon { font-size: 1.5rem; margin-bottom: 4px; }
+      .stat-value { font-size: 1.3rem; }
+      .stat-label { font-size: .75rem; }
+
+      /* Acordiones */
+      .accordion-item { margin-bottom: 8px; }
+      .accordion-toggle { padding: 16px; font-size: .9rem; gap: 10px; }
+      .accordion-body p { padding: 14px 16px 18px; font-size: .88rem; }
+      .accordion-icon { width: 26px; height: 26px; font-size: .8rem; }
+
+      /* Profiles */
+      .profile-card { padding: 14px; gap: 12px; }
+      .profile-card strong { font-size: .88rem; }
+      .profile-card p { font-size: .8rem; }
+      .icon-box { width: 36px; height: 36px; font-size: 1.1rem; flex-shrink: 0; }
+
+      /* Steps */
+      .step-card { padding: 16px; gap: 12px; }
+      .step-num { width: 36px; height: 36px; font-size: 1rem; flex-shrink: 0; }
+
+      /* Profesor */
+      .profesor-card { padding: 24px 20px; gap: 20px; }
+      .profesor-photo-ring { width: 140px; height: 140px; }
+
+      /* Pack */
+      .pack-rules { gap: 8px; margin: 14px 0; }
+      .pack-rules li { font-size: .86rem; }
+
+      /* CTA final */
+      .cta-final-badges { gap: 8px; margin: 16px 0 24px; flex-direction: column; align-items: center; }
+      .trust-badge { padding: 6px 14px; font-size: .8rem; }
+      .cta-final .btn--lg { width: 100%; justify-content: center; }
+
+      /* Sticky CTA: siempre horizontal precio + botón */
+      .sticky-cta { padding: 10px 16px; }
+      .sticky-cta-inner { flex-direction: row; gap: 12px; align-items: center; }
+      .sticky-price-val { font-size: 1.3rem; }
+      .sticky-price-note { font-size: .7rem; }
+      .sticky-cta-inner .btn { flex-shrink: 0; white-space: nowrap; }
+    }
+  </style>
+
+  <!-- Modo imagen lateral — activado por DesignSwitcher (body.hero-img-right) -->
+  <style is:global>
+    @media (min-width: 961px) {
+      body.hero-img-right .hero-curso {
+        background-image: none !important;
+      }
+      body.hero-img-right .hero-overlay--photo {
+        display: none;
+      }
+      body.hero-img-right .hero-curso-inner {
+        max-width: 100%;
+        align-items: center;
+      }
+      body.hero-img-right .hero-curso-img-col {
+        display: flex;
+        flex: 0 0 400px;
+      }
+    }
+  </style>
+
+  <!-- ── ACCORDION JS ──────────────────────────────────────────────────── -->
+  <script>
+    // Leer más / Leer menos — solo en mobile
+    const descToggle = document.getElementById('hero-desc-toggle');
+    const desc = document.getElementById('hero-desc');
+    if (descToggle && desc && window.innerWidth <= 600) {
+      descToggle.style.display = 'inline-flex';
+      descToggle.addEventListener('click', () => {
+        const expanded = descToggle.getAttribute('aria-expanded') === 'true';
+        descToggle.setAttribute('aria-expanded', String(!expanded));
+        desc.classList.toggle('expanded', !expanded);
+        descToggle.innerHTML = !expanded
+          ? 'Leer menos <i class="ph ph-caret-down"></i>'
+          : 'Leer más <i class="ph ph-caret-down"></i>';
+      });
+    }
+
+    // Acordeón v2 (programa)
+    document.querySelectorAll('.acordeon__header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement as HTMLElement;
+        const body = item.querySelector('.acordeon__body') as HTMLElement;
+        const isOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.acordeon__item').forEach(i => {
+          i.classList.remove('is-open');
+          (i.querySelector('.acordeon__body') as HTMLElement).style.maxHeight = '0';
+        });
+        if (!isOpen) {
+          item.classList.add('is-open');
+          body.style.maxHeight = body.scrollHeight + 40 + 'px';
+        }
+      });
+    });
+
+    // Acordeón v1 (FAQ)
+    document.querySelectorAll('[data-accordion]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const body = btn.nextElementSibling as HTMLElement;
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        body.classList.toggle('open', !isOpen);
+      });
+    });
+
+    // Sticky CTA: observar tarjeta mobile si existe, si no el hero
+    const heroCta = document.querySelector('.mobile-hero-card') || document.querySelector('.hero-curso-btns');
+    const stickyCta = document.getElementById('sticky-cta');
+    if (heroCta && stickyCta) {
+      const obs = new IntersectionObserver(entries => {
+        stickyCta.style.opacity = entries[0].isIntersecting ? '0' : '1';
+        stickyCta.style.pointerEvents = entries[0].isIntersecting ? 'none' : 'auto';
+      });
+      obs.observe(heroCta);
+    }
+  </script>
+
+</BaseLayout>

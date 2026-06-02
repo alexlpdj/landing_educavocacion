@@ -1,0 +1,74 @@
+---
+// Sin props - datos del carrito vienen de localStorage
+---
+
+<button class="cart-btn" id="cart-btn" aria-label="Abrir carrito">
+  <i class="ph ph-shopping-cart"></i>
+  <span class="cart-btn-badge" id="cart-badge"></span>
+</button>
+
+<style>
+  .cart-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: transparent;
+    border: none;
+    color: var(--navy);
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+  .cart-btn:hover {
+    background: rgba(19, 16, 59, 0.08);
+    transform: translateY(-1px);
+  }
+  .cart-btn-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: var(--sky);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    line-height: 1;
+    border: 2px solid #fff;
+  }
+  .cart-btn-badge.visible {
+    display: flex;
+  }
+</style>
+
+<script>
+  import { getItemCount } from '../lib/cart';
+
+  const btn = document.getElementById('cart-btn');
+  const badge = document.getElementById('cart-badge');
+
+  function updateBadge() {
+    const count = getItemCount();
+    if (!badge) return;
+    badge.textContent = count > 9 ? '9+' : String(count);
+    badge.classList.toggle('visible', count > 0);
+  }
+
+  updateBadge();
+  window.addEventListener('cart:updated', updateBadge);
+
+  btn?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('cart:open'));
+  });
+</script>

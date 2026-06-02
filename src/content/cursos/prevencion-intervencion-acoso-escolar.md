@@ -1,0 +1,72 @@
+---
+title: "Prevención e Intervención ante Situaciones de Acoso Escolar"
+description: "Protege integralmente: comprende dinámicas de acoso y ciberacoso, previene mediante clima positivo, activa protocolos con rigor, lidera comunicación con familias, garantiza seguimiento con documentación."
+price: 45
+hours: 125
+ects: 5
+modality: "100% Virtual"
+category: ["inclusion"]
+icon: "ph-hand-stop"
+packEligible: false
+stripeLink: "https://buy.stripe.com/test_placeholder"
+stripePackLink: "https://buy.stripe.com/test_placeholder"
+profesorName: "Equipo EducaVocación"
+profesorRole: "Especialistas en acoso escolar, prevención y protección integral · Universidad EUNEIZ"
+profesorPhoto: ""
+profesorBio: "Nuestro equipo especializado en prevención e intervención ante acoso te acompañará en el desarrollo de una mirada profesional que detecta tempranamente, previene sistémicamente y actúa con seguridad jurídica."
+modules:
+  - title: "Módulo 1: Comprender el Acoso Escolar - Tipos, Dinámicas y Señales"
+    description: "Diferencia acoso de conflictos puntuales: intencionalidad, repetición, poder desigual. Tipos: físico, verbal, social, psicológico, discriminatorio. Dinámicas grupales: víctima, agresor, observadores. Señales multicapa."
+  - title: "Módulo 2: Prevención del Acoso - Clima Positivo, Habilidades Socioemocionales y Participación"
+    description: "Crea clima escolar positivo: normas de convivencia, programas socioemocionales, habilidades para la vida. Participación estudiantil, alumnado ayudante, mediación entre iguales. Prevención sistemática."
+  - title: "Módulo 3: Protocolos de Actuación, Detección e Intervención"
+    description: "Aplica protocolos oficiales paso a paso: investigación de hechos, protección inmediata, entrevistas, documentación, medidas disciplinarias y educativas. Técnicas de entrevista rigurosas. Seguimiento estructurado."
+  - title: "Módulo 4: Ciberacoso - Prevención, Detección y Actuación Digital"
+    description: "Ciberacoso: características únicas (anonimato, viralidad, permanencia). Prevención: hábitos digitales seguros, identidad digital responsable. Actuación: documentación, comunicación, pautas específicas."
+  - title: "Módulo 5: Comunicación con Familias, Coordinación y Seguimiento de Casos"
+    description: "Comunica efectivamente con familias víctima y agresor. Coordina con equipos, orientación, servicios externos. Hace seguimiento con sensibilidad. Documenta con rigor. Cierra casos de forma integral."
+profiles:
+  - icon: "ph-graduation-cap"
+    title: "Estudiantes de Magisterio"
+    description: "Que desean especializar su formación en prevención de acoso"
+  - icon: "ph-books"
+    title: "Docentes opositores"
+    description: "Que preparan oposiciones con énfasis en convivencia y protección"
+  - icon: "ph-chalkboard-teacher"
+    title: "Docentes en activo"
+    description: "Que buscan herramientas de detección e intervención ante acoso"
+  - icon: "ph-buildings"
+    title: "Coordinadores de convivencia y directivos"
+    description: "Que lideran protocolos integrales de prevención e intervención"
+benefits:
+  - "Comprender fenómeno acoso desde perspectiva educativa y psicosocial"
+  - "Identificar señales tempranas: físicas, emocionales, conductuales"
+  - "Diferenciar acoso de conflictos puntuales"
+  - "Implementar programas preventivos basados en evidencia"
+  - "Construir clima positivo: normas, socioemocional, participación"
+  - "Aplicar protocolos oficiales correctamente"
+  - "Técnicas de entrevista: recogida información rigurosa"
+  - "Intervenir ante ciberacoso con protocolos digitales"
+  - "Comunicar efectivamente con familias"
+  - "Documentar actuaciones con seguridad jurídica"
+evaluation: "Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado.\n\nEn caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad para realizar una nueva prueba. La tarea final es diseñar un plan integral de prevención e intervención ante acoso para tu centro educativo."
+faq:
+  - question: "¿Este curso es válido como mérito en oposiciones?"
+    answer: "Sí. Está acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ y es puntuable como mérito para oposiciones de acceso a la función pública docente en todas las Comunidades Autónomas, según R.D. 276/2007."
+  - question: "¿Es acoso cuando dos alumnos pelean una sola vez?"
+    answer: "No. Acoso requiere: intencionalidad, repetición, poder desigual. Una pelea puntual es conflicto. Aprenderás a diferenciar mediante análisis de contexto, duración, intención."
+  - question: "¿Es un curso teórico o práctico?"
+    answer: "Muy práctico. 125 horas de fundamentos sobre acoso, análisis de casos reales, simulaciones de entrevistas, diseño de programas preventivos, protocolos, documentación y tu plan final implementable."
+  - question: "¿Qué hago si descubro un caso de acoso pero no hay pruebas claras?"
+    answer: "Activas protocolo preventivamente: documentas indicadores, entrevistas, observación. La certeza absoluta no es requisito. Aprenderás a actuar con proporcionalidad según nivel de riesgo."
+  - question: "¿Cuánto tiempo debo dedicar cada semana?"
+    answer: "Son 125 horas totales. A ritmo flexible, puedes dedicar 10-15 horas semanales. La mayoría completa el curso en 4-6 meses."
+  - question: "¿Cómo protejo al alumnado agredido sin revictimizarlo?"
+    answer: "Medidas inmediatas: separación de agregsor, apoyo psicosocial, comunicación con familia, seguimiento. Protección informativa: evitar difusión del caso. Aprenderás protocolos de contención emocional."
+  - question: "¿Ciberacoso es responsabilidad de la escuela o de familia?"
+    answer: "Responsabilidad compartida y coordinada. Aunque ocurra fuera de aula, si afecta convivencia escolar, la escuela actúa. Aprenderás coordinación efectiva con familias y plataformas digitales."
+  - question: "¿Los materiales incluyen plantillas descargables?"
+    answer: "Sí. Plantillas de observación, protocolos de actuación, guías de entrevista, formularios de documentación, modelos de comunicación familiar, checklist de seguimiento, guías de ciberacoso y ejemplos comentados."
+---
+
+Acoso escolar causa daño profundo pero es prevenible e intervencional. Los docentes que comprenden dinámicas de acoso, implementan prevención sistemática, actúan protocolos correctamente y coordinan con familias crean centros seguros donde víctimas son protegidas, agresores son acompañados al cambio, y comunidad sana su convivencia. Este curso te forma integralmente en prevención, detección, intervención, ciberacoso y liderazgo de transformación.

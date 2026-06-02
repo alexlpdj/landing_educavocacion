@@ -1,0 +1,267 @@
+---
+interface Props {
+  slug: string;
+  current: 'a' | 'b';
+}
+const { slug, current } = Astro.props;
+const urlA = `/cursos/${slug}/`;
+const urlB = `/cursos/v2/${slug}/`;
+---
+
+<div id="ds-fab" title="Comparar diseños">
+  <i class="ph ph-swap"></i>
+  <span>Diseño {current === 'a' ? 'A' : 'B'}</span>
+</div>
+
+<div id="ds-panel" class="ds-panel">
+  <div class="ds-panel__head">
+    <span>Comparar diseños</span>
+    <button id="ds-close" aria-label="Cerrar"><i class="ph ph-x"></i></button>
+  </div>
+
+  <div class="ds-versions">
+    <a href={urlA} class={`ds-version ${current === 'a' ? 'ds-version--active' : ''}`}>
+      <div class="ds-version__badge">A</div>
+      <div>
+        <p class="ds-version__name">Diseño actual</p>
+        <p class="ds-version__desc">Hero full-width · Sticky CTA lateral</p>
+      </div>
+      {current === 'a' && <i class="ph-fill ph-check-circle ds-version__check"></i>}
+    </a>
+    <a href={urlB} class={`ds-version ${current === 'b' ? 'ds-version--active' : ''}`}>
+      <div class="ds-version__badge ds-version__badge--b">B</div>
+      <div>
+        <p class="ds-version__name">Diseño nuevo</p>
+        <p class="ds-version__desc">Hero con tarjeta · Acordeón · Stats</p>
+      </div>
+      {current === 'b' && <i class="ph-fill ph-check-circle ds-version__check"></i>}
+    </a>
+  </div>
+
+  {current === 'a' && (
+    <>
+      <div class="ds-divider"></div>
+      <p class="ds-section-label">Opciones · Diseño A</p>
+      <div class="ds-toggle-row">
+        <span class="ds-toggle-label">Imagen en lateral <span class="ds-toggle-sub">desktop</span></span>
+        <div class="ds-switch" id="hero-img-switch"></div>
+      </div>
+    </>
+  )}
+
+  <div class="ds-divider"></div>
+  <p class="ds-hint">Los cambios son solo visuales. Ningún dato se pierde.</p>
+</div>
+
+<style>
+  #ds-fab {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    z-index: 400;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 999px;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .8rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(19,16,59,.35);
+    transition: transform .2s, box-shadow .2s;
+    border: 1.5px solid rgba(255,255,255,.12);
+    user-select: none;
+  }
+  #ds-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(19,16,59,.4);
+  }
+  #ds-fab i { font-size: 1rem; color: var(--sky); }
+
+  .ds-panel {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    z-index: 401;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: 0 12px 48px rgba(19,16,59,.2);
+    border: 1.5px solid rgba(19,16,59,.08);
+    padding: 20px;
+    width: 300px;
+    font-family: 'Poppins', sans-serif;
+  }
+  .ds-panel.is-open { display: block; }
+
+  .ds-panel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  #ds-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6B7280;
+    font-size: 1rem;
+    padding: 2px;
+    line-height: 1;
+  }
+
+  .ds-versions { display: flex; flex-direction: column; gap: 8px; }
+  .ds-version {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1.5px solid #E5EAF0;
+    text-decoration: none;
+    color: var(--navy);
+    transition: border-color .2s, background .2s;
+    position: relative;
+  }
+  .ds-version:hover { border-color: rgba(41,171,226,.4); background: rgba(240,246,255,.5); }
+  .ds-version--active { border-color: var(--blue); background: rgba(36,36,186,.04); }
+
+  .ds-version__badge {
+    width: 32px; height: 32px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .ds-version__badge--b { background: var(--blue); }
+  .ds-version__name { font-size: .83rem; font-weight: 700; margin-bottom: 2px; }
+  .ds-version__desc { font-size: .73rem; color: #6B7280; line-height: 1.4; }
+  .ds-version__check {
+    position: absolute;
+    right: 12px;
+    color: var(--blue);
+    font-size: 1.1rem;
+  }
+
+  .ds-divider { border: none; border-top: 1px solid #E5EAF0; margin: 14px 0; }
+
+  .ds-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ds-toggle-label { font-size: .82rem; font-weight: 500; color: var(--navy); }
+  .ds-switch {
+    width: 40px; height: 22px;
+    background: #E5EAF0;
+    border-radius: 999px;
+    cursor: pointer;
+    position: relative;
+    transition: background .2s;
+  }
+  .ds-switch.on { background: var(--blue); }
+  .ds-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--white);
+    transition: transform .2s;
+  }
+  .ds-switch.on::after { transform: translateX(18px); }
+
+  .ds-section-label {
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #9CA3AF;
+    margin-bottom: 10px;
+  }
+  .ds-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .ds-toggle-label { font-size: .82rem; font-weight: 500; color: var(--navy); }
+  .ds-toggle-sub {
+    font-size: .7rem;
+    font-weight: 400;
+    color: #9CA3AF;
+    margin-left: 4px;
+  }
+  .ds-switch {
+    width: 40px; height: 22px;
+    background: #E5EAF0;
+    border-radius: 999px;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: background .2s;
+  }
+  .ds-switch.on { background: var(--blue); }
+  .ds-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--white);
+    transition: transform .2s;
+  }
+  .ds-switch.on::after { transform: translateX(18px); }
+
+  .ds-hint {
+    font-size: .72rem;
+    color: #6B7280;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    #ds-fab { bottom: 72px; left: 12px; }
+    .ds-panel { bottom: 72px; left: 12px; width: calc(100vw - 24px); }
+  }
+</style>
+
+<script>
+  const fab   = document.getElementById('ds-fab');
+  const panel = document.getElementById('ds-panel');
+  const close = document.getElementById('ds-close');
+
+  fab?.addEventListener('click', () => panel?.classList.toggle('is-open'));
+  close?.addEventListener('click', () => panel?.classList.remove('is-open'));
+
+  document.addEventListener('click', e => {
+    if (!panel?.contains(e.target as Node) && !fab?.contains(e.target as Node)) {
+      panel?.classList.remove('is-open');
+    }
+  });
+
+  // Toggle imagen lateral (solo Diseño A)
+  const heroSwitch = document.getElementById('hero-img-switch');
+  if (heroSwitch) {
+    const KEY = 'heroImgMode';
+    const apply = (active: boolean) => {
+      document.body.classList.toggle('hero-img-right', active);
+      heroSwitch.classList.toggle('on', active);
+      localStorage.setItem(KEY, active ? 'right' : 'bg');
+    };
+    apply(localStorage.getItem(KEY) === 'right');
+    heroSwitch.addEventListener('click', () => apply(!heroSwitch.classList.contains('on')));
+  }
+
+</script>

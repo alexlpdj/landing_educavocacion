@@ -1,0 +1,72 @@
+---
+title: "Aulas Inclusivas: El Diseño Universal de Aprendizaje (DUA)"
+description: "Crea aulas inclusivas desde el diseño. Aprende a eliminar barreras y multiplicar oportunidades para todo tu alumnado."
+price: 80
+hours: 150
+ects: 6
+modality: "100% Virtual"
+category: ["inclusion"]
+icon: "ph-wheelchair"
+packEligible: false
+stripeLink: "https://buy.stripe.com/test_placeholder"
+stripePackLink: "https://buy.stripe.com/test_placeholder"
+profesorName: "Equipo EducaVocación"
+profesorRole: "Especialistas en inclusión educativa · Universidad EUNEIZ"
+profesorPhoto: ""
+profesorBio: "Nuestro equipo especializado en DUA te acompañará en la transformación profunda de tu práctica educativa hacia la verdadera inclusión."
+modules:
+  - title: "Módulo 1: Fundamentos de la Inclusión Educativa y la Atención a la Diversidad"
+    description: "Bases conceptuales y normativas de la educación inclusiva. Marcos internacionales y nacionales, derecho a la educación de calidad, y principios que sustentan la inclusión como movimiento global."
+  - title: "Módulo 2: Introducción al Diseño Universal de Aprendizaje (DUA)"
+    description: "Filosofía y fundamentos del DUA. Principios, pautas y criterios. Conexión con la neurociencia del aprendizaje y las tres redes cerebrales: afectivas, de reconocimiento y estratégicas."
+  - title: "Módulo 3: Identificación de Barreras y Diseño de Entornos Accesibles"
+    description: "Aprende a analizar contextos reales, detectar barreras para el aprendizaje y la participación, y diseñar soluciones accesibles desde el inicio en materiales, tareas y espacios."
+  - title: "Módulo 4: Diseño de Situaciones de Aprendizaje con DUA"
+    description: "Planificación curricular efectiva aplicando DUA. Diseña secuencias didácticas completas con múltiples formas de representación, implicación y expresión."
+  - title: "Módulo 5: Evaluación Inclusiva y DUA"
+    description: "Evaluación formativa, diversificada y accesible. Diseña rúbricas flexibles, instrumentos variados y ajustes que garanticen participación equitativa en la evaluación."
+  - title: "Módulo 6: Proyecto Final de Implementación DUA"
+    description: "Aplica todo lo aprendido diseñando un proyecto de transformación DUA real para tu aula o centro educativo. Lidera innovación con base pedagógica sólida."
+profiles:
+  - icon: "ph-chalkboard-teacher"
+    title: "Docentes de primaria y secundaria"
+    description: "Que desean crear aulas realmente inclusivas y accesibles para toda la diversidad"
+  - icon: "ph-buildings"
+    title: "Equipos directivos e inspectores"
+    description: "Que lideran transformación inclusiva en sus centros educativos"
+  - icon: "ph-graduation-cap"
+    title: "Estudiantes de Magisterio"
+    description: "Que quieren iniciarse en metodologías inclusivas desde el principio de su carrera"
+  - icon: "ph-wheelchair"
+    title: "Especialistas en educación especial"
+    description: "Que buscan un marco global para la inclusión y accesibilidad universal"
+benefits:
+  - "Diseñar experiencias realmente inclusivas anticipando la diversidad desde el inicio"
+  - "Identificar y eliminar barreras para el aprendizaje y la participación en tu contexto"
+  - "Crear materiales y recursos accesibles para alumnado con diversidad sensorial, cognitiva y lingüística"
+  - "Planificar situaciones de aprendizaje completas aplicando principios DUA probados internacionalmente"
+  - "Evaluar de forma inclusiva con múltiples opciones, rúbricas flexibles y ajustes accesibles"
+  - "Liderar proyectos de innovación y transformación metodológica en tu centro educativo"
+  - "Mejora del rendimiento y motivación de TODO tu alumnado, sin excepciones"
+  - "Aumentar tu empleabilidad con competencias altamente demandadas en educación inclusiva"
+evaluation: "Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado.\n\nEn caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad para realizar una nueva prueba. El módulo final es práctico: disenarás un proyecto DUA completo que demostrarás haber comprendido e integrado."
+faq:
+  - question: "¿Este curso es válido como mérito en oposiciones?"
+    answer: "Sí. Está acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ y es puntuable como mérito para oposiciones de acceso a la función pública docente en todas las Comunidades Autónomas, según R.D. 276/2007."
+  - question: "¿Cuál es la diferencia entre DUA y adaptaciones posteriores?"
+    answer: "DUA es proactivo: diseñas accesibilidad y flexibilidad desde el inicio para que nadie quede excluido. Las adaptaciones posteriores son reactivas. DUA reduce la necesidad de adaptaciones individualizadas porque el diseño ya es para la diversidad."
+  - question: "¿Necesito formación previa en inclusión para hacer este curso?"
+    answer: "No. Comienza desde fundamentos. Aunque tengas experiencia, aprenderás un marco científico y estructurado del DUA que eleva significativamente tu práctica."
+  - question: "¿Es un curso teórico o práctico?"
+    answer: "Ambos. Fundamentación teórica sólida en neurociencia e inclusión, pero cada módulo incluye análisis de casos reales, actividades prácticas de diseño y una tarea final integradora."
+  - question: "¿Cuánto tiempo debo dedicar cada semana?"
+    answer: "Son 150 horas totales. A ritmo flexible, puedes dedicar entre 10-15 horas semanales o distribuirlo según tu disponibilidad. El promedio es completar el curso en 4-6 meses."
+  - question: "¿Qué aprenderé a diseñar exactamente?"
+    answer: "Diseñarás: objetivos inclusivos, tareas con múltiples formas de participación, materiales accesibles, evaluaciones diversificadas, y un proyecto completo de transformación DUA aplicable a tu aula o centro."
+  - question: "¿Los materiales son descargables?"
+    answer: "Sí. Acceso a plantillas de diseño, rúbricas DUA, guías de accesibilidad, banco de ejemplos reales y todos los recursos educativos del curso están disponibles para descargar."
+  - question: "¿Puedo aplicar DUA en mi contexto específico?"
+    answer: "Absolutamente. DUA es un marco flexible que funciona en cualquier etapa, materia y contexto educativo. Durante el curso adaptarás todos los aprendizajes a tu realidad específica."
+---
+
+Crea aulas donde nadie queda atrás. Diseña desde el inicio experiencias accesibles para toda la diversidad: ritmos de aprendizaje diferentes, necesidades específicas, culturas y estilos cognitivos variados. El DUA es el marco científico que lo hace posible y práctico en tu aula real.

@@ -1,0 +1,72 @@
+---
+title: "El Modelo de Enriquecimiento para Toda la Escuela (SEM)"
+description: "Diseña e implementa programas SEM que desarrollen talento, creatividad, motivación y aprendizaje profundo en todo el alumnado."
+price: 80
+hours: 150
+ects: 6
+modality: "100% Virtual"
+category: ["talento"]
+icon: "ph-sparkle"
+packEligible: false
+stripeLink: "https://buy.stripe.com/test_placeholder"
+stripePackLink: "https://buy.stripe.com/test_placeholder"
+profesorName: "Equipo EducaVocación"
+profesorRole: "Especialistas en enriquecimiento y talento · Universidad EUNEIZ"
+profesorPhoto: ""
+profesorBio: "Nuestro equipo especializado en Modelo SEM te acompañará en el diseño e implementación de programas de enriquecimiento rigurosos, sostenibles e inspiradores."
+modules:
+  - title: "Módulo 1: Fundamentos del Modelo SEM y Principios del Enriquecimiento"
+    description: "Comprende el origen, bases teóricas y filosofía del Modelo SEM de Renzulli y Reis. Entiende la Triada de Enriquecimiento (Tipo I, II, III) y por qué funciona para toda la diversidad."
+  - title: "Módulo 2: Enriquecimiento Tipo I y Tipo II - Exploración, Recursos y Habilidades"
+    description: "Diseña actividades de exploración general (Tipo I): exposiciones, visitas, expertos. Desarrolla habilidades cognitivas y afectivas (Tipo II): pensamiento crítico, creativo, destrezas de investigación."
+  - title: "Módulo 3: Enriquecimiento Tipo III - Proyectos de Investigación y Producción Creativa"
+    description: "Domina el corazón del modelo: proyectos profundos basados en intereses reales, con productos auténticos para audiencia real. Guía procesos de investigación autónoma completos."
+  - title: "Módulo 4: Identificación de Intereses, Perfiles y Estilos de Aprendizaje"
+    description: "Explora instrumentos y estrategias para detectar intereses, fortalezas, motivaciones, estilos cognitivos y perfiles creativos. Base para todo diseño SEM personalizado."
+  - title: "Módulo 5: Compactación Curricular, Agrupamientos Flexibles y Organización SEM"
+    description: "Domina herramientas de gestión curricular que liberan tiempo: compactación, niveles de reto, agrupamientos flexibles. Organiza el centro para implementar SEM sosteniblemente."
+  - title: "Módulo 6: Proyecto Final - Diseño e Implementación de Programa SEM en el Aula"
+    description: "Diseña tu propio Plan de Enriquecimiento SEM completo: diagnóstico, actividades Tipo I–II–III, compactación, evaluación y sostenibilidad para tu contexto real."
+profiles:
+  - icon: "ph-graduation-cap"
+    title: "Estudiantes de Magisterio"
+    description: "Que desean trabajar con talento y enriquecimiento desde su carrera docente"
+  - icon: "ph-books"
+    title: "Docentes opositores"
+    description: "Que preparan oposiciones y buscan diferenciarse con enfoque de talento"
+  - icon: "ph-chalkboard-teacher"
+    title: "Docentes en activo"
+    description: "Que buscan potenciar motivación, creatividad y talento en todo su alumnado"
+  - icon: "ph-buildings"
+    title: "Equipos directivos"
+    description: "Que lideran transformación hacia aulas de enriquecimiento a nivel de centro"
+benefits:
+  - "Comprender a profundidad el Modelo SEM y sus pilares teóricos basados en investigación internacional"
+  - "Diseñar experiencias de enriquecimiento Tipo I (exploración), Tipo II (habilidades) y Tipo III (investigación)"
+  - "Identificar fortalezas, intereses reales y estilos de aprendizaje de tu alumnado"
+  - "Utilizar herramientas de compactación curricular y agrupamientos flexibles eficazmente"
+  - "Integrar SEM en el currículo competencial sin añadir carga adicional"
+  - "Implementar proyectos Tipo III con productos auténticos para audiencias reales"
+  - "Potenciar motivación intrínseca, autonomía y pensamiento divergente en todo el alumnado"
+  - "Liderar propuestas de innovación basadas en SEM a nivel aula, ciclo y centro"
+evaluation: "Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado.\n\nEn caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad para realizar una nueva prueba. El módulo final es práctico: elaborarás un Programa SEM completo e implementable en tu aula."
+faq:
+  - question: "¿Este curso es válido como mérito en oposiciones?"
+    answer: "Sí. Está acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ y es puntuable como mérito para oposiciones de acceso a la función pública docente en todas las Comunidades Autónomas, según R.D. 276/2007."
+  - question: "¿Es el SEM solo para Altas Capacidades?"
+    answer: "No. El SEM parte del principio de que todos pueden destacar si tienen acceso a experiencias motivadoras basadas en sus intereses. Beneficia a toda la diversidad del alumnado."
+  - question: "¿Es un curso teórico o práctico?"
+    answer: "Ambos. Fundamentación teórica sólida combinada con talleres prácticos, análisis de programas reales, casos de implementación y tu propio proyecto final aplicable."
+  - question: "¿Necesito presupuesto especial para implementar SEM?"
+    answer: "No. SEM parte de la compactación curricular (liberar tiempo) y recursos de bajo coste. El énfasis está en el diseño y la intención pedagógica, no en recursos materiales."
+  - question: "¿Cuánto tiempo debo dedicar cada semana?"
+    answer: "Son 150 horas totales. A ritmo flexible, puedes dedicar 10-15 horas semanales. El promedio es completar el curso en 4-6 meses."
+  - question: "¿Qué aprenderé a crear exactamente?"
+    answer: "Crearás actividades Tipo I (exposiciones, visitas), Tipo II (talleres de habilidades) y Tipo III (proyectos completos). Diseñarás un programa SEM integral para tu aula con compactación, agrupamientos y evaluación."
+  - question: "¿Los materiales incluyen plantillas descargables?"
+    answer: "Sí. Plantillas de compactación, inventarios de intereses, diseños de Tipo I–II–III, rúbricas de investigación, modelos de proyectos reales y guías de implementación."
+  - question: "¿Cómo implemento SEM en una clase con 25+ alumnos?"
+    answer: "El curso te enseña estrategias de gestión grupal, agrupamientos flexibles y cómo integrar SEM en la planificación existente sin multiplicar el trabajo. Verás ejemplos con grupos grandes."
+---
+
+El Modelo SEM propone enriquecimiento para todo el alumnado, partiendo del principio de que todos pueden destacar si tienen acceso a experiencias motivadoras basadas en sus intereses y fortalezas. Este curso te capacita para diseñar e implementar programas SEM que desarrollen talento, creatividad, motivación profunda y aprendizaje transformador.

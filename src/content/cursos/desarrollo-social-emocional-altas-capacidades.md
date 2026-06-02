@@ -1,0 +1,72 @@
+---
+title: "El Desarrollo Social y Emocional del Alumnado con Altas Capacidades"
+description: "Comprende la complejidad emocional del alumnado con altas capacidades: asincronía del desarrollo, perfectionism, soledad intelectual, e intervenciones socioemocionales específicas."
+price: 80
+hours: 150
+ects: 6
+modality: "100% Virtual"
+category: ["talento"]
+icon: "ph-heart"
+packEligible: false
+stripeLink: "https://buy.stripe.com/test_placeholder"
+stripePackLink: "https://buy.stripe.com/test_placeholder"
+profesorName: "Equipo EducaVocación"
+profesorRole: "Especialistas en altas capacidades y desarrollo socioemocional · Universidad EUNEIZ"
+profesorPhoto: ""
+profesorBio: "Nuestro equipo especializado en psicología del talento te acompañará en la comprensión profunda de las necesidades emocionales únicas del alumnado con altas capacidades y en el diseño de intervenciones específicas."
+modules:
+  - title: "Módulo 1: Características Socioemocionales del Alumnado con Altas Capacidades"
+    description: "Comprende la asincronía del desarrollo: capacidad intelectual avanzada, pero madurez emocional y social variable. Identifica rasgos distintivos: intensidad emocional, sensibilidad, idealismo, creatividad expresiva."
+  - title: "Módulo 2: Perfeccionismo, Ansiedad y Gestión Emocional en Alumnado de Talento"
+    description: "Analiza los perfiles de perfeccionismo (adaptativo vs. desadaptativo). Comprende ansiedad, autocrítica y presión. Diseña estrategias de regulación emocional y autocompasión específicas para talento."
+  - title: "Módulo 3: Soledad Intelectual, Relaciones Interpersonales y Desarrollo de Identidad"
+    description: "Aborda la soledad intelectual y diferencias sociales. Desarrolla competencias de relación: empatía bidireccional, asertividad, formación de vínculos significativos. Acompaña la construcción de identidad en adolescencia."
+  - title: "Módulo 4: Intervenciones Socioemocionales: Counseling, Mentoría y Apoyo Psicoeducativo"
+    description: "Domina técnicas de acogida emocional, escucha activa, validación y mentoría. Diseña planes de apoyo socioemocional individualizado. Coordina con familias, orientadores y especialistas."
+  - title: "Módulo 5: Inclusión Socioemocional y Atención a la Diversidad en Talento"
+    description: "Integra el apoyo socioemocional en contextos inclusivos. Adapta intervenciones para alumnado con doble excepcionalidad (talento + NEAE, talento + TEA, talento + TDAH). Respeta diversidad de género e identidades."
+  - title: "Módulo 6: Proyecto Final - Programa de Desarrollo Socioemocional para Talento"
+    description: "Diseña un programa integral de apoyo socioemocional: detección de necesidades, intervenciones de aula, mentoría, coordinación con familia, evaluación y sostenibilidad en tu contexto."
+profiles:
+  - icon: "ph-graduation-cap"
+    title: "Estudiantes de Magisterio"
+    description: "Que desean especializar su formación en el bienestar emocional del alumnado talentoso"
+  - icon: "ph-books"
+    title: "Docentes opositores"
+    description: "Que preparan oposiciones y buscan expertise en atención emocional a la diversidad"
+  - icon: "ph-chalkboard-teacher"
+    title: "Docentes y orientadores"
+    description: "Que trabajan con alumnado de altas capacidades y quieren mejorar su apoyo emocional"
+  - icon: "ph-buildings"
+    title: "Equipos directivos y departamentos de orientación"
+    description: "Que lideran programas de atención integral al talento en sus centros"
+benefits:
+  - "Comprender la asincronía del desarrollo: por qué el talento intelectual convive con vulnerabilidad emocional"
+  - "Identificar características distintivas: intensidad emocional, sensibilidad, idealismo, creatividad en alumnado de talento"
+  - "Reconocer y abordar el perfeccionismo desadaptativo, ansiedad y autocrítica en el talento"
+  - "Diseñar intervenciones de regulación emocional: autocompasión, resiliencia y gestión de frustración"
+  - "Abordar la soledad intelectual mediante desarrollo de vínculos significativos e identidad fortalecida"
+  - "Aplicar técnicas de mentoría, acogida emocional y apoyo psicoeducativo específico para talento"
+  - "Integrar intervenciones socioemocionales en contextos inclusivos respetando la doble excepcionalidad"
+  - "Liderar programas de bienestar integral para alumnado talentoso a nivel aula, ciclo y centro"
+evaluation: "Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado.\n\nEn caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad para realizar una nueva prueba. El módulo final es práctico: diseñarás un programa integral de apoyo socioemocional para talento adaptado a tu contexto específico."
+faq:
+  - question: "¿Este curso es válido como mérito en oposiciones?"
+    answer: "Sí. Está acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ y es puntuable como mérito para oposiciones de acceso a la función pública docente en todas las Comunidades Autónomas, según R.D. 276/2007."
+  - question: "¿Qué es la asincronía del desarrollo?"
+    answer: "Es cuando el alumnado talentoso tiene capacidad intelectual muy avanzada, pero su madurez emocional, social o física no está al mismo nivel. Esto causa conflictos internos únicos que exploraremos en el curso."
+  - question: "¿Es un curso teórico o práctico?"
+    answer: "Ambos. Fundamentos de psicología del talento, análisis de casos reales de alumnado con altas capacidades, videotutoriales de intervención y diseño de tu propio programa final de apoyo emocional."
+  - question: "¿Necesito experiencia previa con alumnado de talento?"
+    answer: "No. El curso comienza desde cero identificando características distintivas. Aunque tengas experiencia, aprenderás un enfoque científico y estructurado de apoyo socioemocional específico."
+  - question: "¿Cuánto tiempo debo dedicar cada semana?"
+    answer: "Son 150 horas totales. A ritmo flexible, puedes dedicar 10-15 horas semanales. El promedio es completar el curso en 4-6 meses."
+  - question: "¿Qué es el perfeccionismo desadaptativo y cómo afecta al talento?"
+    answer: "Es cuando las personas se fijan estándares imposibles, critican constantemente su desempeño y experimentan ansiedad crónica. En talento es muy frecuente y limita su potencial creativo. Aprenderás a transformarlo en perfeccionismo adaptativo."
+  - question: "¿Los materiales incluyen plantillas descargables?"
+    answer: "Sí. Inventarios de características socioemocionales, fichas de evaluación emocional, guías de mentoría, protocolos de acogida, planes de intervención individual, rúbricas de observación y ejemplos de diálogos comentados."
+  - question: "¿Cómo abordaremos la doble excepcionalidad (talento + NEAE)?"
+    answer: "Con análisis profundo de casos reales: talento + TDAH, talento + TEA, talento + dislexia. Aprenderás cómo las NEAE enmascaran el talento y cómo intervenir considerando ambas dimensiones simultáneamente."
+---
+
+El alumnado con altas capacidades experimenta una complejidad única: talento intelectual excepcional convive con intensidad emocional, perfeccionismo, soledad intelectual y vulnerabilidad psicológica. Este curso te forma para comprender esta realidad y diseñar intervenciones socioemocionales específicas que permitan que el talento se desarrolle en un contexto de bienestar integral.

@@ -1,0 +1,70 @@
+---
+title: "Las Inteligencias Múltiples en el Aula"
+description: "Comprende diversidad cognitiva: identifica inteligencias múltiples del alumnado, diseña actividades diferenciadas por perfil cognitivo, integra metodologías activas para máxima inclusión y motivación."
+price: 32
+hours: 50
+ects: 2
+modality: "100% Virtual"
+category: ["methodology"]
+icon: "ph-sparkle"
+packEligible: true
+stripeLink: "https://buy.stripe.com/test_placeholder"
+stripePackLink: "https://buy.stripe.com/test_placeholder"
+profesorName: "Equipo EducaVocación"
+profesorRole: "Especialistas en Inteligencias Múltiples e innovación pedagógica · Universidad EUNEIZ"
+profesorPhoto: ""
+profesorBio: "Nuestro equipo especializado en Inteligencias Múltiples te acompañará en la transformación de tu práctica mediante un enfoque que reconoce y desarrolla la diversidad de talentos del alumnado."
+modules:
+  - title: "Módulo 1: Fundamentos de las Inteligencias Múltiples"
+    description: "Comprende evolución del concepto de inteligencia: de lo unidimensional a la visión multidimensional. Teoría de Gardner, las 8 inteligencias, evidencias neuropsicológicas y aportaciones a educación actual."
+  - title: "Módulo 2: Identificación y Evaluación de las Inteligencias Múltiples"
+    description: "Reconoce inteligencias predominantes en el alumnado mediante observación sistemática, cuestionarios, portfolios, rúbricas. Diseña perfiles individuales y de grupo que guían intervención pedagógica."
+  - title: "Módulo 3: Diseño de Actividades y Metodologías Basadas en Inteligencias Múltiples"
+    description: "Crea actividades específicas para cada inteligencia: lingüística, lógico-matemática, espacial, musical, cinestésica, interpersonal, intrapersonal, naturalista. Integra metodologías activas: cooperativo, ABP, gamificación."
+  - title: "Módulo 4: Diseño de Unidades Didácticas Basadas en Inteligencias Múltiples"
+    description: "Transforma contenidos oficiales en unidades didácticas completas y multinivel. Integra currículo con enfoque IM, diseña proyectos coherentes, establece indicadores evaluables."
+  - title: "Módulo 5: Aplicación Práctica, Innovación y Transferencia al Centro Educativo"
+    description: "Aplica conocimientos en realidad: implementa actividades, analiza casos reales, diseña plan de innovación IM para tu centro. Liderazgo pedagógico basado en fortalezas del alumnado."
+profiles:
+  - icon: "ph-graduation-cap"
+    title: "Estudiantes de Magisterio"
+    description: "Que desean especializar su formación en atención a la diversidad cognitiva"
+  - icon: "ph-books"
+    title: "Docentes opositores"
+    description: "Que preparan oposiciones con énfasis en metodologías activas e inclusión"
+  - icon: "ph-chalkboard-teacher"
+    title: "Docentes en activo"
+    description: "Que buscan innovar su práctica mediante el enfoque de inteligencias múltiples"
+  - icon: "ph-buildings"
+    title: "Directivos y coordinadores de centro"
+    description: "Que impulsan transformación pedagógica hacia modelos más inclusivos"
+benefits:
+  - "Comprender teoría de Inteligencias Múltiples: marco conceptual y evidencias científicas"
+  - "Identificar ocho inteligencias y sus indicadores en el alumnado"
+  - "Diferenciar entre inteligencias, capacidades y estilos de aprendizaje"
+  - "Evaluar funcionalmente inteligencias mediante herramientas cualitativas y cuantitativas"
+  - "Diseñar actividades multinivel que activan fortalezas de cada alumno"
+  - "Integrar metodologías activas: aprendizaje cooperativo, basado en proyectos, gamificación"
+  - "Crear unidades didácticas completas alineadas con enfoque IM y currículo oficial"
+  - "Impulsar innovación pedagógica y liderazgo transformador en tu centro educativo"
+evaluation: "Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado.\n\nEn caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad para realizar una nueva prueba. La tarea final es diseñar una unidad didáctica completa basada en inteligencias múltiples para tu contexto educativo."
+faq:
+  - question: "¿Este curso es válido como mérito en oposiciones?"
+    answer: "Sí. Está acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ y es puntuable como mérito para oposiciones de acceso a la función pública docente en todas las Comunidades Autónomas, según R.D. 276/2007."
+  - question: "¿Las inteligencias múltiples son lo mismo que estilos de aprendizaje?"
+    answer: "No. Inteligencias: potenciales cognitivos diferenciados, relativamente estables. Estilos: preferencias sobre cómo aprender. Son conceptos relacionados pero distintos. Aprenderás diferencias y cómo aplicar ambos."
+  - question: "¿Es un curso teórico o práctico?"
+    answer: "Muy práctico. Fundamentos sobre IM combinados con análisis de casos, diseño de actividades, creación de instrumentos de evaluación, elaboración de unidades didácticas y tu proyecto final implementable."
+  - question: "¿Puedo usar metodología IM si tengo grupos numerosos?"
+    answer: "Sí. El enfoque IM es escalable: desde actividades multinivel que todos realizan simultáneamente hasta estaciones de aprendizaje donde cada grupo accede por su inteligencia dominante. Aprenderás estrategias para cualquier grupo."
+  - question: "¿Cuánto tiempo debo dedicar cada semana?"
+    answer: "Son 50 horas totales. A ritmo flexible, puedes dedicar 5-10 horas semanales. La mayoría completa el curso en 2-3 meses."
+  - question: "¿Todos los alumnos tienen todas las inteligencias o hay perfiles diferenciados?"
+    answer: "Todos tenemos todas las inteligencias, pero en grados diferentes. Algunos tienen perfil equilibrado, otros dominantes en 2-3 áreas. Aprenderás a identificar perfiles y potenciar fortalezas mientras apoyas áreas desafiantes."
+  - question: "¿Los materiales incluyen plantillas descargables?"
+    answer: "Sí. Cuestionarios IM por etapas, rúbricas de observación, plantillas de diseño de actividades por inteligencia, modelos de unidades didácticas, instrumentos de evaluación y ejemplos comentados."
+  - question: "¿Cómo se aplica el descuento del pack de cursos?"
+    answer: "Al matricularte simultáneamente en dos cursos de 50 horas y 32€, el segundo curso solo cuesta 8€. Este curso es elegible para combinar con cualquier otro del pack."
+---
+
+Inteligencias Múltiples ofrece marco para reconocer que la inteligencia no es un factor único sino constelación de capacidades diversas. Los docentes que adoptan este enfoque crean aulas donde cada alumno ve sus fortalezas valoradas, donde la diversidad cognitiva es diseñada estratégicamente, donde todos acceden al currículo a través de sus potenciales. Este curso te forma en identificación, evaluación, diseño de actividades y unidades didácticas que transforman expectativas y resultados educativos.

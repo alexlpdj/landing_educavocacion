@@ -1,0 +1,71 @@
+---
+title: "La Acción Tutorial en el Aula Ordinaria"
+description: "Diseña e implementa Plan de Acción Tutorial (PAT) integral: acompañamiento académico, desarrollo socioemocional, orientación profesional, convivencia inclusiva y comunicación con familias."
+price: 45
+hours: 125
+ects: 5
+modality: "100% Virtual"
+category: ["teacher_development"]
+icon: "ph-heart"
+packEligible: false
+stripeLink: "https://buy.stripe.com/test_placeholder"
+stripePackLink: "https://buy.stripe.com/test_placeholder"
+profesorName: "Equipo EducaVocación"
+profesorRole: "Especialistas en tutoría y desarrollo integral del alumnado · Universidad EUNEIZ"
+profesorPhoto: ""
+profesorBio: "Nuestro equipo especializado en acción tutorial te acompañará en el diseño e implementación de estrategias de acompañamiento que transforman el sentido del aprendizaje, previenen el fracaso y promocionan el bienestar integral."
+modules:
+  - title: "Módulo 1: Fundamentos de la Acción Tutorial y Marco de Centro"
+    description: "Comprende sentido pedagógico de tutoría, sus funciones académica, personal, social, orientadora. Sitúa tutoría en proyecto educativo, plan de convivencia, coordinación con orientación."
+  - title: "Módulo 2: Diseño del Plan de Acción Tutorial (PAT) y Programación de Tutoría"
+    description: "Desarrolla PAT como documento vivo: diagnóstico de necesidades, objetivos, itinerario anual, materiales, coordinación, evaluación. Diseña sesiones de tutoría por niveles con materiales reutilizables."
+  - title: "Módulo 3: Tutoría para el Aprendizaje, Bienestar y Competencias Socioemocionales"
+    description: "Integra orientación en estudio, hábitos de trabajo, autorregulación, funciones ejecutivas. Desarrolla competencias socioemocionales: autoconciencia, autorregulación, empatía, habilidades sociales."
+  - title: "Módulo 4: Orientación Académica y Profesional. Escuela-Familia-Comunidad"
+    description: "Aborda orientación académica, toma de decisiones, itinerarios, proyecto vital. Comunica efectivamente con familias: entrevistas, reuniones, acuerdos. Activa redes de apoyo y coordinación."
+  - title: "Módulo 5: Convivencia, Inclusión y Protocolos. Seguimiento y Evaluación del PAT"
+    description: "Prevención y respuesta ante conflictos, acoso, ciberacoso, absentismo. DUA en tutoría. Protocolos, registros, indicadores, informes que documenten impacto e impulsen mejora continua."
+profiles:
+  - icon: "ph-graduation-cap"
+    title: "Estudiantes de Magisterio"
+    description: "Que desean especializar su formación en acción tutorial y acompañamiento"
+  - icon: "ph-books"
+    title: "Docentes opositores"
+    description: "Que preparan oposiciones con énfasis en tutoría e inclusión"
+  - icon: "ph-chalkboard-teacher"
+    title: "Tutores en activo"
+    description: "Que buscan mejorar diseño e implementación de su acción tutorial"
+  - icon: "ph-buildings"
+    title: "Jefaturas de estudio y coordinadores de inclusión"
+    description: "Que lideran planes de tutoría coherentes a nivel de centro"
+benefits:
+  - "Comprender sentido estratégico de la acción tutorial en educación de calidad"
+  - "Diseñar Plan de Acción Tutorial (PAT) alineado con proyecto educativo del centro"
+  - "Aplicar estrategias de orientación académica y profesional para toma de decisiones"
+  - "Planificar sesiones de tutoría para bienestar y desarrollo socioemocional"
+  - "Implementar educación emocional: autoconciencia, autorregulación, empatía"
+  - "Apoyar funciones ejecutivas: planificación, organización, autorregulación"
+  - "Coordinar efectivamente con familias: entrevistas, reuniones, acuerdos"
+  - "Gestionar convivencia desde enfoque preventivo e inclusivo"
+  - "Documentar seguimiento con indicadores que muestren impacto real"
+evaluation: "Para superar el curso, el alumnado deberá realizar una prueba tipo test al finalizar la formación. Será necesario obtener una calificación igual o superior a 7 sobre 10 para considerar el curso superado.\n\nEn caso de no alcanzar la puntuación mínima en la primera prueba, el alumnado dispondrá de una segunda oportunidad para realizar una nueva prueba. La tarea final es diseñar un Plan de Acción Tutorial completo (PAT) para tu contexto educativo específico."
+faq:
+  - question: "¿Este curso es válido como mérito en oposiciones?"
+    answer: "Sí. Está acreditado por la Universidad de Vitoria-Gasteiz EUNEIZ y es puntuable como mérito para oposiciones de acceso a la función pública docente en todas las Comunidades Autónomas, según R.D. 276/2007."
+  - question: "¿Es lo mismo acción tutorial que tutoría de seguimiento académico?"
+    answer: "No. Acción tutorial es integral: acompañamiento académico, personal, social, orientador. Incluye diseño de PAT, desarrollo socioemocional, orientación profesional, convivencia. Tutoría académica es solo una parte."
+  - question: "¿Es un curso teórico o práctico?"
+    answer: "Muy práctico. 125 horas de fundamentos de tutoría, análisis de marcos legales, diseño de PAT, programación de sesiones, educación emocional, coordinación familia-escuela, protocolos y tu PAT final implementable."
+  - question: "¿Cómo balanceo tutoría con mi carga docente regular?"
+    answer: "Tutoría se integra en currículo: muchos objetivos socioemocionales se abordan en sesiones regulares. Aprenderás a diseñar PAT realista, escalable y sostenible con los recursos disponibles."
+  - question: "¿Cuánto tiempo debo dedicar cada semana?"
+    answer: "Son 125 horas totales. A ritmo flexible, puedes dedicar 10-15 horas semanales. La mayoría completa el curso en 4-6 meses."
+  - question: "¿Incluye protocolos específicos para situaciones de riesgo?"
+    answer: "Sí. Aborda protocolos para conflictos, acoso, ciberacoso, absentismo, bajo rendimiento, transiciones difíciles. Aprenderás a detectar, registrar, activar redes de apoyo y hacer seguimiento."
+  - question: "¿Los materiales incluyen plantillas descargables?"
+    answer: "Sí. Plantillas de PAT, sesiones de tutoría por temas, herramientas de diagnóstico, guías de entrevista con familias, protocolos de convivencia, indicadores de evaluación y ejemplos comentados para cada nivel."
+  - question: "¿Cómo se aplica el descuento del pack de cursos?"
+    answer: "Este curso de 125h y 45€ no entra en el pack 2×1. Es un curso especializado de acción tutorial de mayor carga horaria."
+---
+
+Acción tutorial es eje estratégico que articula sentido del aprendizaje, alinea expectativas, previene fracaso, reduce conflictos y promueve bienestar integral. Los docentes que diseñan tutorías efectivas crean espacios donde cada alumno es acompañado académica, emocional y socialmente, donde familias son aliadas, donde convivencia es preventiva e inclusiva. Este curso te forma en diseño integral de PAT, estrategias socioemocionales, orientación académica y protocolos que transforman tutoría en palanca de calidad educativa.
